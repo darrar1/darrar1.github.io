@@ -174,6 +174,37 @@ section{ padding:108px 0; }
 .proj a.link{ font-weight:600; color:var(--azure); font-size:.95rem; display:inline-flex; align-items:center; gap:7px; margin-top:18px; }
 .proj a.link:hover{ gap:12px; }
 
+/* CERTIFICATIONS — spotlight + compact grid */
+.cert-spotlight{
+  display:grid; grid-template-columns:1.05fr 1fr;
+  background:var(--card); border:1px solid var(--line);
+  border-radius:var(--r-lg); overflow:hidden; margin-bottom:26px;
+  box-shadow:0 30px 60px -34px rgba(22,33,58,.4);
+}
+.cert-spotlight .cover{ background:linear-gradient(150deg,var(--azure),#0b3c8c);
+  min-height:300px; display:grid; place-items:center; padding:34px; }
+.cert-spotlight .cover img{ border-radius:12px; max-height:250px; width:auto;
+  box-shadow:0 20px 44px -16px rgba(0,0,0,.45); }
+.cert-spotlight .info{ padding:42px 46px; }
+.cert-spotlight .tag{ font-family:'JetBrains Mono'; font-size:.7rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--azure); display:inline-flex; align-items:center;
+  gap:9px; margin-bottom:16px; }
+.cert-spotlight .tag .dot{ background:var(--azure); box-shadow:0 0 0 4px var(--azure-soft); }
+.cert-spotlight h3{ font-size:1.65rem; margin-bottom:10px; }
+.cert-spotlight .issuer{ font-family:'JetBrains Mono'; font-size:.8rem; color:var(--mist); margin-bottom:18px; }
+.cert-spotlight p{ margin-bottom:26px; }
+
+.cert-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.cert{ background:var(--card); border:1px solid var(--line); border-radius:var(--r-md);
+  padding:26px; transition:transform .3s var(--ease), box-shadow .3s, border-color .3s; }
+.cert:hover{ transform:translateY(-4px); box-shadow:0 20px 40px -26px rgba(22,33,58,.32);
+  border-color:var(--azure-soft); }
+.cert .issuer{ font-family:'JetBrains Mono'; font-size:.68rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--azure); }
+.cert h4{ font-size:1.05rem; margin:10px 0 6px; }
+.cert .date{ font-size:.85rem; color:var(--mist); display:block; }
+.cert .link{ margin-top:14px; }
+
 /* CREATIVE — split two-craft lanes (borderless) */
 .lanes{ display:grid; grid-template-columns:1fr 1fr; gap:44px; }
 .lane-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; padding-bottom:16px; border-bottom:1px solid var(--line); }
@@ -214,7 +245,6 @@ section{ padding:108px 0; }
   background:rgba(255,255,255,.12); border:none; color:#fff; font-size:1.5rem; cursor:pointer; transition:.25s; }
 .lb-nav:hover{ background:rgba(255,255,255,.24); }
 .lb-nav.prev{ left:26px; } .lb-nav.next{ right:26px; }
-@media (max-width:640px){ .lb-nav{ width:42px; height:42px; } }
 
 /* CONTACT */
 .contact{ text-align:center; }
@@ -249,6 +279,8 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   .skill-cols{ grid-template-columns:1fr; }
   .proj-grid{ grid-template-columns:1fr; }
   .lanes{ grid-template-columns:1fr; gap:54px; }
+  .cert-spotlight{ grid-template-columns:1fr; }
+  .cert-grid{ grid-template-columns:1fr; }
 }
 @media (max-width:640px){
   .nav-links{
@@ -262,6 +294,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   .menu-btn{ display:block; }
   .hero-meta{ gap:22px; }
   section{ padding:78px 0; }
+  .lb-nav{ width:42px; height:42px; }
 }
 </style>
 </head>
@@ -270,13 +303,14 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 <!-- ============ NAV ============ -->
 <header id="top">
   <div class="wrap nav">
-    <a href="#top" class="logo"></a>DAR<span>.</span></a>
+    <a href="#top" class="logo">DAR<span>.</span></a>
     <nav class="nav-links" id="navlinks">
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
+      <a href="#certs">Certs</a>
       <a href="#work">Work</a>
       <a href="#creative">Creative</a>
-      <a href="#contact" class="btn btn-primary" style="padding:11px 22px;">Let's talk</a>
+      <a href="#contact" class="btn btn-primary" style="padding:11px 22px; color:#fff;">Let's talk</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
@@ -367,6 +401,57 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
       </div>
     </div>
   </div>
+</section>
+
+<!-- ============ CERTIFICATIONS ============ -->
+<section id="certs">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Credentials</span>
+      <h2>Certifications &amp; training.</h2>
+      <p>Proof behind the skills — most recent in the spotlight.</p>
+    </div>
+
+    <!-- SPOTLIGHT: your latest / proudest certificate -->
+    <div class="cert-spotlight reveal">
+      <div class="cover">
+        <img src="images/cert-featured.jpg" alt="Featured certificate">
+      </div>
+      <div class="info">
+        <span class="tag"><span class="dot"></span>Latest credential</span>
+        <h3>Full-Stack Web Development</h3>
+        <p class="issuer">Coursera · Completed Mar 2026</p>
+        <p>A 6-month program covering modern front-end and back-end development, REST APIs, and deployment. Capstone project: a full booking platform.</p>
+        <a href="#" target="_blank" class="btn btn-primary" style="color:#fff;">View credential →</a>
+      </div>
+    </div>
+
+<!-- OTHER CERTS: compact, scannable list -->
+    <div class="cert-grid">
+      <div class="cert reveal">
+        <span class="issuer">Cisco</span>
+        <h4>CCNA: Networking Basics</h4>
+        <span class="date">Jan 2026</span>
+        <a href="#" target="_blank" class="link">View →</a>
+      </div>
+      <div class="cert reveal">
+        <span class="issuer">freeCodeCamp</span>
+        <h4>Responsive Web Design</h4>
+        <span class="date">Nov 2025</span>
+        <a href="#" target="_blank" class="link">View →</a>
+      </div>
+      <div class="cert reveal">
+        <span class="issuer">Google</span>
+        <h4>IT Support Fundamentals</h4>
+        <span class="date">Aug 2025</span>
+        <a href="#" target="_blank" class="link">View →</a>
+      </div>
+    </div>
+
+    <!-- View more → LinkedIn certifications -->
+    <div style="text-align:center; margin-top:36px;">
+      <a href="https://www.linkedin.com/in/your-username/details/certifications/" target="_blank" class="btn btn-ghost">View all certifications on LinkedIn →</a>
+    </div>
 </section>
 
 <!-- ============ WORK / PROJECTS (IT focus) ============ -->
@@ -484,10 +569,10 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
     <span class="eyebrow reveal" style="justify-content:center;">Contact</span>
     <h2 class="reveal">Let's build something good.</h2>
     <p class="reveal">Open to full-time roles and freelance projects. The fastest way to reach me is email — I usually reply within a day.</p>
-    <div class="reveal"><a href="mailto:dcbcelestial@gmail.com" class="btn btn-primary">hello@example.com</a></div>
+    <div class="reveal"><a href="mailto:dcbcelestial@gmail.com" class="btn btn-primary">dcbcelestial@gmail.com</a></div>
     <div class="socials reveal">
       <a href="https://github.com/darrar1" aria-label="GitHub">GH</a>
-      <a href="https://www.linkedin.com/in/daryll-cris-celestial-3891192ba/" aria-label="LinkedIn">in</a>
+      <a href="https://www.linkedin.com/in/daryll-cris-celestial-3891192ba/" aria-label="LinkedIn">In</a>
       <a href="https://www.instagram.com/darrarfs/" aria-label="Instagram">IG</a>
     </div>
   </div>
@@ -504,8 +589,8 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 
 <footer>
   <div class="wrap foot">
-    <span>© 2026 Juan Reyes. Built from scratch.</span>
-    <span>Azure &amp; Pearl · Designed with care</span>
+    <span>© 2026 Daryll Celestial</span>
+    <span></span>
   </div>
 </footer>
 
