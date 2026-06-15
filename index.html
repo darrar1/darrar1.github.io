@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio — IT Professional</title>
+
+<!-- =========================================================
+     FONTS  (swap freely)
+     Sora = headings · Inter = body · JetBrains Mono = labels
+========================================================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   DESIGN TOKENS  — change colors here once, applies everywhere
+========================================================= */
+:root{
+  --pearl:        #FBFCFE;   /* page background        */
+  --pearl-2:      #F2F6FC;   /* soft section tint      */
+  --card:         #FFFFFF;   /* surfaces               */
+  --azure:        #1E6FE0;   /* primary brand          */
+  --azure-bright: #2D88FF;   /* accents / hover        */
+  --azure-soft:   #E7F0FE;   /* fills, chips           */
+  --ink:          #16213A;   /* headings (soft navy)   */
+  --slate:        #51607A;   /* body text              */
+  --mist:         #8794AC;   /* captions / meta        */
+  --line:         #E4EAF3;   /* hairline borders       */
+
+  --r-lg: 26px;  --r-md: 18px;  --r-sm: 12px;
+  --max: 1180px;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--pearl);
+  color:var(--slate);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{ font-family:'Sora',sans-serif; color:var(--ink); line-height:1.12; letter-spacing:-.02em; }
+a{ color:inherit; text-decoration:none; }
+img{ display:block; max-width:100%; }
+.wrap{ width:100%; max-width:var(--max); margin:0 auto; padding:0 28px; }
+
+/* small uppercase technical label — the IT/dev signal */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--azure); display:inline-flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:""; width:26px; height:1px; background:var(--azure); }
+
+/* =========================================================
+   NAV  — persistent (HCI: recognition over recall)
+========================================================= */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  backdrop-filter:saturate(150%) blur(14px);
+  background:rgba(251,252,254,.72);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s, background .3s;
+}
+header.scrolled{ border-color:var(--line); background:rgba(251,252,254,.9); }
+.nav{ display:flex; align-items:center; justify-content:space-between; height:74px; }
+.logo{ font-family:'Sora'; font-weight:700; font-size:1.15rem; color:var(--ink); letter-spacing:-.02em; }
+.logo span{ color:var(--azure); }
+.nav-links{ display:flex; gap:6px; align-items:center; }
+/* large targets = Fitts's Law */
+.nav-links a{
+  font-size:.92rem; font-weight:500; color:var(--slate);
+  padding:10px 16px; border-radius:var(--r-sm); transition:color .2s, background .2s;
+}
+.nav-links a:hover{ color:var(--azure); background:var(--azure-soft); }
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  font-family:'Inter'; font-weight:600; font-size:.95rem;
+  padding:13px 26px; border-radius:999px; cursor:pointer; border:none;
+  transition:transform .25s var(--ease), box-shadow .25s, background .25s;
+}
+.btn-primary{ background:var(--azure); color:#fff; box-shadow:0 8px 22px -8px rgba(30,111,224,.65); }
+.btn-primary:hover{ background:var(--azure-bright); transform:translateY(-2px); box-shadow:0 14px 30px -10px rgba(30,111,224,.7); }
+.btn-ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--line); }
+.btn-ghost:hover{ border-color:var(--azure); color:var(--azure); transform:translateY(-2px); }
+.menu-btn{ display:none; background:none; border:none; cursor:pointer; padding:8px; }
+.menu-btn span{ display:block; width:24px; height:2px; background:var(--ink); margin:5px 0; border-radius:2px; transition:.3s; }
+
+/* =========================================================
+   HERO  — the thesis. spacious, soft azure glow signature.
+========================================================= */
+.hero{ position:relative; padding:190px 0 120px; overflow:hidden; }
+.glow{
+  position:absolute; top:-120px; right:-160px; width:680px; height:680px;
+  background:radial-gradient(circle at center, rgba(45,136,255,.22), rgba(45,136,255,0) 62%);
+  filter:blur(8px); z-index:0; animation:float 14s ease-in-out infinite;
+}
+.glow.two{ top:240px; left:-220px; width:520px; height:520px;
+  background:radial-gradient(circle, rgba(30,111,224,.14), transparent 60%); animation-delay:-7s; }
+@keyframes float{ 0%,100%{ transform:translate(0,0) } 50%{ transform:translate(-24px,28px) } }
+.hero .wrap{ position:relative; z-index:1; }
+.hero-grid{ display:grid; grid-template-columns:1.45fr .9fr; gap:60px; align-items:center; }
+.hero h1{ font-size:clamp(2.7rem,6vw,4.4rem); font-weight:700; margin:22px 0 0; }
+.hero h1 em{ font-style:normal; color:var(--azure); }
+.hero p.lead{ font-size:1.18rem; max-width:520px; margin:26px 0 38px; }
+.hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+.hero-meta{ display:flex; gap:34px; margin-top:54px; }
+.hero-meta .num{ font-family:'Sora'; font-weight:700; font-size:1.8rem; color:var(--ink); }
+.hero-meta .lbl{ font-size:.85rem; color:var(--mist); }
+
+/* portrait card — borderless feel, soft frame */
+.portrait{
+  position:relative; border-radius:var(--r-lg); overflow:hidden;
+  aspect-ratio:4/5; box-shadow:0 30px 60px -28px rgba(22,33,58,.35);
+  background:linear-gradient(140deg,var(--azure),#0b3c8c);
+}
+.portrait img{ width:100%; height:100%; object-fit:cover; }
+.portrait .badge{
+  position:absolute; left:18px; bottom:18px; right:18px;
+  background:rgba(255,255,255,.85); backdrop-filter:blur(8px);
+  border-radius:14px; padding:14px 18px; display:flex; align-items:center; gap:12px;
+}
+.dot{ width:10px; height:10px; border-radius:50%; background:#2bd07a; box-shadow:0 0 0 4px rgba(43,208,122,.2); }
+.badge small{ font-family:'JetBrains Mono'; font-size:.78rem; color:var(--ink); }
+
+/* =========================================================
+   SECTION SHELL
+========================================================= */
+section{ padding:108px 0; }
+.sec-tint{ background:var(--pearl-2); }
+.sec-head{ max-width:640px; margin-bottom:56px; }
+.sec-head h2{ font-size:clamp(2rem,4vw,2.9rem); font-weight:700; margin:18px 0 16px; }
+.sec-head p{ font-size:1.06rem; }
+
+/* ABOUT */
+.about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
+.about p{ font-size:1.08rem; margin-bottom:18px; }
+.facts{ display:grid; gap:14px; }
+.fact{ display:flex; gap:16px; padding:20px 22px; background:var(--card); border:1px solid var(--line); border-radius:var(--r-md); transition:transform .3s var(--ease), box-shadow .3s; }
+.fact:hover{ transform:translateY(-3px); box-shadow:0 18px 36px -22px rgba(22,33,58,.3); }
+.fact .ico{ flex:0 0 44px; height:44px; border-radius:12px; background:var(--azure-soft); color:var(--azure); display:grid; place-items:center; font-size:1.3rem; }
+.fact h4{ font-size:1rem; margin-bottom:2px; }
+.fact span{ font-size:.92rem; color:var(--mist); }
+
+/* SKILLS — grouped (Gestalt). IT first = primary emphasis. */
+.skill-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.skill-card{ background:var(--card); border:1px solid var(--line); border-radius:var(--r-md); padding:30px; transition:transform .3s var(--ease), box-shadow .3s, border-color .3s; }
+.skill-card:hover{ transform:translateY(-4px); box-shadow:0 22px 44px -26px rgba(22,33,58,.32); border-color:var(--azure-soft); }
+.skill-card .tag{ font-family:'JetBrains Mono'; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--azure); }
+.skill-card.primary{ background:linear-gradient(160deg,var(--azure),#1452ab); border:none; }
+.skill-card.primary *{ color:#fff; }
+.skill-card.primary .tag{ color:rgba(255,255,255,.75); }
+.skill-card h3{ font-size:1.25rem; margin:12px 0 16px; }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.chip{ font-size:.84rem; font-weight:500; padding:7px 14px; border-radius:999px; background:var(--azure-soft); color:var(--azure); }
+.skill-card.primary .chip{ background:rgba(255,255,255,.16); color:#fff; }
+
+/* PROJECTS — IT focus (primary) */
+.proj-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.proj{ background:var(--card); border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; transition:transform .35s var(--ease), box-shadow .35s; }
+.proj:hover{ transform:translateY(-6px); box-shadow:0 34px 60px -30px rgba(22,33,58,.4); }
+.proj .thumb{ aspect-ratio:16/10; background:linear-gradient(135deg,var(--azure-soft),#cfe1fc); position:relative; overflow:hidden; }
+.proj .thumb img{ width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
+.proj:hover .thumb img{ transform:scale(1.05); }
+.proj .body{ padding:28px 30px 32px; }
+.proj .stack{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+.proj .stack span{ font-family:'JetBrains Mono'; font-size:.72rem; color:var(--mist); }
+.proj h3{ font-size:1.4rem; margin-bottom:10px; }
+.proj a.link{ font-weight:600; color:var(--azure); font-size:.95rem; display:inline-flex; align-items:center; gap:7px; margin-top:18px; }
+.proj a.link:hover{ gap:12px; }
+
+/* CREATIVE — split two-craft lanes (borderless) */
+.lanes{ display:grid; grid-template-columns:1fr 1fr; gap:44px; }
+.lane-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+.lane-head h3{ font-size:1.5rem; }
+.lane-head .label{ font-family:'JetBrains Mono'; font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--azure); }
+.lane-stack{ display:flex; flex-direction:column; gap:18px; }
+
+.shot{ position:relative; border-radius:var(--r-md); overflow:hidden; cursor:zoom-in; }
+.shot img{ width:100%; display:block; transition:transform .6s var(--ease); }
+.shot:hover img{ transform:scale(1.05); }
+.shot figcaption{
+  position:absolute; left:0; right:0; bottom:0; padding:30px 18px 16px;
+  background:linear-gradient(transparent, rgba(11,24,52,.82));
+  color:#fff; font-size:.95rem; font-weight:600;
+  opacity:0; transform:translateY(8px); transition:.4s var(--ease);
+}
+.shot:hover figcaption{ opacity:1; transform:translateY(0); }
+.shot .meta{ display:block; font-family:'JetBrains Mono'; font-size:.7rem; font-weight:400; opacity:.8; margin-top:5px; letter-spacing:.02em; }
+.shot .zoom{
+  position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:10px;
+  background:rgba(255,255,255,.9); color:var(--azure); display:grid; place-items:center;
+  font-size:1rem; opacity:0; transform:scale(.8); transition:.35s var(--ease);
+}
+.shot:hover .zoom{ opacity:1; transform:scale(1); }
+
+/* lightbox (HCI: see work full-size · easy escape · keyboard support) */
+.lightbox{ position:fixed; inset:0; z-index:100; display:none; place-items:center;
+  background:rgba(8,16,34,.92); backdrop-filter:blur(6px); padding:30px; }
+.lightbox.open{ display:grid; }
+.lightbox img{ max-width:90vw; max-height:78vh; border-radius:14px; box-shadow:0 30px 80px -20px rgba(0,0,0,.6); }
+.lb-cap{ position:absolute; bottom:34px; left:0; right:0; text-align:center; color:#fff; }
+.lb-cap .pill{ font-family:'JetBrains Mono'; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--azure-bright); }
+.lb-cap .meta{ font-family:'JetBrains Mono'; font-size:.78rem; opacity:.8; display:block; margin-top:4px; }
+.lb-close{ position:absolute; top:26px; right:30px; width:46px; height:46px; border-radius:50%;
+  background:rgba(255,255,255,.12); border:none; color:#fff; font-size:1.4rem; cursor:pointer; transition:.25s; }
+.lb-close:hover{ background:rgba(255,255,255,.24); }
+.lb-nav{ position:absolute; top:50%; transform:translateY(-50%); width:50px; height:50px; border-radius:50%;
+  background:rgba(255,255,255,.12); border:none; color:#fff; font-size:1.5rem; cursor:pointer; transition:.25s; }
+.lb-nav:hover{ background:rgba(255,255,255,.24); }
+.lb-nav.prev{ left:26px; } .lb-nav.next{ right:26px; }
+@media (max-width:640px){ .lb-nav{ width:42px; height:42px; } }
+
+/* CONTACT */
+.contact{ text-align:center; }
+.contact h2{ font-size:clamp(2.2rem,5vw,3.4rem); margin-bottom:18px; }
+.contact p{ max-width:520px; margin:0 auto 36px; font-size:1.1rem; }
+.socials{ display:flex; gap:14px; justify-content:center; margin-top:42px; flex-wrap:wrap; }
+.socials a{ width:48px; height:48px; border-radius:14px; border:1.5px solid var(--line); display:grid; place-items:center; color:var(--ink); transition:.3s var(--ease); }
+.socials a:hover{ border-color:var(--azure); color:var(--azure); transform:translateY(-3px); }
+
+footer{ border-top:1px solid var(--line); padding:36px 0; }
+.foot{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-size:.88rem; color:var(--mist); }
+
+/* =========================================================
+   SCROLL REVEAL (subtle) + REDUCED MOTION (accessibility)
+========================================================= */
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+:focus-visible{ outline:3px solid var(--azure-bright); outline-offset:3px; border-radius:6px; }
+@media (prefers-reduced-motion:reduce){
+  *{ animation:none !important; transition:none !important; }
+  .reveal{ opacity:1; transform:none; }
+  html{ scroll-behavior:auto; }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width:900px){
+  .hero-grid{ grid-template-columns:1fr; gap:48px; }
+  .portrait{ max-width:360px; }
+  .about-grid{ grid-template-columns:1fr; gap:40px; }
+  .skill-cols{ grid-template-columns:1fr; }
+  .proj-grid{ grid-template-columns:1fr; }
+  .lanes{ grid-template-columns:1fr; gap:54px; }
+}
+@media (max-width:640px){
+  .nav-links{
+    position:fixed; inset:74px 0 auto 0; flex-direction:column; gap:0;
+    background:var(--pearl); border-bottom:1px solid var(--line);
+    padding:14px 28px 22px; transform:translateY(-130%); transition:transform .35s var(--ease);
+  }
+  .nav-links.open{ transform:translateY(0); }
+  .nav-links a{ padding:14px 4px; width:100%; }
+  .nav-links .btn{ width:100%; margin-top:8px; }
+  .menu-btn{ display:block; }
+  .hero-meta{ gap:22px; }
+  section{ padding:78px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header id="top">
+  <div class="wrap nav">
+    <a href="#top" class="logo"></a>DAR<span>.</span></a>
+    <nav class="nav-links" id="navlinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#work">Work</a>
+      <a href="#creative">Creative</a>
+      <a href="#contact" class="btn btn-primary" style="padding:11px 22px;">Let's talk</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="glow"></div>
+  <div class="glow two"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow reveal"> Web and Mobile Application Developer · Graphic Designer · Photographer</span>
+        <h1 class="reveal">Building reliable software with a <em>designer's eye.</em></h1>
+        <p class="lead reveal">I'm Daryll Celestial — an incoming 4th-year IT student who develops web applications with purpose, and brings a graphic-design and photography background to everything I ship.</p>
+        <div class="hero-actions reveal">
+          <a href="#work" class="btn btn-primary">View my work →</a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+        <div class="hero-meta reveal">
+          <div><div class="num">00+</div><div class="lbl">Projects built</div></div>
+          <div><div class="num">3</div><div class="lbl">Years coding</div></div>
+          <div><div class="num">100%</div><div class="lbl">Deadline kept</div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="portrait">
+          <img src="images/portrait.jpg" alt="Portrait of Daryll Celestial">
+          <div class="badge"><span class="dot"></span><small>Available for work &amp; freelance</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about reveal">
+        <span class="eyebrow">About me</span>
+        <h2 style="font-size:clamp(1.9rem,4vw,2.7rem);margin:18px 0 22px;">A developer who cares how things work <em style="font-style:normal;color:var(--azure)">and</em> how they feel.</h2>
+        <p>I'm completing my Bachelor's in Information Technology, focused on full-stack web and mobile application development. I enjoy turning messy problems into simple, maintainable solutions — and because I started in graphic design, I sweat the details users actually notice.</p>
+        <p>Outside of code, I shoot photography and design visual identities. It keeps my eye sharp and feeds back into the products I build.</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact"><div class="ico">⚙️</div><div><h4>Full-stack focus</h4><span>Front to back, deployed and maintained</span></div></div>
+        <div class="fact"><div class="ico">🎨</div><div><h4>Design-literate</h4><span>UI/UX informed by real design training</span></div></div>
+        <div class="fact"><div class="ico">📸</div><div><h4>Visual storyteller</h4><span>Photography &amp; brand visuals on the side</span></div></div>
+        <div class="fact"><div class="ico">🤝</div><div><h4>Freelance-ready</h4><span>Clear communication, on-time delivery</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS (IT primary) ============ -->
+<section id="skills" class="sec-tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">What I do</span>
+      <h2>Skills, weighted toward engineering.</h2>
+      <p>My core is software development — design and photography support it, not the other way around.</p>
+    </div>
+    <div class="skill-cols">
+      <div class="skill-card primary reveal">
+        <span class="tag">Primary</span>
+        <h3>Development</h3>
+        <div class="chips">
+          <span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">Node.js</span>
+          <span class="chip">Python</span><span class="chip">PHP</span><span class="chip">MySQL</span>
+          <span class="chip">REST APIs</span><span class="chip">Git</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="tag">Supporting</span>
+        <h3>Design</h3>
+        <div class="chips">
+          <span class="chip">Figma</span><span class="chip">Photoshop</span><span class="chip">Illustrator</span>
+          <span class="chip">UI/UX</span><span class="chip">Branding</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="tag">Supporting</span>
+        <h3>Photography</h3>
+        <div class="chips">
+          <span class="chip">Lightroom</span><span class="chip">Portrait</span><span class="chip">Product</span><span class="chip">Editing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK / PROJECTS (IT focus) ============ -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Selected work</span>
+      <h2>Things I've built.</h2>
+      <p>A few projects that show how I think and ship. Replace these with your real repos and case studies.</p>
+    </div>
+    <div class="proj-grid">
+      <article class="proj reveal">
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80" alt=""></div>
+        <div class="body">
+          <div class="stack"><span>React</span><span>·</span><span>Node</span><span>·</span><span>MySQL</span></div>
+          <h3>Campus Service Portal</h3>
+          <p>A web app that lets students file and track requests online, replacing a paper process. Built end-to-end with role-based access.</p>
+          <a href="#" class="link">View case study →</a>
+        </div>
+      </article>
+      <article class="proj reveal">
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt=""></div>
+        <div class="body">
+          <div class="stack"><span>Python</span><span>·</span><span>Flask</span></div>
+          <h3>Inventory Dashboard</h3>
+          <p>A small-business stock tracker with live charts, low-stock alerts, and exportable reports.</p>
+          <a href="#" class="link">View case study →</a>
+        </div>
+      </article>
+      <article class="proj reveal">
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80" alt=""></div>
+        <div class="body">
+          <div class="stack"><span>PHP</span><span>·</span><span>JavaScript</span></div>
+          <h3>Booking System</h3>
+          <p>An appointment scheduler with email confirmations and an admin calendar view.</p>
+          <a href="#" class="link">View case study →</a>
+        </div>
+      </article>
+      <article class="proj reveal">
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80" alt=""></div>
+        <div class="body">
+          <div class="stack"><span>React</span><span>·</span><span>API</span></div>
+          <h3>Weather &amp; Maps App</h3>
+          <p>A responsive app pulling live weather and mapping data through public APIs.</p>
+          <a href="#" class="link">View case study →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CREATIVE GALLERY (borderless, secondary) ============ -->
+<section id="creative" class="sec-tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">On the side</span>
+      <h2>Design &amp; photography.</h2>
+      <p>The visual work that keeps my eye sharp. Borderless, so the images speak for themselves.</p>
+    </div>
+    <!-- two borderless lanes · click any image to open the lightbox -->
+    <!-- data-pill = label · data-meta = the mono spec strip -->
+    <div class="lanes reveal" id="gallery">
+
+      <!-- LANE 1 — PHOTOGRAPHY -->
+      <div class="lane">
+        <div class="lane-head"><h3>Through the lens</h3><span class="label">Photography</span></div>
+        <div class="lane-stack">
+          <figure class="shot" data-pill="Photography" data-meta="Sony A7III · 50mm · f/1.8 · 1/200s">
+            <span class="zoom">⤢</span>
+            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&q=80" alt="Golden hour over the city">
+            <figcaption>Golden hour, city<span class="meta">Sony A7III · 50mm · f/1.8 · 1/200s</span></figcaption>
+          </figure>
+          <figure class="shot" data-pill="Photography" data-meta="Sony A7III · 24mm · f/8 · 1/500s">
+            <span class="zoom">⤢</span>
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80" alt="Landscape study">
+            <figcaption>Landscape study<span class="meta">Sony A7III · 24mm · f/8 · 1/500s</span></figcaption>
+          </figure>
+          <figure class="shot" data-pill="Photography" data-meta="Sony A7III · 35mm · f/4 · 1/250s">
+            <span class="zoom">⤢</span>
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Mountain light">
+            <figcaption>Mountain light<span class="meta">Sony A7III · 35mm · f/4 · 1/250s</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- LANE 2 — DESIGN -->
+      <div class="lane">
+        <div class="lane-head"><h3>By design</h3><span class="label">Graphic design</span></div>
+        <div class="lane-stack">
+          <figure class="shot" data-pill="Design" data-meta="Illustrator · Brand identity · 2025">
+            <span class="zoom">⤢</span>
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="Brand exploration">
+            <figcaption>Brand exploration<span class="meta">Illustrator · Brand identity · 2025</span></figcaption>
+          </figure>
+          <figure class="shot" data-pill="Design" data-meta="Photoshop · Poster series · 2025">
+            <span class="zoom">⤢</span>
+            <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80" alt="Poster series">
+            <figcaption>Poster series<span class="meta">Photoshop · Poster series · 2025</span></figcaption>
+          </figure>
+          <figure class="shot" data-pill="Design" data-meta="Figma · UI concept · 2025">
+            <span class="zoom">⤢</span>
+            <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?w=800&q=80" alt="UI concept">
+            <figcaption>UI concept<span class="meta">Figma · UI concept · 2025</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap contact">
+    <span class="eyebrow reveal" style="justify-content:center;">Contact</span>
+    <h2 class="reveal">Let's build something good.</h2>
+    <p class="reveal">Open to full-time roles and freelance projects. The fastest way to reach me is email — I usually reply within a day.</p>
+    <div class="reveal"><a href="mailto:dcbcelestial@gmail.com" class="btn btn-primary">hello@example.com</a></div>
+    <div class="socials reveal">
+      <a href="https://github.com/darrar1" aria-label="GitHub">GH</a>
+      <a href="https://www.linkedin.com/in/daryll-cris-celestial-3891192ba/" aria-label="LinkedIn">in</a>
+      <a href="https://www.instagram.com/darrarfs/" aria-label="Instagram">IG</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <button class="lb-nav prev" id="lbPrev" aria-label="Previous">‹</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-nav next" id="lbNext" aria-label="Next">›</button>
+  <div class="lb-cap"><span class="pill" id="lbPill"></span><span class="meta" id="lbMeta"></span></div>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Juan Reyes. Built from scratch.</span>
+    <span>Azure &amp; Pearl · Designed with care</span>
+  </div>
+</footer>
+
+<script>
+// nav background on scroll
+const head = document.getElementById('top');
+addEventListener('scroll', () => head.classList.toggle('scrolled', scrollY > 20));
+
+// mobile menu
+const mb = document.getElementById('menuBtn');
+const nl = document.getElementById('navlinks');
+mb.addEventListener('click', () => nl.classList.toggle('open'));
+nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nl.classList.remove('open')));
+
+// ===== lightbox (works across both lanes) =====
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbPill = document.getElementById('lbPill');
+const lbMeta = document.getElementById('lbMeta');
+const shots = [...document.querySelectorAll('.shot')];
+let cur = 0;
+
+function openLb(fig){ cur = shots.indexOf(fig); render(); lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); }
+function render(){
+  const f = shots[cur];
+  lbImg.src = f.querySelector('img').src;
+  lbImg.alt = f.querySelector('img').alt;
+  lbPill.textContent = f.dataset.pill;
+  lbMeta.textContent = f.dataset.meta;
+}
+function closeLb(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); }
+function step(n){ cur = (cur + n + shots.length) % shots.length; render(); }
+
+shots.forEach(f => f.addEventListener('click', () => openLb(f)));
+document.getElementById('lbClose').addEventListener('click', closeLb);
+document.getElementById('lbNext').addEventListener('click', () => step(1));
+document.getElementById('lbPrev').addEventListener('click', () => step(-1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight') step(1);
+  if (e.key === 'ArrowLeft') step(-1);
+});
+
+// scroll reveal (HCI: gentle feedback, not distracting)
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+}, { threshold:.12 });
+document.querySelectorAll('.reveal').forEach((el,i) => {
+  el.style.transitionDelay = (i % 4 * 70) + 'ms';
+  io.observe(el);
+});
+</script>
+</body>
+</html>
