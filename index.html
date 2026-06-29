@@ -343,29 +343,114 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 /* =========================================================
    RESPONSIVE
 ========================================================= */
+
+/* ---- Tablet (portrait + landscape) ---- */
 @media (max-width:900px){
-  .hero-grid{ grid-template-columns:1fr; gap:48px; }
-  .portrait{ max-width:360px; }
-  .about-grid{ grid-template-columns:1fr; gap:40px; }
-  .skill-cols{ grid-template-columns:1fr; }
+  section{ padding:88px 0; }
+
+  /* hero */
+  .hero{ padding:150px 0 90px; }
+  .hero-grid{ grid-template-columns:1fr; gap:44px; }
+  .hero-grid > div:last-child{ order:-1; }   /* portrait first on mobile */
+  .portrait{ max-width:300px; margin:0 auto; }
+
+  /* about */
+  .about-grid{ grid-template-columns:1fr; gap:36px; }
+
+  /* skills — 2-col at tablet */
+  .skill-cols{ grid-template-columns:1fr 1fr; gap:16px; }
+  .skill-card.primary{ grid-column:1 / -1; }  /* primary spans full row */
+
+  /* projects */
   .proj-grid{ grid-template-columns:1fr; }
-  .lanes{ grid-template-columns:1fr; gap:54px; }
+
+  /* certs — 2-col at tablet */
   .cert-spotlight{ grid-template-columns:1fr; }
-  .cert-grid{ grid-template-columns:1fr; }
+  .cert-grid{ grid-template-columns:1fr 1fr; gap:14px; }
+
+  /* gallery */
+  .lanes{ grid-template-columns:1fr; gap:48px; }
 }
+
+/* ---- Mobile portrait (phones) ---- */
 @media (max-width:640px){
+  /* layout */
+  .wrap{ padding:0 20px; }
+  section{ padding:68px 0; }
+
+  /* nav — slide-down menu */
   .nav-links{
     position:fixed; inset:74px 0 auto 0; flex-direction:column; gap:0;
     background:var(--pearl); border-bottom:1px solid var(--line);
-    padding:14px 28px 22px; transform:translateY(-130%); transition:transform .35s var(--ease);
+    padding:14px 20px 22px; transform:translateY(-130%);
+    transition:transform .35s var(--ease);
+    box-shadow:0 12px 40px -10px rgba(22,33,58,.12);
   }
   .nav-links.open{ transform:translateY(0); }
-  .nav-links a{ padding:14px 4px; width:100%; }
-  .nav-links .btn{ width:100%; margin-top:8px; }
+  .nav-links a{ padding:15px 6px; width:100%; border-radius:0; border-bottom:1px solid var(--line); }
+  .nav-links a:last-child{ border-bottom:none; }
+  .nav-links .btn{ width:100%; margin-top:12px; justify-content:center; border-radius:var(--r-sm); }
   .menu-btn{ display:block; }
-  .hero-meta{ gap:22px; }
-  section{ padding:78px 0; }
-  .lb-nav{ width:42px; height:42px; }
+
+  /* hero */
+  .hero{ padding:120px 0 72px; }
+  .hero h1{ font-size:clamp(2rem,9vw,2.8rem); }
+  .hero p.lead{ font-size:1rem; margin:20px 0 28px; }
+  .hero-actions{ flex-direction:column; gap:10px; }
+  .hero-actions .btn{ width:100%; justify-content:center; }
+  .portrait{ max-width:240px; }
+  .hero-meta{ gap:0; justify-content:space-between; }
+  .hero-meta .num{ font-size:1.5rem; }
+  .hero-meta .lbl{ font-size:.8rem; }
+
+  /* section heads */
+  .sec-head{ margin-bottom:36px; }
+
+  /* about */
+  .facts{ gap:10px; }
+  .fact{ padding:16px 18px; gap:14px; }
+  .fact .ico{ flex:0 0 40px; height:40px; }
+
+  /* skills — back to single column */
+  .skill-cols{ grid-template-columns:1fr; }
+  .skill-card.primary{ grid-column:auto; }
+  .skill-card{ padding:24px; }
+
+  /* certs */
+  .cert-grid{ grid-template-columns:1fr; }
+  .cert-spotlight .info{ padding:28px 24px; }
+  .cert-spotlight h3{ font-size:1.35rem; }
+
+  /* projects */
+  .proj .body{ padding:22px 22px 26px; }
+  .proj h3{ font-size:1.2rem; }
+
+  /* gallery */
+  .lane-head h3{ font-size:1.25rem; }
+
+  /* lightbox controls — larger tap targets */
+  .lb-close{ top:16px; right:16px; width:44px; height:44px; }
+  .lb-nav{ width:44px; height:44px; }
+  .lb-nav.prev{ left:10px; }
+  .lb-nav.next{ right:10px; }
+  .lb-cap{ bottom:20px; }
+
+  /* contact */
+  .contact p{ font-size:1rem; }
+  .socials{ gap:10px; margin-top:32px; }
+
+  /* footer */
+  .foot{ flex-direction:column; align-items:center; gap:6px; text-align:center; }
+}
+
+/* ---- Small phones (iPhone SE, Galaxy A etc.) ---- */
+@media (max-width:390px){
+  .hero h1{ font-size:clamp(1.85rem,8.5vw,2.4rem); }
+  .hero-meta .num{ font-size:1.3rem; }
+  .hero-meta .lbl{ font-size:.75rem; }
+  .portrait{ max-width:200px; }
+  .chip{ font-size:.78rem; padding:6px 12px; }
+  .btn{ padding:12px 22px; font-size:.9rem; }
 }
 </style>
 </head>
