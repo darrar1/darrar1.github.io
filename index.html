@@ -329,6 +329,66 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 .foot{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-size:.88rem; color:var(--mist); }
 
 /* =========================================================
+   ANIMATIONS
+========================================================= */
+
+/* scroll progress bar */
+#progress{
+  position:fixed; top:0; left:0; right:0; height:3px; z-index:60;
+  background:linear-gradient(90deg, var(--azure), var(--azure-bright));
+  transform-origin:left; transform:scaleX(0);
+  pointer-events:none; border-radius:0 2px 2px 0;
+}
+
+/* pulsing availability dot */
+.dot{ position:relative; flex-shrink:0; }
+.dot::after{
+  content:""; position:absolute; inset:-3px; border-radius:50%;
+  background:rgba(43,208,122,.35);
+  animation:pulse-ring 2.2s ease-out infinite;
+}
+@keyframes pulse-ring{
+  0%{ transform:scale(1); opacity:.9; }
+  100%{ transform:scale(2.8); opacity:0; }
+}
+
+/* button primary shimmer */
+.btn-primary{ position:relative; overflow:hidden; }
+.btn-primary::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,.18) 50%, transparent 100%);
+  transform:translateX(-100%); pointer-events:none;
+}
+.btn-primary:hover::after{ transform:translateX(100%); transition:transform .55s ease; }
+
+/* skill chip micro-lift */
+.chip{ transition:transform .2s var(--ease), background .2s, color .2s, box-shadow .2s; }
+.chip:hover{ transform:translateY(-2px) scale(1.06); box-shadow:0 5px 14px -4px rgba(30,111,224,.28); }
+.skill-card.primary .chip:hover{ background:rgba(255,255,255,.26); box-shadow:0 5px 14px -4px rgba(0,0,0,.18); }
+
+/* eyebrow line grows in when section enters viewport */
+.eyebrow::before{ transition:width .7s var(--ease) .25s; }
+.eyebrow.reveal:not(.in)::before{ width:0; }
+
+/* fact icon subtle spin on card hover */
+.fact .ico svg{ transition:transform .35s var(--ease); }
+.fact:hover .ico svg{ transform:rotate(10deg) scale(1.12); }
+
+/* social icon scale on hover */
+.socials a svg{ transition:transform .25s var(--ease); }
+.socials a:hover svg{ transform:scale(1.2); }
+
+/* logo dot brightens on hover */
+.logo span{ transition:color .2s; }
+.logo:hover span{ color:var(--azure-bright); }
+
+/* hamburger → X morph */
+.menu-btn span{ transition:transform .3s var(--ease), opacity .3s; }
+.menu-btn.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.menu-btn.open span:nth-child(2){ opacity:0; transform:scaleX(0); }
+.menu-btn.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+/* =========================================================
    SCROLL REVEAL + REDUCED MOTION
 ========================================================= */
 .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
@@ -455,6 +515,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 </style>
 </head>
 <body>
+<div id="progress" aria-hidden="true"></div>
 
 <!-- ============ NAV ============ -->
 <header id="top">
@@ -808,21 +869,32 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 </footer>
 
 <script>
-// nav scroll state
+// nav scroll state + progress bar
 const head = document.getElementById('top');
-addEventListener('scroll', () => head.classList.toggle('scrolled', scrollY > 20));
+const progressBar = document.getElementById('progress');
+addEventListener('scroll', () => {
+  head.classList.toggle('scrolled', scrollY > 20);
+  const max = document.body.scrollHeight - innerHeight;
+  if (max > 0) progressBar.style.transform = `scaleX(${scrollY / max})`;
+}, { passive: true });
 
-// logo → scroll to absolute top (bypasses snap anchor quirk on fixed header)
+// logo → scroll to absolute top
 document.querySelector('a.logo').addEventListener('click', e => {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// mobile menu
+// mobile menu + hamburger morph
 const mb = document.getElementById('menuBtn');
 const nl = document.getElementById('navlinks');
-mb.addEventListener('click', () => nl.classList.toggle('open'));
-nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nl.classList.remove('open')));
+mb.addEventListener('click', () => {
+  nl.classList.toggle('open');
+  mb.classList.toggle('open');
+});
+nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  nl.classList.remove('open');
+  mb.classList.remove('open');
+}));
 
 // active nav link on scroll (section tracking)
 const sections = document.querySelectorAll('section[id]');
@@ -900,6 +972,27 @@ if (!prefersReducedMotion) {
       g.style.transform = `translateY(${y * factors[i]}px)`;
     });
   }, { passive: true });
+}
+
+// hero stat counter (counts up when meta enters view)
+function countUp(el, to, suffix, duration) {
+  const start = performance.now();
+  (function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(ease * to) + suffix;
+    if (t < 1) requestAnimationFrame(tick);
+  })(start);
+}
+const heroMeta = document.querySelector('.hero-meta');
+if (heroMeta) {
+  new IntersectionObserver((entries, obs) => {
+    if (!entries[0].isIntersecting) return;
+    const nums = heroMeta.querySelectorAll('.num');
+    countUp(nums[1], 3,    '',  900);
+    countUp(nums[2], 100, '%', 1300);
+    obs.disconnect();
+  }, { threshold: 0.6 }).observe(heroMeta);
 }
 
 // scroll reveal with stagger support
