@@ -47,7 +47,9 @@
 html{ scroll-behavior:smooth; scroll-padding-top:90px; }
 body{
   font-family:'Inter',system-ui,sans-serif;
-  background:var(--pearl);
+  background-color:var(--pearl);
+  background-image:radial-gradient(circle, rgba(30,111,224,.065) 1px, transparent 1px);
+  background-size:28px 28px;
   color:var(--slate);
   line-height:1.7;
   -webkit-font-smoothing:antialiased;
@@ -157,7 +159,11 @@ header.scrolled{ border-color:var(--line); background:rgba(251,252,254,.9); }
    SECTION SHELL
 ========================================================= */
 section{ padding:108px 0; }
-.sec-tint{ background:var(--pearl-2); }
+.sec-tint{
+  background-color:var(--pearl-2);
+  background-image:radial-gradient(circle, rgba(30,111,224,.065) 1px, transparent 1px);
+  background-size:28px 28px;
+}
 .sec-head{ max-width:640px; margin-bottom:56px; }
 .sec-head h2{ font-size:clamp(2rem,4vw,2.9rem); font-weight:700; margin:18px 0 16px; }
 .sec-head p{ font-size:1.06rem; }
@@ -332,6 +338,32 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
    ANIMATIONS
 ========================================================= */
 
+/* ambient background orbs — fixed behind all content */
+.ambient-bg{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+.amb-orb{ position:absolute; border-radius:50%; filter:blur(70px); }
+.amb-orb.a1{
+  width:1000px; height:1000px; top:-350px; left:-450px;
+  background:radial-gradient(circle, rgba(45,136,255,.08), transparent 70%);
+  animation:amb-float 55s ease-in-out infinite;
+}
+.amb-orb.a2{
+  width:750px; height:750px; bottom:-280px; right:-320px;
+  background:radial-gradient(circle, rgba(30,111,224,.07), transparent 70%);
+  animation:amb-float 70s ease-in-out infinite reverse;
+}
+.amb-orb.a3{
+  width:560px; height:560px; top:42%; left:52%;
+  background:radial-gradient(circle, rgba(45,136,255,.055), transparent 70%);
+  animation:amb-float 44s ease-in-out infinite;
+  animation-delay:-20s;
+}
+@keyframes amb-float{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  25%{ transform:translate(60px,-55px) scale(1.04); }
+  50%{ transform:translate(-45px,80px) scale(0.97); }
+  75%{ transform:translate(80px,25px) scale(1.02); }
+}
+
 /* scroll progress bar */
 #progress{
   position:fixed; top:0; left:0; right:0; height:3px; z-index:60;
@@ -398,6 +430,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   *{ animation:none !important; transition:none !important; }
   .reveal{ opacity:1; transform:none; }
   html{ scroll-behavior:auto; }
+  .amb-orb{ animation:none !important; }
 }
 
 /* =========================================================
@@ -515,6 +548,11 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 </style>
 </head>
 <body>
+<div class="ambient-bg" aria-hidden="true">
+  <div class="amb-orb a1"></div>
+  <div class="amb-orb a2"></div>
+  <div class="amb-orb a3"></div>
+</div>
 <div id="progress" aria-hidden="true"></div>
 
 <!-- ============ NAV ============ -->
