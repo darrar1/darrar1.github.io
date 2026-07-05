@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Campus Service Portal — Case study — Daryll Celestial</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ========== tokens (shared with index) ========== */
+:root{
+  --pearl:#FBFCFE; --card:#FFFFFF;
+  --azure:#1E6FE0; --azure-bright:#2D88FF; --azure-soft:#E7F0FE; --azure-ink:#0B3C8C;
+  --ink:#141E36; --slate:#4E5D78; --mist:#8794AC; --line:#DEE6F2; --line-strong:#C6D4E8;
+  --max:1240px; --ease:cubic-bezier(.22,1,.36,1);
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:'Inter',system-ui,sans-serif; color:var(--slate); line-height:1.7;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  background-color:var(--pearl);
+  background-image:
+    linear-gradient(rgba(30,111,224,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,111,224,.045) 1px, transparent 1px),
+    radial-gradient(circle, rgba(30,111,224,.09) 1px, transparent 1.5px);
+  background-size:140px 140px,140px 140px,28px 28px;
+}
+h1,h2,h3,h4{ font-family:'Sora',sans-serif; color:var(--ink); line-height:1.08; letter-spacing:-.03em; }
+a{ color:inherit; text-decoration:none; }
+img{ display:block; max-width:100%; }
+main{ position:relative; z-index:1; }
+.wrap{ width:100%; max-width:var(--max); margin:0 auto; padding:0 40px; }
+:focus-visible{ outline:3px solid var(--azure-bright); outline-offset:3px; }
+::selection{ background:var(--azure); color:#fff; }
+.note{ font-family:'JetBrains Mono'; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--azure); }
+.note-dim{ font-family:'JetBrains Mono'; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--mist); }
+.btn{ display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono';
+  font-weight:600; font-size:.82rem; letter-spacing:.08em; text-transform:uppercase;
+  padding:15px 26px; border-radius:3px; cursor:pointer; border:1px solid var(--ink);
+  color:var(--ink); background:transparent; transition:background .25s, color .25s, border-color .25s; }
+.btn .ar{ transition:transform .25s var(--ease); }
+.btn:hover .ar{ transform:translateX(5px); }
+.btn-solid{ background:var(--azure); border-color:var(--azure); color:#fff; }
+.btn-solid:hover{ background:var(--azure-ink); border-color:var(--azure-ink); }
+.btn:not(.btn-solid):hover{ background:var(--ink); color:var(--pearl); }
+
+/* header */
+header{ position:fixed; top:0; left:0; right:0; z-index:50;
+  background:rgba(251,252,254,.82); backdrop-filter:blur(12px);
+  border-bottom:1px solid transparent; transition:border-color .3s; }
+header.scrolled{ border-color:var(--line); }
+.nav{ display:flex; align-items:center; justify-content:space-between; height:70px;
+  max-width:var(--max); margin:0 auto; padding:0 40px; position:relative; }
+.logo{ font-family:'Sora'; font-weight:800; font-size:1.1rem; color:var(--ink); }
+.logo span{ color:var(--azure); }
+.loc{ position:absolute; left:50%; transform:translateX(-50%); white-space:nowrap; }
+.nav-links{ display:flex; gap:2px; align-items:center; }
+.nav-links a{ font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--slate); padding:10px 14px; border-radius:3px; transition:color .2s, background .2s; }
+.nav-links a:hover{ color:var(--azure); background:var(--azure-soft); }
+@media (max-width:900px){ .loc{ display:none; } }
+@media (max-width:640px){ .nav{ padding:0 22px; } .wrap{ padding:0 22px; } }
+
+/* wow kit (lite) */
+#spot{ position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(30,111,224,.20) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,111,224,.20) 1px, transparent 1px),
+    radial-gradient(circle, rgba(30,111,224,.32) 1px, transparent 1.5px);
+  background-size:140px 140px,140px 140px,28px 28px;
+  -webkit-mask-image:radial-gradient(240px circle at var(--mx,-500px) var(--my,-500px), #000 0%, transparent 72%);
+  mask-image:radial-gradient(240px circle at var(--mx,-500px) var(--my,-500px), #000 0%, transparent 72%);
+}
+#cursor{ position:fixed; top:0; left:0; width:30px; height:30px; border:1.5px solid var(--azure);
+  border-radius:50%; pointer-events:none; z-index:80; opacity:0; transform:translate(-50%,-50%);
+  transition:width .25s var(--ease), height .25s var(--ease), border-color .25s, opacity .3s, background .25s; }
+#cursor::before{ content:""; position:absolute; top:50%; left:50%; width:3px; height:3px;
+  border-radius:50%; background:var(--azure); transform:translate(-50%,-50%); }
+#cursor.on{ opacity:.9; } #cursor.big{ width:54px; height:54px; border-color:var(--azure-bright); background:rgba(45,136,255,.08); }
+body::after{ content:""; position:fixed; inset:0; z-index:9; pointer-events:none; opacity:.05; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E"); }
+section{ position:relative; padding:100px 0; }
+section .wrap{ position:relative; }
+.ghost{ position:absolute; top:-46px; right:-8px; z-index:-1; pointer-events:none; user-select:none;
+  font-family:'Sora'; font-weight:800; line-height:1; font-size:clamp(6rem,17vw,13rem);
+  color:transparent; -webkit-text-stroke:1.5px rgba(30,111,224,.10); will-change:transform; }
+.idx{ display:flex; align-items:baseline; gap:20px; padding-bottom:20px; margin-bottom:52px; position:relative; }
+.idx .n{ font-family:'JetBrains Mono'; font-weight:600; font-size:.85rem; color:var(--azure); }
+.idx h2{ font-size:clamp(1.6rem,3.4vw,2.4rem); text-transform:uppercase; }
+.idx .right{ margin-left:auto; }
+.idx::after{ content:""; position:absolute; left:0; bottom:0; height:1px; width:100%;
+  background:var(--line-strong); transform:scaleX(0); transform-origin:left; transition:transform 1.1s var(--ease) .15s; }
+.idx.in::after{ transform:scaleX(1); }
+
+/* ===== case hero ===== */
+.chero{ padding:160px 0 70px; }
+.chero .crumb{ display:flex; gap:14px; align-items:center; margin-bottom:28px; }
+.chero h1{ font-size:clamp(2.6rem,7.5vw,5.6rem); text-transform:uppercase; letter-spacing:-.04em; max-width:15ch; }
+.chero .sum{ font-size:1.15rem; max-width:600px; margin-top:24px; }
+.meta{ display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line-strong);
+  border-bottom:1px solid var(--line-strong); margin-top:52px; }
+.meta div{ padding:18px 20px; }
+.meta div + div{ border-left:1px solid var(--line); }
+.meta small{ display:block; font-family:'JetBrains Mono'; font-size:.62rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--mist); margin-bottom:5px; }
+.meta b{ font-family:'JetBrains Mono'; font-size:.82rem; color:var(--ink); font-weight:600; }
+@media (max-width:900px){ .meta{ grid-template-columns:1fr 1fr; } .meta div{ border-bottom:1px solid var(--line); } }
+
+/* stat band */
+.stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:26px;
+  border:1px solid var(--line-strong); border-radius:4px; background:var(--card); overflow:hidden; }
+.stat{ padding:34px 30px; }
+.stat + .stat{ border-left:1px solid var(--line); }
+.stat .big{ font-family:'Sora'; font-weight:800; font-size:clamp(1.8rem,4vw,2.8rem); color:var(--azure); letter-spacing:-.03em; }
+.stat p{ font-size:.92rem; margin-top:6px; }
+@media (max-width:700px){ .stats{ grid-template-columns:1fr; } .stat + .stat{ border-left:none; border-top:1px solid var(--line); } }
+
+/* body sections */
+.two{ display:grid; grid-template-columns:1fr 1fr; gap:70px; }
+.two h3{ font-size:1.35rem; margin-bottom:14px; }
+.two p{ margin-bottom:14px; }
+@media (max-width:900px){ .two{ grid-template-columns:1fr; gap:44px; } }
+
+.plate{ margin-bottom:44px; }
+.plate .ph{ border-radius:4px; overflow:hidden; border:1px solid var(--line-strong);
+  background:linear-gradient(135deg,var(--azure-soft),#cfe1fc); aspect-ratio:16/9; }
+.plate .ph img{ width:100%; height:100%; object-fit:cover; }
+.plate .cap{ display:flex; justify-content:space-between; margin-top:11px; }
+.plate .cap b{ font-family:'Sora'; font-weight:600; font-size:.95rem; color:var(--ink); }
+
+.plist{ border-top:1px solid var(--line-strong); }
+.prow{ display:grid; grid-template-columns:70px 200px 1fr; gap:26px; padding:24px 8px;
+  border-bottom:1px solid var(--line); align-items:baseline; }
+.prow h4{ font-size:1.05rem; }
+@media (max-width:700px){ .prow{ grid-template-columns:50px 1fr; } .prow p{ grid-column:2; } }
+
+/* bridges + next project */
+.bridge{ display:flex; justify-content:flex-end; margin-top:64px; }
+.bridge a{ font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--mist); display:inline-flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--line-strong); padding-bottom:6px; transition:color .25s, border-color .25s; }
+.bridge a:hover{ color:var(--azure); border-color:var(--azure); }
+.nextproj{ padding:110px 0 120px; text-align:left; }
+.nextproj h2{ font-size:clamp(2rem,6vw,4.2rem); text-transform:uppercase; letter-spacing:-.04em; margin:16px 0 30px; }
+.nextproj h2 .outline{ color:transparent; -webkit-text-stroke:2px var(--azure); }
+.nextproj .row2{ display:flex; gap:14px; flex-wrap:wrap; }
+
+/* footer */
+.titleblock{ border-top:1px solid var(--line-strong); background:var(--card); }
+.tb-grid{ display:grid; grid-template-columns:2fr 1fr 1fr 1fr; max-width:var(--max); margin:0 auto; }
+.tb-cell{ padding:22px 26px; border-right:1px solid var(--line); }
+.tb-cell:first-child{ padding-left:40px; } .tb-cell:last-child{ border-right:none; }
+.tb-cell small{ display:block; font-family:'JetBrains Mono'; font-size:.62rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--mist); margin-bottom:5px; }
+.tb-cell b{ font-family:'JetBrains Mono'; font-size:.8rem; color:var(--ink); font-weight:600; }
+@media (max-width:900px){ .tb-grid{ grid-template-columns:1fr 1fr; } .tb-cell{ border-bottom:1px solid var(--line); } }
+@media (max-width:640px){ .tb-grid{ grid-template-columns:1fr; } .tb-cell{ padding-left:22px; } }
+
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+@media (hover:none){ #spot,#cursor{ display:none; } }
+@media (prefers-reduced-motion:reduce){
+  *{ animation:none !important; transition:none !important; }
+  .reveal{ opacity:1; transform:none; }
+  #spot,#cursor{ display:none; } .idx::after{ transform:scaleX(1); }
+  .ghost{ transform:none !important; } body::after{ display:none; }
+  html{ scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<div id="spot" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"></div>
+
+<header id="topbar">
+  <div class="nav">
+    <a href="index.html" class="logo">DAR<span>.</span></a>
+    <span class="loc note-dim" aria-hidden="true">W.01 / Case study</span>
+    <nav class="nav-links">
+      <a href="index.html#work">← All work</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===== CASE HERO ===== -->
+<section class="chero" style="padding-bottom:40px;">
+  <div class="wrap">
+    <span class="ghost" aria-hidden="true">W.01</span>
+    <div class="crumb">
+      <span class="note">Case study</span>
+      <span class="note-dim">Sheet W.01 — Rev 1.0</span>
+    </div>
+    <h1>Campus Service Portal</h1>
+    <p class="sum">Students used to file service requests on paper and wait in line to check the status. I built a web portal where they file, track, and get notified — end to end. <em style="font-style:normal;color:var(--mist)">(All content on this page is a template — replace with your real project.)</em></p>
+
+    <div class="meta reveal">
+      <div><small>Role</small><b>Full-stack developer</b></div>
+      <div><small>Stack</small><b>React · Node · MySQL</b></div>
+      <div><small>Timeline</small><b>6 weeks</b></div>
+      <div><small>For</small><b>University dept.</b></div>
+      <div><small>Year</small><b>2026</b></div>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><div class="big">300+</div><p>students onboarded in the first month</p></div>
+      <div class="stat"><div class="big">0</div><p>paper forms — the old process fully retired</p></div>
+      <div class="stat"><div class="big">6 wks</div><p>from kickoff to deployment, on schedule</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 01 PROBLEM / SOLUTION ===== -->
+<section style="padding-top:60px;">
+  <div class="wrap">
+    <span class="ghost" aria-hidden="true">01</span>
+    <div class="idx reveal"><span class="n">01</span><h2>Problem → Solution</h2></div>
+    <div class="two reveal">
+      <div>
+        <h3>The problem</h3>
+        <p>Describe the situation before your work: what was slow, broken, or manual. Keep it concrete — queues, lost forms, hours wasted. One or two short paragraphs.</p>
+        <p>What made it hard? A constraint, a legacy process, a tight deadline. This is where the reader starts rooting for you.</p>
+      </div>
+      <div>
+        <h3>The solution</h3>
+        <p>What you built, in plain language. Who uses it, what they can do now, and the one design/engineering decision you're proudest of.</p>
+        <p>Mention your role honestly — solo, or which parts were yours in a team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 SCREENS ===== -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <span class="ghost" aria-hidden="true">02</span>
+    <div class="idx reveal"><span class="n">02</span><h2>The build</h2><span class="note-dim right">Screens &amp; details</span></div>
+    <figure class="plate reveal">
+      <div class="ph"><img src="images/case-portal-1.jpg" alt="Main dashboard screen"></div>
+      <div class="cap"><b>Student dashboard — file &amp; track requests</b><span class="note-dim">Fig. 01</span></div>
+    </figure>
+    <figure class="plate reveal">
+      <div class="ph"><img src="images/case-portal-2.jpg" alt="Admin view screen"></div>
+      <div class="cap"><b>Admin queue with role-based access</b><span class="note-dim">Fig. 02</span></div>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== 03 PROCESS ===== -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <span class="ghost" aria-hidden="true">03</span>
+    <div class="idx reveal"><span class="n">03</span><h2>Process notes</h2></div>
+    <div class="plist reveal">
+      <div class="prow"><span class="note">P.01</span><h4>Research</h4><p>Interviewed the office staff and students; mapped the paper flow before designing anything.</p></div>
+      <div class="prow"><span class="note">P.02</span><h4>Design</h4><p>Wireframes in Figma, tested with five students, two rounds of revisions.</p></div>
+      <div class="prow"><span class="note">P.03</span><h4>Build</h4><p>React front end, Node/Express API, MySQL. Weekly progress links to the stakeholders.</p></div>
+      <div class="prow"><span class="note">P.04</span><h4>Ship</h4><p>Deployed, wrote a one-page admin guide, trained the staff in one session.</p></div>
+    </div>
+    <div class="bridge reveal"><a href="#outcome">Next — 04 / Outcome ↓</a></div>
+  </div>
+</section>
+
+<!-- ===== 04 OUTCOME ===== -->
+<section id="outcome" style="padding-top:0;">
+  <div class="wrap">
+    <span class="ghost" aria-hidden="true">04</span>
+    <div class="idx reveal"><span class="n">04</span><h2>Outcome</h2></div>
+    <div class="two reveal">
+      <div>
+        <h3>What changed</h3>
+        <p>The result in the user's terms: time saved, errors gone, people served. If you have a quote from the client or adviser, this is where it lives.</p>
+      </div>
+      <div>
+        <h3>What I'd do next</h3>
+        <p>One honest paragraph on limitations or the next iteration. This reads as maturity, not weakness.</p>
+        <div style="display:flex; gap:14px; margin-top:22px; flex-wrap:wrap;">
+          <a href="#" target="_blank" class="btn btn-solid">View code <span class="ar">→</span></a>
+          <a href="#" target="_blank" class="btn">Live demo <span class="ar">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEXT PROJECT ===== -->
+<section class="nextproj" style="padding-top:20px;">
+  <div class="wrap">
+    <span class="note reveal">Next sheet</span>
+    <h2 class="reveal">W.02 —<br><span class="outline">Inventory Dashboard</span></h2>
+    <div class="row2 reveal">
+      <a href="index.html#work" class="btn btn-solid">Back to all work <span class="ar">→</span></a>
+      <a href="index.html#contact" class="btn">Start a project <span class="ar">→</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="titleblock">
+  <div class="tb-grid">
+    <div class="tb-cell"><small>Document</small><b>Case study — sheet W.01</b></div>
+    <div class="tb-cell"><small>Drawn by</small><b>Daryll Celestial</b></div>
+    <div class="tb-cell"><small>Location</small><b>Philippines</b></div>
+    <div class="tb-cell"><small>Revision</small><b>1.0 — 2026</b></div>
+  </div>
+</footer>
+
+<script>
+const topbar = document.getElementById('topbar');
+addEventListener('scroll', () => topbar.classList.toggle('scrolled', scrollY > 20));
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canHover = matchMedia('(hover:hover)').matches;
+
+// spotlight + cursor ring
+const spot = document.getElementById('spot');
+const cursor = document.getElementById('cursor');
+if (canHover && !reduce){
+  let cx = innerWidth/2, cy = innerHeight/2, mx = cx, my = cy, seen = false;
+  addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    spot.style.setProperty('--mx', mx + 'px');
+    spot.style.setProperty('--my', my + 'px');
+    if (!seen){ seen = true; cursor.classList.add('on'); }
+  });
+  (function loop(){
+    cx += (mx - cx) * .18; cy += (my - cy) * .18;
+    cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+  document.querySelectorAll('.btn').forEach(b => {
+    b.addEventListener('mousemove', e => {
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.12}px,${(e.clientY-r.top-r.height/2)*.22}px)`;
+    });
+    b.addEventListener('mouseleave', () => b.style.transform = '');
+  });
+}
+
+// ghost parallax
+const ghosts = [...document.querySelectorAll('.ghost')];
+if (!reduce && ghosts.length){
+  let t = false;
+  addEventListener('scroll', () => {
+    if (t) return; t = true;
+    requestAnimationFrame(() => {
+      ghosts.forEach(g => {
+        const r = g.parentElement.getBoundingClientRect();
+        g.style.transform = `translateY(${(r.top / innerHeight - .5) * -60}px)`;
+      });
+      t = false;
+    });
+  }, { passive:true });
+}
+
+// reveal
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold:.1 });
+document.querySelectorAll('.reveal, .idx').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

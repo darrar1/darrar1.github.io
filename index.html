@@ -272,6 +272,128 @@ section{ padding:110px 0; }
   color:var(--mist); align-self:center; border-bottom:1px solid transparent; transition:color .25s, border-color .25s; }
 .quiet:hover{ color:var(--azure); border-color:var(--azure); }
 
+
+/* =========================================================
+   DAY-MODE WOW KIT
+========================================================= */
+main{ position:relative; z-index:1; }
+
+/* cursor spotlight: brightens the drafting grid around the pointer */
+#spot{ position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(30,111,224,.20) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,111,224,.20) 1px, transparent 1px),
+    radial-gradient(circle, rgba(30,111,224,.32) 1px, transparent 1.5px);
+  background-size:140px 140px,140px 140px,28px 28px;
+  -webkit-mask-image:radial-gradient(240px circle at var(--mx,-500px) var(--my,-500px), #000 0%, transparent 72%);
+  mask-image:radial-gradient(240px circle at var(--mx,-500px) var(--my,-500px), #000 0%, transparent 72%);
+}
+
+/* crosshair cursor ring */
+#cursor{ position:fixed; top:0; left:0; width:30px; height:30px; border:1.5px solid var(--azure);
+  border-radius:50%; pointer-events:none; z-index:80; opacity:0;
+  transform:translate(-50%,-50%);
+  transition:width .25s var(--ease), height .25s var(--ease), border-color .25s, opacity .3s, background .25s; }
+#cursor::before{ content:""; position:absolute; top:50%; left:50%; width:3px; height:3px;
+  border-radius:50%; background:var(--azure); transform:translate(-50%,-50%); }
+#cursor.on{ opacity:.9; }
+#cursor.big{ width:54px; height:54px; border-color:var(--azure-bright); background:rgba(45,136,255,.08); }
+
+/* paper grain */
+body::after{ content:""; position:fixed; inset:0; z-index:9; pointer-events:none; opacity:.05;
+  mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E"); }
+
+/* ghost numerals behind sections (parallax via JS) */
+section{ position:relative; }
+section .wrap{ position:relative; }
+.ghost{ position:absolute; top:-46px; right:-8px; z-index:-1; pointer-events:none; user-select:none;
+  font-family:'Sora'; font-weight:800; line-height:1; font-size:clamp(7rem,19vw,15rem);
+  color:transparent; -webkit-text-stroke:1.5px rgba(30,111,224,.10); will-change:transform; }
+
+/* headers draw themselves in */
+.idx{ border-bottom:none; position:relative; }
+.idx::after{ content:""; position:absolute; left:0; bottom:0; height:1px; width:100%;
+  background:var(--line-strong); transform:scaleX(0); transform-origin:left;
+  transition:transform 1.1s var(--ease) .15s; }
+.idx.in::after{ transform:scaleX(1); }
+
+/* hero dimension line */
+.dim-wrap{ margin-top:34px; max-width:520px; opacity:0; animation:fade .6s var(--ease) .85s forwards; }
+.dim-wrap .note{ display:block; margin-bottom:10px; }
+.dim{ position:relative; height:1px; background:var(--azure);
+  transform:scaleX(0); transform-origin:left; animation:draw 1.1s var(--ease) 1s forwards; }
+.dim::before,.dim::after{ content:""; position:absolute; top:-5px; width:1px; height:11px; background:var(--azure); }
+.dim::before{ left:0; } .dim::after{ right:0; }
+@keyframes draw{ to{ transform:scaleX(1); } }
+
+/* portrait crop marks grow on hover */
+.fig .frame::before,.fig .frame::after{ transition:width .3s var(--ease), height .3s var(--ease); }
+.fig .frame:hover::before,.fig .frame:hover::after{ width:28px; height:28px; }
+.fig .frame{ will-change:transform; }
+
+/* work row micro-motion */
+.work-row .num{ transition:color .3s, transform .3s var(--ease); }
+.work-row:hover .num{ transform:translateX(5px); }
+
+/* plates wipe in */
+.plate .ph img{ clip-path:inset(0 100% 0 0); transition:clip-path 1s var(--ease), transform .6s var(--ease); }
+.plate.in .ph img{ clip-path:inset(0 0 0 0); }
+
+@media (hover:none){ #spot,#cursor{ display:none; } }
+@media (prefers-reduced-motion:reduce){
+  #spot,#cursor{ display:none; }
+  .idx::after{ transform:scaleX(1); }
+  .dim{ transform:scaleX(1); } .dim-wrap{ opacity:1; }
+  .plate .ph img{ clip-path:none; }
+  .ghost{ transform:none !important; }
+  body::after{ display:none; }
+}
+
+
+/* =========================================================
+   HERO + HEADER UPGRADE / MINIMAL KIT
+========================================================= */
+/* header: live "you are here" sheet indicator */
+.loc{ position:absolute; left:50%; transform:translateX(-50%); white-space:nowrap; }
+@media (max-width:900px){ .loc{ display:none; } }
+
+/* interactive name letters */
+.display .lt{ display:inline-block; transition:transform .3s var(--ease), color .3s; }
+.display .lt:hover{ transform:translateY(-7%); color:var(--azure); }
+
+/* rotating positioning word */
+.rot{ display:inline-block; overflow:hidden; vertical-align:bottom; }
+.rot-in{ display:inline-block; color:var(--azure); font-weight:600;
+  transition:transform .4s var(--ease), opacity .4s; }
+.rot-in.out{ transform:translateY(-110%); opacity:0; }
+.rot-in.enter{ transform:translateY(110%); opacity:0; transition:none; }
+
+/* work row outcome metric */
+.work-row .outcome{ font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.06em;
+  color:var(--azure); margin-top:10px; }
+
+/* 06 how I work */
+.steps{ display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line-strong);
+  border-bottom:1px solid var(--line-strong); }
+.step{ padding:28px 24px 32px; }
+.step + .step{ border-left:1px solid var(--line); }
+.step h4{ font-size:1.05rem; margin:10px 0 8px; }
+.step p{ font-size:.92rem; }
+.mani{ margin-top:56px; display:grid; gap:4px; }
+.mani span{ font-family:'Sora'; font-weight:600; font-size:clamp(1.05rem,2vw,1.3rem);
+  color:var(--ink); letter-spacing:-.01em; }
+.mani .note-dim{ margin-bottom:10px; }
+@media (max-width:900px){ .steps{ grid-template-columns:1fr 1fr; } .step:nth-child(3){ border-left:none; }
+  .step{ border-bottom:1px solid var(--line); } }
+@media (max-width:640px){ .steps{ grid-template-columns:1fr; } .step + .step{ border-left:none; } }
+
+/* click-to-copy mail */
+.mail{ cursor:copy; }
+.mail .hint{ display:block; font-size:.66rem; letter-spacing:.16em; color:var(--mist);
+  margin-top:10px; text-transform:uppercase; transition:color .3s; }
+.mail.copied .hint{ color:var(--azure); }
+
 /* reveal + reduced motion */
 .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
 .reveal.in{ opacity:1; transform:none; }
@@ -320,6 +442,9 @@ section{ padding:110px 0; }
 </head>
 <body>
 
+<div id="spot" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"></div>
+
 <!-- drafting margin -->
 <aside class="rail" aria-hidden="true">
   <span class="vtext">Portfolio — Rev 3.0 — 2026</span>
@@ -337,6 +462,7 @@ section{ padding:110px 0; }
 <header id="topbar">
   <div class="nav">
     <a href="#top" class="logo">DAR<span>.</span></a>
+    <span class="loc note-dim" id="loc" aria-hidden="true">00 / Hello</span>
     <nav class="nav-links" id="navlinks">
       <a href="about.html">About</a>
       <a href="#work">Work</a>
@@ -365,6 +491,11 @@ section{ padding:110px 0; }
       <span class="row"><span class="outline">Celestial</span></span>
     </h1>
 
+    <div class="dim-wrap" aria-hidden="true">
+      <span class="note">Scale 1:1 — built by hand</span>
+      <div class="dim"></div>
+    </div>
+
     <figure class="fig">
       <div class="frame"><img src="images/portrait.jpg" alt="Portrait of Daryll Celestial"></div>
       <figcaption><span class="note">Fig. 00</span><span class="note-dim">Self portrait</span></figcaption>
@@ -372,7 +503,7 @@ section{ padding:110px 0; }
 
     <div class="hero-foot">
       <div>
-        <p>I build web and mobile apps end to end — and I was a designer before I was a developer, so the interface gets the same care as the database. Incoming 4th-year BSIT, shipping since 2023.</p>
+        <p>Web &amp; mobile apps for <span class="rot"><span class="rot-in" id="rotWord">small businesses</span></span> — designed, built, and shipped by one person. Trained as a designer first, so it looks as good as it runs.</p>
         <div class="hero-actions">
           <a href="#work" class="btn btn-solid">Start at the work <span class="ar">↓</span></a>
           <a href="#contact" class="quiet">or skip to hello →</a>
@@ -388,19 +519,21 @@ section{ padding:110px 0; }
 <!-- ============ 04 WORK — THE INDEX ============ -->
 <section id="work">
   <div class="wrap">
+    <span class="ghost" aria-hidden="true">01</span>
     <div class="idx reveal"><span class="n">01</span><h2>Selected work</h2><span class="note-dim right workhead-hint">Hover a row for a preview</span></div>
 
     <div class="works reveal" id="works">
       <article class="work-row" data-img="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=700&q=80">
         <span class="num">W.01</span>
         <div>
-          <h3>Campus Service Portal</h3>
+          <h3><a href="work-portal.html">Campus Service Portal</a></h3>
           <p class="desc">Students file and track requests online instead of on paper. Built end-to-end with role-based access.</p>
+          <p class="outcome">→ 300+ students onboarded · paper forms eliminated (edit: your real result)</p>
         </div>
         <div class="side">
           <span class="note">Full-stack developer</span>
           <span class="note-dim">React · Node · MySQL</span>
-          <div class="links"><a href="#" target="_blank">Code</a><a href="#" target="_blank">Live</a></div>
+          <div class="links"><a href="work-portal.html">Case study</a><a href="#" target="_blank">Code</a><a href="#" target="_blank">Live</a></div>
         </div>
       </article>
       <article class="work-row" data-img="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80">
@@ -408,6 +541,7 @@ section{ padding:110px 0; }
         <div>
           <h3>Inventory Dashboard</h3>
           <p class="desc">Stock tracking for a small business: live charts, low-stock alerts, exportable reports.</p>
+          <p class="outcome">→ 2-week build · stockouts down 40% (edit: your real result)</p>
         </div>
         <div class="side">
           <span class="note">Backend developer</span>
@@ -420,6 +554,7 @@ section{ padding:110px 0; }
         <div>
           <h3>Booking System</h3>
           <p class="desc">Appointment scheduling with email confirmations and an admin calendar view.</p>
+          <p class="outcome">→ bookings handled online end-to-end (edit: your real result)</p>
         </div>
         <div class="side">
           <span class="note">Team lead · Frontend</span>
@@ -432,6 +567,7 @@ section{ padding:110px 0; }
         <div>
           <h3>Weather &amp; Maps App</h3>
           <p class="desc">A responsive app pulling live weather and mapping data through public APIs.</p>
+          <p class="outcome">→ solo project · shipped in 10 days (edit: your real result)</p>
         </div>
         <div class="side">
           <span class="note">Solo project</span>
@@ -448,6 +584,7 @@ section{ padding:110px 0; }
 <!-- ============ 02 CAPABILITIES ============ -->
 <section id="skills" style="padding-top:0;">
   <div class="wrap">
+    <span class="ghost" aria-hidden="true">02</span>
     <div class="idx reveal"><span class="n">02</span><h2>Capabilities</h2></div>
     <div class="caps reveal">
       <div class="cap primary">
@@ -489,6 +626,7 @@ section{ padding:110px 0; }
 <!-- ============ 03 CREDENTIALS ============ -->
 <section id="certs" style="padding-top:0;">
   <div class="wrap">
+    <span class="ghost" aria-hidden="true">03</span>
     <div class="idx reveal"><span class="n">03</span><h2>Credentials</h2></div>
 
     <div class="cred-feat reveal">
@@ -537,6 +675,7 @@ section{ padding:110px 0; }
 <!-- ============ 05 REFERENCES ============ -->
 <section id="refs" style="padding-top:0;">
   <div class="wrap">
+    <span class="ghost" aria-hidden="true">04</span>
     <div class="idx reveal"><span class="n">04</span><h2>References</h2></div>
   </div>
   <div class="wrap reveal">
@@ -570,6 +709,7 @@ section{ padding:110px 0; }
 <!-- ============ 06 PLATES ============ -->
 <section id="creative" style="padding-top:0;">
   <div class="wrap">
+    <span class="ghost" aria-hidden="true">05</span>
     <div class="idx reveal"><span class="n">05</span><h2>Plates</h2><span class="note-dim right">Design &amp; photography — click to enlarge</span></div>
     <div class="lanes reveal" id="gallery">
       <div class="lane">
@@ -607,17 +747,38 @@ section{ padding:110px 0; }
         </div>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#contact">Next — Contact <span class="ar">↓</span></a></div>
+      <div class="bridge reveal"><a href="#process">Next — 06 / How I work <span class="ar">↓</span></a></div>
   </div>
 </section>
 
-<!-- ============ CONTACT ============ -->
-<section id="contact" class="cta" style="padding-top:40px;">
+<!-- ============ 06 HOW I WORK ============ -->
+<section id="process" style="padding-top:0;">
+  <div class="wrap">
+    <span class="ghost" aria-hidden="true">06</span>
+    <div class="idx reveal"><span class="n">06</span><h2>How I work</h2><span class="note-dim right">For clients &amp; teams</span></div>
+    <div class="steps reveal">
+      <div class="step"><span class="note">01</span><h4>Chat</h4><p>A quick call or messages — what you need, when, and what it costs. No jargon.</p></div>
+      <div class="step"><span class="note">02</span><h4>Plan</h4><p>I send a simple scope: what gets built, the timeline, and one fixed price.</p></div>
+      <div class="step"><span class="note">03</span><h4>Build</h4><p>You get progress links as I go — see it live, request changes early.</p></div>
+      <div class="step"><span class="note">04</span><h4>Handover</h4><p>Deployed, documented, and yours. I stay reachable after launch.</p></div>
+    </div>
+    <div class="mani reveal">
+      <span class="note-dim">Working principles</span>
+      <span>Code you can read.</span>
+      <span>Design you can feel.</span>
+      <span>Deadlines you can trust.</span>
+    </div>
+    <div class="bridge reveal"><a href="#contact">Next — Contact <span class="ar">↓</span></a></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ --><section id="contact" class="cta" style="padding-top:40px;">
   <div class="wrap">
     <span class="note reveal">Contact</span>
     <h2 class="reveal">Got a project?<br><span class="outline">Let's talk.</span></h2>
-    <div class="reveal"><a class="mail" href="mailto:hello@example.com">hello@example.com</a></div>
+    <div class="reveal"><a class="mail" id="mail" href="mailto:hello@example.com">hello@example.com<span class="hint" id="mailHint">Click to copy</span></a></div>
     <div class="row2 reveal">
+      <a href="mailto:hello@example.com">Open mail app</a>
       <a href="#" target="_blank">GitHub</a>
       <a href="#" target="_blank">LinkedIn</a>
       <a href="#" target="_blank">Instagram</a>
@@ -666,9 +827,10 @@ const sio = new IntersectionObserver(es => {
     if (!e.isIntersecting) return;
     const id = e.target.id === 'refs' ? 'certs' : e.target.id;
     dots.forEach(d => d.classList.toggle('on', d.dataset.s === id));
+    if (loc && locLabels[e.target.id]) loc.textContent = locLabels[e.target.id];
   });
 }, { rootMargin:'-40% 0px -50% 0px' });
-secIds.concat('refs').forEach(id => { const s = document.getElementById(id); if (s) sio.observe(s); });
+secIds.concat('refs','process').forEach(id => { const s = document.getElementById(id); if (s) sio.observe(s); });
 
 // work index: cursor-following preview (pointer devices)
 const prev = document.getElementById('preview');
@@ -725,6 +887,115 @@ addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') stepLb(1);
   if (e.key === 'ArrowLeft') stepLb(-1);
 });
+
+// ===== day-mode wow kit =====
+const spot = document.getElementById('spot');
+const cursor = document.getElementById('cursor');
+if (canHover && !reduce){
+  let cx = innerWidth/2, cy = innerHeight/2, mx2 = cx, my2 = cy, seen = false;
+  addEventListener('mousemove', e => {
+    mx2 = e.clientX; my2 = e.clientY;
+    spot.style.setProperty('--mx', mx2 + 'px');
+    spot.style.setProperty('--my', my2 + 'px');
+    if (!seen){ seen = true; cursor.classList.add('on'); }
+  });
+  (function ringLoop(){
+    cx += (mx2 - cx) * .18; cy += (my2 - cy) * .18;
+    cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(ringLoop);
+  })();
+  document.querySelectorAll('a, button, .work-row, .plate').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+
+  // magnetic buttons
+  document.querySelectorAll('.btn').forEach(b => {
+    b.addEventListener('mousemove', e => {
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.12}px,${(e.clientY-r.top-r.height/2)*.22}px)`;
+    });
+    b.addEventListener('mouseleave', () => b.style.transform = '');
+  });
+
+  // hero portrait tilt
+  const frame = document.querySelector('.fig .frame');
+  const heroEl = document.querySelector('.hero');
+  if (frame && heroEl){
+    heroEl.addEventListener('mousemove', e => {
+      const nx = (e.clientX / innerWidth - .5) * 2, ny = (e.clientY / innerHeight - .5) * 2;
+      frame.style.transform = `perspective(700px) rotateY(${nx*4}deg) rotateX(${-ny*3}deg) rotate(2.5deg)`;
+    });
+    heroEl.addEventListener('mouseleave', () => frame.style.transform = 'rotate(2.5deg)');
+  }
+}
+
+// ghost numeral parallax
+const ghosts = [...document.querySelectorAll('.ghost')];
+if (!reduce && ghosts.length){
+  let gTick = false;
+  addEventListener('scroll', () => {
+    if (gTick) return; gTick = true;
+    requestAnimationFrame(() => {
+      ghosts.forEach(g => {
+        const r = g.parentElement.getBoundingClientRect();
+        g.style.transform = `translateY(${(r.top / innerHeight - .5) * -70}px)`;
+      });
+      gTick = false;
+    });
+  }, { passive:true });
+}
+
+// plates wipe in, staggered
+const pio = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); pio.unobserve(e.target); } });
+}, { threshold:.25 });
+plates.forEach((p,i) => { p.querySelector('img').style.transitionDelay = (i % 3 * 130) + 'ms'; pio.observe(p); });
+
+// ===== header sheet indicator + rotating word + letters + copy mail =====
+const loc = document.getElementById('loc');
+const locLabels = { work:'01 / Selected work', skills:'02 / Capabilities', certs:'03 / Credentials',
+  refs:'04 / References', creative:'05 / Plates', process:'06 / How I work', contact:'— / Contact' };
+
+// rotating positioning word
+const rotWord = document.getElementById('rotWord');
+const rotList = ['small businesses','student orgs','startups','your idea'];
+if (rotWord && !reduce){
+  let ri = 0;
+  setInterval(() => {
+    rotWord.classList.add('out');
+    setTimeout(() => {
+      ri = (ri + 1) % rotList.length;
+      rotWord.textContent = rotList[ri];
+      rotWord.classList.remove('out');
+      rotWord.classList.add('enter');
+      requestAnimationFrame(() => requestAnimationFrame(() => rotWord.classList.remove('enter')));
+    }, 400);
+  }, 2600);
+}
+
+// split the display name into hoverable letters
+if (canHover){
+  document.querySelectorAll('.display .row > span').forEach(sp => {
+    sp.innerHTML = sp.textContent.split('').map(c =>
+      c === ' ' ? ' ' : `<span class="lt">${c}</span>`).join('');
+  });
+}
+
+// click-to-copy email
+const mail = document.getElementById('mail');
+const mailHint = document.getElementById('mailHint');
+if (mail){
+  mail.addEventListener('click', e => {
+    e.preventDefault();
+    const addr = mail.childNodes[0].textContent.trim();
+    navigator.clipboard.writeText(addr).then(() => {
+      mail.classList.add('copied');
+      mailHint.textContent = 'Copied ✓';
+      setTimeout(() => { mail.classList.remove('copied'); mailHint.textContent = 'Click to copy'; }, 1800);
+    }).catch(() => { location.href = mail.href; });
+  });
+}
 
 // reveal
 const io = new IntersectionObserver(es => {
