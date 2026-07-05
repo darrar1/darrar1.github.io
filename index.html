@@ -144,17 +144,7 @@ section{ padding:110px 0; }
 .idx h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); text-transform:uppercase; letter-spacing:-.02em; }
 .idx .right{ margin-left:auto; }
 
-/* 01 ABOUT — offset editorial columns */
-.about-grid{ display:grid; grid-template-columns:5fr 4fr; gap:80px; }
-.about-grid .big{ font-family:'Sora'; font-weight:600; font-size:clamp(1.4rem,2.6vw,1.9rem);
-  line-height:1.35; color:var(--ink); letter-spacing:-.02em; }
-.about-grid .big em{ font-style:normal; color:var(--azure); }
-.about-side{ padding-top:8px; }
-.about-side p{ margin-bottom:16px; }
-.ledger-mini{ margin-top:28px; border-top:1px solid var(--line); }
-.ledger-mini .row{ display:flex; justify-content:space-between; gap:18px; padding:13px 2px;
-  border-bottom:1px solid var(--line); font-size:.95rem; }
-.ledger-mini .row b{ color:var(--ink); font-weight:600; }
+/* (About section moved to about.html) */
 
 /* 02 CAPABILITIES — three ruled columns, no cards */
 .caps{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:0; border-top:1px solid var(--line-strong); }
@@ -301,7 +291,6 @@ section{ padding:110px 0; }
 @media (max-width:900px){
   .fig{ position:relative; right:auto; top:auto; width:min(300px,70vw); margin:44px 0 0; }
   .hero-foot{ grid-template-columns:1fr; }
-  .about-grid{ grid-template-columns:1fr; gap:44px; }
   .caps{ grid-template-columns:1fr; }
   .cap + .cap{ border-left:none; }
   .cred-feat{ grid-template-columns:1fr; }
@@ -335,7 +324,7 @@ section{ padding:110px 0; }
 <aside class="rail" aria-hidden="true">
   <span class="vtext">Portfolio — Rev 3.0 — 2026</span>
   <nav class="dots" id="railDots">
-    <a href="#about" data-s="about" aria-label="About"></a>
+    <a href="about.html" data-s="about" aria-label="About page"></a>
     <a href="#skills" data-s="skills" aria-label="Skills"></a>
     <a href="#certs" data-s="certs" aria-label="Certifications"></a>
     <a href="#work" data-s="work" aria-label="Work"></a>
@@ -349,7 +338,7 @@ section{ padding:110px 0; }
   <div class="nav">
     <a href="#top" class="logo">DAR<span>.</span></a>
     <nav class="nav-links" id="navlinks">
-      <a href="#about">About</a>
+      <a href="about.html">About</a>
       <a href="#skills">Skills</a>
       <a href="#certs">Certs</a>
       <a href="#work">Work</a>
@@ -406,29 +395,12 @@ section{ padding:110px 0; }
   </div>
 </section>
 
-<!-- ============ 01 ABOUT ============ -->
-<section id="about">
-  <div class="wrap">
-    <div class="idx reveal"><span class="n">01</span><h2>About</h2><span class="note-dim right">The person behind the commits</span></div>
-    <div class="about-grid">
-      <p class="big reveal">I care how software <em>works</em> and how it <em>feels</em> — most people pick one. I started in graphic design, picked up a camera, then found that code was the tool that let me build the things I kept sketching.</p>
-      <div class="about-side reveal">
-        <p>Now I'm finishing my BSIT degree and taking on freelance work: web apps, mobile apps, and the occasional brand or shoot for clients who want one person who speaks both languages.</p>
-        <div class="ledger-mini">
-          <div class="row"><span>Degree</span><b>BS Information Technology</b></div>
-          <div class="row"><span>Focus</span><b>Web &amp; mobile development</b></div>
-          <div class="row"><span>Side craft</span><b>Design · Photography</b></div>
-          <div class="row"><span>Availability</span><b>Full-time '27 · Freelance now</b></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- About now lives on its own page: about.html -->
 
 <!-- ============ 02 CAPABILITIES ============ -->
-<section id="skills" style="padding-top:0;">
+<section id="skills">
   <div class="wrap">
-    <div class="idx reveal"><span class="n">02</span><h2>Capabilities</h2><span class="note-dim right">Primary column first</span></div>
+    <div class="idx reveal"><span class="n">01</span><h2>Capabilities</h2><span class="note-dim right">Primary column first</span></div>
     <div class="caps reveal">
       <div class="cap primary">
         <span class="note">Primary</span>
@@ -468,7 +440,7 @@ section{ padding:110px 0; }
 <!-- ============ 03 CREDENTIALS ============ -->
 <section id="certs" style="padding-top:0;">
   <div class="wrap">
-    <div class="idx reveal"><span class="n">03</span><h2>Credentials</h2><span class="note-dim right">Latest in the spotlight</span></div>
+    <div class="idx reveal"><span class="n">02</span><h2>Credentials</h2><span class="note-dim right">Latest in the spotlight</span></div>
 
     <div class="cred-feat reveal">
       <div class="doc">
@@ -515,7 +487,7 @@ section{ padding:110px 0; }
 <!-- ============ 04 WORK — THE INDEX ============ -->
 <section id="work" style="padding-top:0;">
   <div class="wrap">
-    <div class="idx reveal"><span class="n">04</span><h2>Selected work</h2><span class="note-dim right workhead-hint">Hover a row for a preview</span></div>
+    <div class="idx reveal"><span class="n">03</span><h2>Selected work</h2><span class="note-dim right workhead-hint">Hover a row for a preview</span></div>
 
     <div class="works reveal" id="works">
       <article class="work-row" data-img="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=700&q=80">
@@ -574,7 +546,7 @@ section{ padding:110px 0; }
 <!-- ============ 05 REFERENCES ============ -->
 <section id="refs" style="padding-top:0;">
   <div class="wrap">
-    <div class="idx reveal"><span class="n">05</span><h2>References</h2><span class="note-dim right">On the record</span></div>
+    <div class="idx reveal"><span class="n">04</span><h2>References</h2><span class="note-dim right">On the record</span></div>
   </div>
   <div class="wrap reveal">
     <div class="quotes" id="quotesTrack">
@@ -606,7 +578,7 @@ section{ padding:110px 0; }
 <!-- ============ 06 PLATES ============ -->
 <section id="creative" style="padding-top:0;">
   <div class="wrap">
-    <div class="idx reveal"><span class="n">06</span><h2>Plates</h2><span class="note-dim right">Design &amp; photography — click to enlarge</span></div>
+    <div class="idx reveal"><span class="n">05</span><h2>Plates</h2><span class="note-dim right">Design &amp; photography — click to enlarge</span></div>
     <div class="lanes reveal" id="gallery">
       <div class="lane">
         <div class="lane-head"><h3>Through the lens</h3><span class="note">Photography</span></div>
@@ -699,7 +671,7 @@ tk.appendChild(tk.querySelector('.set').cloneNode(true));
 
 // rail: highlight current section
 const dots = [...document.querySelectorAll('#railDots a')];
-const secIds = ['about','skills','certs','work','creative','contact'];
+const secIds = ['skills','certs','work','creative','contact'];
 const sio = new IntersectionObserver(es => {
   es.forEach(e => {
     if (!e.isIntersecting) return;
