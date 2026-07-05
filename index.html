@@ -73,7 +73,7 @@ main{ margin-left:var(--rail); }
    TOP BAR
 ========================================================= */
 header{ position:fixed; top:0; left:var(--rail); right:0; z-index:50;
-  background:rgba(251,252,254,.82); backdrop-filter:blur(12px);
+  background:color-mix(in srgb, var(--pearl) 82%, transparent); backdrop-filter:blur(12px);
   border-bottom:1px solid transparent; transition:border-color .3s; }
 header.scrolled{ border-color:var(--line); }
 .nav{ display:flex; align-items:center; justify-content:space-between; height:70px;
@@ -394,6 +394,71 @@ section .wrap{ position:relative; }
   margin-top:10px; text-transform:uppercase; transition:color .3s; }
 .mail.copied .hint{ color:var(--azure); }
 
+
+/* =========================================================
+   NIGHTFALL (from Plates down) + 07 PRINCIPLES
+========================================================= */
+body{ transition:background-color .8s var(--ease); }
+h1,h2,h3,h4{ transition:color .8s var(--ease); }
+header, .titleblock, .step, .quote, .cert, .cred-table, .cred-feat, .stats{ transition:background-color .8s var(--ease), border-color .8s var(--ease); }
+body.night{
+  --pearl:#0C1428; --card:#111B33; --azure-soft:#16233F;
+  --ink:#EAF1FC; --slate:#9FB0CC; --mist:#7286A8;
+  --line:#1D2A47; --line-strong:#28395F;
+  background-image:
+    linear-gradient(rgba(120,170,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,170,255,.05) 1px, transparent 1px),
+    radial-gradient(circle, rgba(120,170,255,.10) 1px, transparent 1.5px);
+}
+body.night #spot{
+  background-image:
+    linear-gradient(rgba(120,170,255,.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,170,255,.22) 1px, transparent 1px),
+    radial-gradient(circle, rgba(120,170,255,.34) 1px, transparent 1.5px);
+}
+body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
+body.night::after{ mix-blend-mode:screen; opacity:.04; }
+
+/* ---- 07 principles: typography IS the design ---- */
+.prin{ border-top:1px solid var(--line-strong); }
+.prin-row{ position:relative; padding:70px 8px; border-bottom:1px solid var(--line-strong); }
+.prin-row .pn{ display:block; margin-bottom:20px; }
+.ptxt{ font-family:'Sora'; font-weight:800; color:var(--ink);
+  font-size:clamp(2rem,6.5vw,4.6rem); letter-spacing:-.035em; line-height:1.04; transition:color .8s; }
+/* P.01 typewriter */
+.prin-row[data-fx="type"] .ptxt{ font-family:'JetBrains Mono'; font-weight:600;
+  font-size:clamp(1.5rem,4.8vw,3.4rem); letter-spacing:-.01em; min-height:1.2em; }
+.ptxt.typing::after{ content:"▌"; color:var(--azure); animation:blink 1s steps(1) infinite; }
+@keyframes blink{ 50%{ opacity:0; } }
+/* P.02 cursor-reactive letters */
+.prin-row[data-fx="wave"] .lt{ display:inline-block; transition:transform .3s var(--ease), color .3s; will-change:transform; }
+/* P.03 deadline bar */
+.pline{ position:relative; display:block; height:6px; max-width:640px; margin-top:28px;
+  background:var(--azure-soft); overflow:hidden; border-radius:2px; }
+.pline i{ position:absolute; inset:0; background:var(--azure); transform:scaleX(0);
+  transform-origin:left; transition:transform 1.6s var(--ease); }
+.prin-row.go .pline i{ transform:scaleX(1); }
+.stamp{ display:inline-block; margin-top:14px; opacity:0; transform:translateY(6px);
+  transition:opacity .5s var(--ease) 1.55s, transform .5s var(--ease) 1.55s; }
+.prin-row.go .stamp{ opacity:1; transform:none; }
+/* P.04 AI autocomplete */
+.ai-ghost{ opacity:.3; transition:opacity .6s var(--ease), color .6s var(--ease); }
+.prin-row.accept .ai-ghost{ opacity:1; }
+.tabchip{ display:inline-block; vertical-align:middle; margin-left:18px;
+  font-family:'JetBrains Mono'; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--azure); border:1px solid var(--azure); border-radius:3px; padding:5px 10px;
+  opacity:0; transform:scale(.9); transition:opacity .4s var(--ease), transform .4s var(--ease); }
+.prin-row.accept .tabchip{ opacity:1; transform:scale(1); }
+/* honesty note */
+.honest{ max-width:760px; margin-top:70px; }
+.honest p{ font-size:1.06rem; margin-top:14px; }
+@media (prefers-reduced-motion:reduce){
+  .ptxt.typing::after{ display:none; }
+  .pline i{ transform:scaleX(1); } .stamp{ opacity:1; transform:none; }
+  .ai-ghost{ opacity:1; } .tabchip{ opacity:1; transform:none; }
+}
+
+
 /* reveal + reduced motion */
 .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
 .reveal.in{ opacity:1; transform:none; }
@@ -514,7 +579,7 @@ section .wrap{ position:relative; }
 
   </section>
 
-<!-- About now lives ons its own page: about.html -->
+<!-- About now lives on its own page: about.html -->
 
 <!-- ============ 04 WORK — THE INDEX ============ -->
 <section id="work">
@@ -762,17 +827,51 @@ section .wrap{ position:relative; }
       <div class="step"><span class="note">03</span><h4>Build</h4><p>You get progress links as I go — see it live, request changes early.</p></div>
       <div class="step"><span class="note">04</span><h4>Handover</h4><p>Deployed, documented, and yours. I stay reachable after launch.</p></div>
     </div>
-    <div class="mani reveal">
-      <span class="note-dim">Working principles</span>
-      <span>Code you can read.</span>
-      <span>Design you can feel.</span>
-      <span>Deadlines you can trust.</span>
+    <div class="bridge reveal"><a href="#principles">Next — 07 / Principles <span class="ar">↓</span></a></div>
+  </div>
+</section>
+
+<!-- ============ 07 PRINCIPLES ============ -->
+<section id="principles" style="padding-top:0;">
+  <div class="wrap">
+    <span class="ghost" aria-hidden="true">07</span>
+    <div class="idx reveal"><span class="n">07</span><h2>Principles</h2><span class="note-dim right">Each one demonstrates itself</span></div>
+
+    <div class="prin">
+      <div class="prin-row" data-fx="type" data-text="Code you can read.">
+        <span class="pn note-dim">P.01 — Engineering</span>
+        <h3 class="ptxt" aria-label="Code you can read."></h3>
+      </div>
+
+      <div class="prin-row" data-fx="wave">
+        <span class="pn note-dim">P.02 — Design</span>
+        <h3 class="ptxt" data-text="Design you can feel." aria-label="Design you can feel.">Design you can feel.</h3>
+      </div>
+
+      <div class="prin-row" data-fx="line">
+        <span class="pn note-dim">P.03 — Delivery</span>
+        <h3 class="ptxt">Deadlines you can trust.</h3>
+        <span class="pline" aria-hidden="true"><i></i></span>
+        <span class="stamp note">100% — On time ✓</span>
+      </div>
+
+      <div class="prin-row" data-fx="ai">
+        <span class="pn note-dim">P.04 — Transparency</span>
+        <h3 class="ptxt" aria-label="AI-assisted. Human-accountable."><span class="ai-solid"></span><span class="ai-ghost"> Human-accountable.</span><span class="tabchip">Tab ↹ accepted</span></h3>
+      </div>
     </div>
+
+    <div class="honest reveal">
+      <span class="note">Full transparency</span>
+      <p>I build with AI tools the way a carpenter uses power tools — they speed up my hands, not replace my judgment. Every line on this site and in my projects is reviewed, understood, and mine to maintain. If you ask me how something works, I can tell you — that's the standard.</p>
+    </div>
+
     <div class="bridge reveal"><a href="#contact">Next — Contact <span class="ar">↓</span></a></div>
   </div>
 </section>
 
-<!-- ============ CONTACT ============ --><section id="contact" class="cta" style="padding-top:40px;">
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="cta" style="padding-top:40px;">
   <div class="wrap">
     <span class="note reveal">Contact</span>
     <h2 class="reveal">Got a project?<br><span class="outline">Let's talk.</span></h2>
@@ -825,12 +924,13 @@ const secIds = ['work','skills','certs','creative','contact'];
 const sio = new IntersectionObserver(es => {
   es.forEach(e => {
     if (!e.isIntersecting) return;
-    const id = e.target.id === 'refs' ? 'certs' : e.target.id;
+    const idMap = { refs:'certs', process:'contact', principles:'contact' };
+    const id = idMap[e.target.id] || e.target.id;
     dots.forEach(d => d.classList.toggle('on', d.dataset.s === id));
     if (loc && locLabels[e.target.id]) loc.textContent = locLabels[e.target.id];
   });
 }, { rootMargin:'-40% 0px -50% 0px' });
-secIds.concat('refs','process').forEach(id => { const s = document.getElementById(id); if (s) sio.observe(s); });
+secIds.concat('refs','process','principles').forEach(id => { const s = document.getElementById(id); if (s) sio.observe(s); });
 
 // work index: cursor-following preview (pointer devices)
 const prev = document.getElementById('preview');
@@ -955,7 +1055,7 @@ plates.forEach((p,i) => { p.querySelector('img').style.transitionDelay = (i % 3 
 // ===== header sheet indicator + rotating word + letters + copy mail =====
 const loc = document.getElementById('loc');
 const locLabels = { work:'01 / Selected work', skills:'02 / Capabilities', certs:'03 / Credentials',
-  refs:'04 / References', creative:'05 / Plates', process:'06 / How I work', contact:'— / Contact' };
+  refs:'04 / References', creative:'05 / Plates', process:'06 / How I work', principles:'07 / Principles', contact:'— / Contact' };
 
 // rotating positioning word
 const rotWord = document.getElementById('rotWord');
@@ -995,6 +1095,66 @@ if (mail){
       setTimeout(() => { mail.classList.remove('copied'); mailHint.textContent = 'Click to copy'; }, 1800);
     }).catch(() => { location.href = mail.href; });
   });
+}
+
+// ===== nightfall from Plates down =====
+const nightStart = document.getElementById('creative');
+const nio = new IntersectionObserver(es => {
+  es.forEach(e => document.body.classList.toggle('night', e.isIntersecting || e.boundingClientRect.top < 0));
+}, { rootMargin:'-35% 0px -35% 0px' });
+nio.observe(nightStart);
+
+// ===== 07 principles: each effect demonstrates its meaning =====
+function typeInto(el, text, done){
+  el.classList.add('typing'); el.textContent = '';
+  let i = 0;
+  (function tick(){
+    if (i <= text.length){ el.textContent = text.slice(0, i); i++; setTimeout(tick, 42); }
+    else { el.classList.remove('typing'); if (done) done(); }
+  })();
+}
+const prinObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const row = e.target, fx = row.dataset.fx;
+    prinObs.unobserve(row);
+    if (reduce){
+      if (fx === 'type') row.querySelector('.ptxt').textContent = row.dataset.text;
+      if (fx === 'ai'){ row.querySelector('.ai-solid').textContent = 'AI-assisted.'; row.classList.add('accept'); }
+      row.classList.add('go');
+      return;
+    }
+    if (fx === 'type') typeInto(row.querySelector('.ptxt'), row.dataset.text);
+    if (fx === 'line') row.classList.add('go');
+    if (fx === 'ai'){
+      typeInto(row.querySelector('.ai-solid'), 'AI-assisted.', () => {
+        setTimeout(() => row.classList.add('accept'), 650);
+      });
+    }
+  });
+}, { threshold:.55 });
+document.querySelectorAll('.prin-row').forEach(r => prinObs.observe(r));
+
+// P.02: letters ripple under the cursor
+const waveRow = document.querySelector('.prin-row[data-fx="wave"]');
+if (waveRow){
+  const wt = waveRow.querySelector('.ptxt');
+  wt.innerHTML = wt.dataset.text.split('').map(c =>
+    c === ' ' ? ' ' : `<span class="lt">${c}</span>`).join('');
+  if (canHover && !reduce){
+    const lts = [...wt.querySelectorAll('.lt')];
+    waveRow.addEventListener('mousemove', e => {
+      lts.forEach(l => {
+        const r = l.getBoundingClientRect();
+        const d = Math.abs(e.clientX - (r.left + r.width/2));
+        const f = Math.max(0, 1 - d / 220);
+        l.style.transform = `translateY(${-14*f}px)`;
+        l.style.color = f > .45 ? 'var(--azure)' : '';
+      });
+    });
+    waveRow.addEventListener('mouseleave', () =>
+      lts.forEach(l => { l.style.transform = ''; l.style.color = ''; }));
+  }
 }
 
 // reveal
