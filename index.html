@@ -123,17 +123,6 @@ header.scrolled{ border-color:var(--line); }
 .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:30px;
   opacity:0; animation:fade .8s var(--ease) .7s forwards; }
 
-/* status ticker — thin, technical */
-.ticker{ border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-  overflow:hidden; background:var(--card); padding:13px 0; }
-.ticker .track{ display:flex; width:max-content; animation:scroll 30s linear infinite; }
-.ticker:hover .track{ animation-play-state:paused; }
-.ticker .set{ display:flex; align-items:center; }
-.ticker .set span{ font-family:'JetBrains Mono'; font-size:.72rem; letter-spacing:.18em;
-  text-transform:uppercase; color:var(--slate); white-space:nowrap; }
-.ticker .set i{ font-style:normal; color:var(--azure); margin:0 22px; }
-@keyframes scroll{ to{ transform:translateX(-50%); } }
-
 /* =========================================================
    SECTION SHELL — numbered like a document index
 ========================================================= */
@@ -271,13 +260,24 @@ section{ padding:110px 0; }
   text-transform:uppercase; color:var(--mist); margin-bottom:5px; }
 .tb-cell b{ font-family:'JetBrains Mono'; font-size:.8rem; color:var(--ink); font-weight:600; }
 
+/* section bridges — the connective tissue */
+.bridge{ display:flex; justify-content:flex-end; margin-top:70px; }
+.bridge a{ font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--mist); display:inline-flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--line-strong); padding-bottom:6px; transition:color .25s, border-color .25s; }
+.bridge a:hover{ color:var(--azure); border-color:var(--azure); }
+.bridge .ar{ transition:transform .25s var(--ease); }
+.bridge a:hover .ar{ transform:translateY(3px); }
+.quiet{ font-family:'JetBrains Mono'; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--mist); align-self:center; border-bottom:1px solid transparent; transition:color .25s, border-color .25s; }
+.quiet:hover{ color:var(--azure); border-color:var(--azure); }
+
 /* reveal + reduced motion */
 .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
 .reveal.in{ opacity:1; transform:none; }
 @media (prefers-reduced-motion:reduce){
   *{ animation:none !important; transition:none !important; }
   .reveal,.display .row > span,.hero .spec,.hero-foot p,.hero-actions,.fig{ opacity:1; transform:none; }
-  .ticker .track{ animation:none !important; }
   #preview{ display:none; }
   html{ scroll-behavior:auto; }
 }
@@ -325,9 +325,9 @@ section{ padding:110px 0; }
   <span class="vtext">Portfolio — Rev 3.0 — 2026</span>
   <nav class="dots" id="railDots">
     <a href="about.html" data-s="about" aria-label="About page"></a>
+    <a href="#work" data-s="work" aria-label="Work"></a>
     <a href="#skills" data-s="skills" aria-label="Skills"></a>
     <a href="#certs" data-s="certs" aria-label="Certifications"></a>
-    <a href="#work" data-s="work" aria-label="Work"></a>
     <a href="#creative" data-s="creative" aria-label="Creative"></a>
     <a href="#contact" data-s="contact" aria-label="Contact"></a>
   </nav>
@@ -339,9 +339,9 @@ section{ padding:110px 0; }
     <a href="#top" class="logo">DAR<span>.</span></a>
     <nav class="nav-links" id="navlinks">
       <a href="about.html">About</a>
+      <a href="#work">Work</a>
       <a href="#skills">Skills</a>
       <a href="#certs">Certs</a>
-      <a href="#work">Work</a>
       <a href="#creative">Creative</a>
       <a href="#contact" class="talk">Let's talk</a>
     </nav>
@@ -352,7 +352,7 @@ section{ padding:110px 0; }
 <main id="top">
 
 <!-- ============ HERO ============ -->
-<section class="hero" style="padding-bottom:0;">
+<section class="hero">
   <div class="wrap">
     <div class="spec">
       <span class="note-dim">Field: <b>Web &amp; mobile development</b></span>
@@ -374,120 +374,21 @@ section{ padding:110px 0; }
       <div>
         <p>I build web and mobile apps end to end — and I was a designer before I was a developer, so the interface gets the same care as the database. Incoming 4th-year BSIT, shipping since 2023.</p>
         <div class="hero-actions">
-          <a href="#work" class="btn btn-solid">See the work <span class="ar">→</span></a>
-          <a href="#contact" class="btn">Contact <span class="ar">→</span></a>
+          <a href="#work" class="btn btn-solid">Start at the work <span class="ar">↓</span></a>
+          <a href="#contact" class="quiet">or skip to hello →</a>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="ticker" aria-hidden="true">
-    <div class="track" id="tickerTrack">
-      <div class="set">
-        <span>Open to full-time &amp; freelance</span><i>//</i>
-        <span>Web apps</span><i>//</i>
-        <span>Mobile apps</span><i>//</i>
-        <span>UI/UX</span><i>//</i>
-        <span>Brand &amp; photo work</span><i>//</i>
-        <span>Rev 3.0 — 2026</span><i>//</i>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
 <!-- About now lives on its own page: about.html -->
 
-<!-- ============ 02 CAPABILITIES ============ -->
-<section id="skills">
-  <div class="wrap">
-    <div class="idx reveal"><span class="n">01</span><h2>Capabilities</h2><span class="note-dim right">Primary column first</span></div>
-    <div class="caps reveal">
-      <div class="cap primary">
-        <span class="note">Primary</span>
-        <h3>Development</h3>
-        <ul>
-          <li>JavaScript / React <em>frontend</em></li>
-          <li>Node.js / PHP <em>backend</em></li>
-          <li>Python <em>scripting</em></li>
-          <li>MySQL <em>data</em></li>
-          <li>REST APIs <em>integration</em></li>
-          <li>Git / GitHub <em>workflow</em></li>
-        </ul>
-      </div>
-      <div class="cap">
-        <span class="note-dim">Supporting</span>
-        <h3>Design</h3>
-        <ul>
-          <li>Figma <em>UI/UX</em></li>
-          <li>Photoshop <em>raster</em></li>
-          <li>Illustrator <em>vector</em></li>
-          <li>Brand identity <em>systems</em></li>
-        </ul>
-      </div>
-      <div class="cap">
-        <span class="note-dim">Supporting</span>
-        <h3>Photography</h3>
-        <ul>
-          <li>Lightroom <em>editing</em></li>
-          <li>Portrait <em>people</em></li>
-          <li>Product <em>commercial</em></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 03 CREDENTIALS ============ -->
-<section id="certs" style="padding-top:0;">
-  <div class="wrap">
-    <div class="idx reveal"><span class="n">02</span><h2>Credentials</h2><span class="note-dim right">Latest in the spotlight</span></div>
-
-    <div class="cred-feat reveal">
-      <div class="doc">
-        <span class="corner tl">DOC. A-01</span>
-        <img src="images/cert-featured.jpg" alt="Featured certificate">
-        <span class="corner br">Verified</span>
-      </div>
-      <div class="info">
-        <span class="note">Latest credential</span>
-        <h3>Full-Stack Web Development</h3>
-        <span class="note-dim">Coursera · Completed Mar 2026</span>
-        <p>A 6-month program covering modern front-end and back-end development, REST APIs, and deployment. Capstone: a full booking platform.</p>
-        <a href="#" target="_blank" class="btn btn-solid">View credential <span class="ar">→</span></a>
-      </div>
-    </div>
-
-    <div class="cred-table reveal">
-      <div class="cred-row">
-        <span class="note-dim">Cisco</span>
-        <h4>CCNA: Networking Basics</h4>
-        <span class="note-dim">Jan 2026</span>
-        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
-      </div>
-      <div class="cred-row">
-        <span class="note-dim">freeCodeCamp</span>
-        <h4>Responsive Web Design</h4>
-        <span class="note-dim">Nov 2025</span>
-        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
-      </div>
-      <div class="cred-row">
-        <span class="note-dim">Google</span>
-        <h4>IT Support Fundamentals</h4>
-        <span class="note-dim">Aug 2025</span>
-        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
-      </div>
-    </div>
-
-    <div class="cred-more reveal">
-      <a href="https://www.linkedin.com/in/your-username/details/certifications/" target="_blank" class="btn">All certifications on LinkedIn <span class="ar">→</span></a>
-    </div>
-  </div>
-</section>
-
 <!-- ============ 04 WORK — THE INDEX ============ -->
-<section id="work" style="padding-top:0;">
+<section id="work">
   <div class="wrap">
-    <div class="idx reveal"><span class="n">03</span><h2>Selected work</h2><span class="note-dim right workhead-hint">Hover a row for a preview</span></div>
+    <div class="idx reveal"><span class="n">01</span><h2>Selected work</h2><span class="note-dim right workhead-hint">Hover a row for a preview</span></div>
 
     <div class="works reveal" id="works">
       <article class="work-row" data-img="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=700&q=80">
@@ -540,13 +441,103 @@ section{ padding:110px 0; }
       </article>
     </div>
     <div id="preview" aria-hidden="true"><img src="" alt=""></div>
+      <div class="bridge reveal"><a href="#skills">Next — 02 / Capabilities <span class="ar">↓</span></a></div>
+  </div>
+</section>
+
+<!-- ============ 02 CAPABILITIES ============ -->
+<section id="skills" style="padding-top:0;">
+  <div class="wrap">
+    <div class="idx reveal"><span class="n">02</span><h2>Capabilities</h2></div>
+    <div class="caps reveal">
+      <div class="cap primary">
+        <span class="note">Primary</span>
+        <h3>Development</h3>
+        <ul>
+          <li>JavaScript / React <em>frontend</em></li>
+          <li>Node.js / PHP <em>backend</em></li>
+          <li>Python <em>scripting</em></li>
+          <li>MySQL <em>data</em></li>
+          <li>REST APIs <em>integration</em></li>
+          <li>Git / GitHub <em>workflow</em></li>
+        </ul>
+      </div>
+      <div class="cap">
+        <span class="note-dim">Supporting</span>
+        <h3>Design</h3>
+        <ul>
+          <li>Figma <em>UI/UX</em></li>
+          <li>Photoshop <em>raster</em></li>
+          <li>Illustrator <em>vector</em></li>
+          <li>Brand identity <em>systems</em></li>
+        </ul>
+      </div>
+      <div class="cap">
+        <span class="note-dim">Supporting</span>
+        <h3>Photography</h3>
+        <ul>
+          <li>Lightroom <em>editing</em></li>
+          <li>Portrait <em>people</em></li>
+          <li>Product <em>commercial</em></li>
+        </ul>
+      </div>
+    </div>
+      <div class="bridge reveal"><a href="#certs">Next — 03 / Credentials <span class="ar">↓</span></a></div>
+  </div>
+</section>
+
+<!-- ============ 03 CREDENTIALS ============ -->
+<section id="certs" style="padding-top:0;">
+  <div class="wrap">
+    <div class="idx reveal"><span class="n">03</span><h2>Credentials</h2></div>
+
+    <div class="cred-feat reveal">
+      <div class="doc">
+        <span class="corner tl">DOC. A-01</span>
+        <img src="images/cert-featured.jpg" alt="Featured certificate">
+        <span class="corner br">Verified</span>
+      </div>
+      <div class="info">
+        <span class="note">Latest credential</span>
+        <h3>Full-Stack Web Development</h3>
+        <span class="note-dim">Coursera · Completed Mar 2026</span>
+        <p>A 6-month program covering modern front-end and back-end development, REST APIs, and deployment. Capstone: a full booking platform.</p>
+        <a href="#" target="_blank" class="btn btn-solid">View credential <span class="ar">→</span></a>
+      </div>
+    </div>
+
+    <div class="cred-table reveal">
+      <div class="cred-row">
+        <span class="note-dim">Cisco</span>
+        <h4>CCNA: Networking Basics</h4>
+        <span class="note-dim">Jan 2026</span>
+        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
+      </div>
+      <div class="cred-row">
+        <span class="note-dim">freeCodeCamp</span>
+        <h4>Responsive Web Design</h4>
+        <span class="note-dim">Nov 2025</span>
+        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
+      </div>
+      <div class="cred-row">
+        <span class="note-dim">Google</span>
+        <h4>IT Support Fundamentals</h4>
+        <span class="note-dim">Aug 2025</span>
+        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
+      </div>
+    </div>
+
+    <div class="cred-more reveal">
+      <a href="https://www.linkedin.com/in/your-username/details/certifications/" target="_blank" class="btn">All certifications on LinkedIn <span class="ar">→</span></a>
+    </div>
+      <div class="bridge reveal"><a href="#refs">Next — 04 / References <span class="ar">↓</span></a></div>
   </div>
 </section>
 
 <!-- ============ 05 REFERENCES ============ -->
 <section id="refs" style="padding-top:0;">
   <div class="wrap">
-    <div class="idx reveal"><span class="n">04</span><h2>References</h2><span class="note-dim right">On the record</span></div>
+    <div class="idx reveal"><span class="n">04</span><h2>References</h2></div>
   </div>
   <div class="wrap reveal">
     <div class="quotes" id="quotesTrack">
@@ -572,6 +563,7 @@ section{ padding:110px 0; }
       </div>
     </div>
     <div class="drag-hint note-dim">← Drag to browse</div>
+      <div class="bridge reveal"><a href="#creative">Next — 05 / Plates <span class="ar">↓</span></a></div>
   </div>
 </section>
 
@@ -615,6 +607,7 @@ section{ padding:110px 0; }
         </div>
       </div>
     </div>
+      <div class="bridge reveal"><a href="#contact">Next — Contact <span class="ar">↓</span></a></div>
   </div>
 </section>
 
@@ -665,17 +658,13 @@ const nl = document.getElementById('navlinks');
 mb.addEventListener('click', () => nl.classList.toggle('open'));
 nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nl.classList.remove('open')));
 
-// ticker loop
-const tk = document.getElementById('tickerTrack');
-tk.appendChild(tk.querySelector('.set').cloneNode(true));
-
 // rail: highlight current section
 const dots = [...document.querySelectorAll('#railDots a')];
-const secIds = ['skills','certs','work','creative','contact'];
+const secIds = ['work','skills','certs','creative','contact'];
 const sio = new IntersectionObserver(es => {
   es.forEach(e => {
     if (!e.isIntersecting) return;
-    const id = e.target.id === 'refs' ? 'work' : e.target.id;
+    const id = e.target.id === 'refs' ? 'certs' : e.target.id;
     dots.forEach(d => d.classList.toggle('on', d.dataset.s === id));
   });
 }, { rootMargin:'-40% 0px -50% 0px' });
