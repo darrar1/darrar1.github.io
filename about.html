@@ -335,14 +335,15 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 /* =========================================================
    FOOTER — name marquee + back-to-top + live cells
 ========================================================= */
-.tb-top{ position:relative; overflow:hidden; border-bottom:1px solid var(--ln); }
-.tb-track{ display:flex; width:max-content; animation:tbmarq 30s linear infinite; padding:26px 0; }
-.tb-track span{ font-family:'Sora'; font-weight:800; white-space:nowrap; line-height:1;
-  font-size:clamp(2.4rem,7vw,4.6rem); letter-spacing:-.035em;
-  color:transparent; -webkit-text-stroke:1.5px var(--azure); opacity:.5; }
-.tb-top:hover .tb-track{ animation-play-state:paused; }
-@keyframes tbmarq{ to{ transform:translateX(-50%); } }
-.toTop{ position:absolute; top:50%; right:28px; transform:translateY(-50%);
+.tb-top{ display:flex; align-items:center; justify-content:space-between; gap:20px;
+  max-width:var(--max); margin:0 auto; padding:16px 40px; border-bottom:1px solid var(--ln); }
+.tb-status{ font-family:'JetBrains Mono'; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--mist); display:inline-flex; align-items:center; gap:10px; }
+.live-dot{ width:8px; height:8px; border-radius:50%; background:#2bd07a;
+  animation:livepulse 2.2s ease-out infinite; }
+@keyframes livepulse{ 0%{ box-shadow:0 0 0 0 rgba(43,208,122,.45); }
+  70%{ box-shadow:0 0 0 10px rgba(43,208,122,0); } 100%{ box-shadow:0 0 0 0 rgba(43,208,122,0); } }
+.toTop{ flex:0 0 auto;
   font-family:'JetBrains Mono'; font-weight:600; font-size:.72rem; letter-spacing:.14em;
   text-transform:uppercase; color:var(--azure); background:var(--srf);
   border:1px solid var(--azure); border-radius:3px; padding:10px 16px; cursor:pointer;
@@ -352,7 +353,15 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 .toTop:hover .ar{ transform:translateY(-3px); }
 .tb-cell{ transition:background .3s, border-color .8s var(--ease); }
 .tb-cell:hover{ background:color-mix(in srgb, var(--azure) 8%, transparent); }
-@media (prefers-reduced-motion:reduce){ .tb-track{ animation:none; } }
+@media (prefers-reduced-motion:reduce){ .live-dot{ animation:none; } }
+
+/* cursor: context labels + click squeeze */
+#cursor .clabel{ position:absolute; inset:0; display:grid; place-items:center;
+  font-family:'JetBrains Mono'; font-weight:600; font-size:.55rem; letter-spacing:.12em;
+  text-transform:uppercase; color:#fff; opacity:0; transition:opacity .2s; }
+#cursor.label{ width:68px; height:68px; background:var(--azure); border-color:var(--azure); }
+#cursor.label::before{ display:none; }
+#cursor.label .clabel{ opacity:1; }
 
 .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
 .reveal.in{ opacity:1; transform:none; }
@@ -392,7 +401,7 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 <body>
 
 <div id="spot" aria-hidden="true"></div>
-<div id="cursor" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"><span class="clabel"></span></div>
 
 <header id="topbar">
   <div class="nav">
@@ -592,10 +601,7 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 
 <footer class="titleblock">
   <div class="tb-top">
-    <div class="tb-track" aria-hidden="true">
-      <span>Daryll Celestial — Web &amp; Mobile Developer&nbsp;—&nbsp;</span>
-      <span>Daryll Celestial — Web &amp; Mobile Developer&nbsp;—&nbsp;</span>
-    </div>
+    <span class="tb-status"><span class="live-dot"></span>Open to work — full-time &amp; freelance</span>
     <button class="toTop" id="toTop">Top <span class="ar">↑</span></button>
   </div>
   <div class="tb-grid">
@@ -677,11 +683,22 @@ if (canHover && !reduce){
     spot.style.setProperty('--my', my2 + 'px');
     if (!seen){ seen = true; cursor.classList.add('on'); }
   });
+  let cDown = false;
   (function ringLoop(){
     cx += (mx2 - cx) * .18; cy += (my2 - cy) * .18;
-    cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%) scale(${cDown ? .82 : 1})`;
     requestAnimationFrame(ringLoop);
   })();
+  // cursor: context labels + click squeeze
+  addEventListener('mousedown', () => cDown = true);
+  addEventListener('mouseup', () => cDown = false);
+  const clabel = cursor.querySelector('.clabel');
+  const rigEl = document.getElementById('rig'); if (rigEl) rigEl.dataset.cursor = 'Hi ^_^';
+  document.addEventListener('mouseover', e => {
+    const t = e.target.closest('[data-cursor]');
+    if (t){ clabel.textContent = t.dataset.cursor; cursor.classList.add('label'); }
+    else cursor.classList.remove('label');
+  });
   document.querySelectorAll('a, button').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('big'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('big'));

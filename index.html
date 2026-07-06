@@ -114,20 +114,20 @@ header.scrolled{ border-color:var(--line); }
 .hero{ position:relative; padding:168px 0 0; }
 .hero .wrap{ position:relative; }
 .hero .spec{ display:flex; gap:26px; flex-wrap:wrap; margin-bottom:34px;
-  opacity:0; animation:fade .7s var(--ease) .1s forwards; }
+  opacity:0; }
 .hero .spec .note-dim b{ color:var(--ink); font-weight:600; }
 .display{ position:relative; z-index:2; font-family:'Sora'; font-weight:800; color:var(--ink);
   font-size:clamp(3.4rem,11.5vw,8.6rem); line-height:.94; letter-spacing:-.045em; text-transform:uppercase; }
 .display .row{ display:block; overflow:hidden; }
-.display .row > span{ display:inline-block; transform:translateY(112%); animation:rise .95s var(--ease) forwards; }
-.display .row:nth-child(2) > span{ animation-delay:.14s; }
+.display .row > span{ display:inline-block; transform:translateY(112%); }
+
 .display .outline{ color:transparent; -webkit-text-stroke:2.5px var(--azure); }
 @keyframes rise{ to{ transform:translateY(0); } }
 @keyframes fade{ to{ opacity:1; } }
 
 /* portrait overlaps the headline from the right — crop marks like a draft figure */
 .fig{ position:absolute; right:40px; top:36px; z-index:1; width:min(320px,30vw);
-  opacity:0; animation:fade .9s var(--ease) .5s forwards; }
+  opacity:0; }
 .fig .frame{ position:relative; transform:rotate(2.5deg); }
 .fig img{ width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:4px;
   box-shadow:0 26px 50px -26px rgba(20,30,54,.45); }
@@ -138,9 +138,9 @@ header.scrolled{ border-color:var(--line); }
 .fig figcaption{ margin-top:12px; display:flex; justify-content:space-between; }
 .hero-foot{ display:grid; grid-template-columns:minmax(0,560px) 1fr; gap:40px; align-items:end;
   margin-top:54px; padding-bottom:70px; }
-.hero-foot p{ font-size:1.16rem; opacity:0; animation:fade .8s var(--ease) .55s forwards; }
+.hero-foot p{ font-size:1.16rem; opacity:0; }
 .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:30px;
-  opacity:0; animation:fade .8s var(--ease) .7s forwards; }
+  opacity:0; }
 
 /* =========================================================
    SECTION SHELL — numbered like a document index
@@ -338,10 +338,10 @@ section .wrap{ position:relative; }
 .idx.in::after{ transform:scaleX(1); }
 
 /* hero dimension line */
-.dim-wrap{ margin-top:34px; max-width:520px; opacity:0; animation:fade .6s var(--ease) .85s forwards; }
+.dim-wrap{ margin-top:34px; max-width:520px; opacity:0; }
 .dim-wrap .note{ display:block; margin-bottom:10px; }
 .dim{ position:relative; height:1px; background:var(--azure);
-  transform:scaleX(0); transform-origin:left; animation:draw 1.1s var(--ease) 1s forwards; }
+  transform:scaleX(0); transform-origin:left; }
 .dim::before,.dim::after{ content:""; position:absolute; top:-5px; width:1px; height:11px; background:var(--azure); }
 .dim::before{ left:0; } .dim::after{ right:0; }
 @keyframes draw{ to{ transform:scaleX(1); } }
@@ -546,14 +546,15 @@ body.night header.scrolled{ background:rgba(12,20,40,.93); }
 /* =========================================================
    FOOTER — name marquee + back-to-top + live cells
 ========================================================= */
-.tb-top{ position:relative; overflow:hidden; border-bottom:1px solid var(--line); }
-.tb-track{ display:flex; width:max-content; animation:tbmarq 30s linear infinite; padding:26px 0; }
-.tb-track span{ font-family:'Sora'; font-weight:800; white-space:nowrap; line-height:1;
-  font-size:clamp(2.4rem,7vw,4.6rem); letter-spacing:-.035em;
-  color:transparent; -webkit-text-stroke:1.5px var(--azure); opacity:.5; }
-.tb-top:hover .tb-track{ animation-play-state:paused; }
-@keyframes tbmarq{ to{ transform:translateX(-50%); } }
-.toTop{ position:absolute; top:50%; right:28px; transform:translateY(-50%);
+.tb-top{ display:flex; align-items:center; justify-content:space-between; gap:20px;
+  max-width:var(--max); margin:0 auto; padding:16px 40px; border-bottom:1px solid var(--line); }
+.tb-status{ font-family:'JetBrains Mono'; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--mist); display:inline-flex; align-items:center; gap:10px; }
+.live-dot{ width:8px; height:8px; border-radius:50%; background:#2bd07a;
+  animation:livepulse 2.2s ease-out infinite; }
+@keyframes livepulse{ 0%{ box-shadow:0 0 0 0 rgba(43,208,122,.45); }
+  70%{ box-shadow:0 0 0 10px rgba(43,208,122,0); } 100%{ box-shadow:0 0 0 0 rgba(43,208,122,0); } }
+.toTop{ flex:0 0 auto;
   font-family:'JetBrains Mono'; font-weight:600; font-size:.72rem; letter-spacing:.14em;
   text-transform:uppercase; color:var(--azure); background:var(--card);
   border:1px solid var(--azure); border-radius:3px; padding:10px 16px; cursor:pointer;
@@ -563,7 +564,44 @@ body.night header.scrolled{ background:rgba(12,20,40,.93); }
 .toTop:hover .ar{ transform:translateY(-3px); }
 .tb-cell{ transition:background .3s, border-color .8s var(--ease); }
 .tb-cell:hover{ background:color-mix(in srgb, var(--azure) 8%, transparent); }
-@media (prefers-reduced-motion:reduce){ .tb-track{ animation:none; } }
+@media (prefers-reduced-motion:reduce){ .live-dot{ animation:none; } }
+
+/* =========================================================
+   LOBBY GATE — blueprint particle sphere
+========================================================= */
+body.locked{ overflow:hidden; }
+#lobby{ position:fixed; inset:0; z-index:200; background-color:#0C1428;
+  background-image:
+    linear-gradient(rgba(120,170,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,170,255,.05) 1px, transparent 1px);
+  background-size:140px 140px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6vh;
+  transition:transform .95s cubic-bezier(.75,0,.25,1); }
+#lobby.done{ transform:translateY(-101%); }
+.orb-wrap{ position:relative; width:min(92vw,80vh); aspect-ratio:1; }
+#orb{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.lobby-tag{ position:absolute; font-family:'JetBrains Mono'; font-size:.62rem;
+  letter-spacing:.2em; text-transform:uppercase; color:#56698F; }
+.lobby-tag.tl{ top:26px; left:30px; }
+.lobby-tag.br{ bottom:24px; right:30px; }
+.lobby-load{ width:min(300px,56vw); height:2px; background:#1D2A47;
+  border-radius:99px; overflow:hidden; margin-top:-3vh; }
+.lobby-load span{ display:block; height:100%; width:0; background:var(--azure-bright); }
+.lobby-load span.run{ animation:lobbyfill 3.5s cubic-bezier(.3,.6,.4,1) forwards; }
+@keyframes lobbyfill{ to{ width:100%; } }
+.orb-wrap{ touch-action:none; }
+@media (max-width:640px){ .lobby-tag.br{ display:none; } }
+@media (prefers-reduced-motion:reduce){ #lobby{ transition:none; } }
+
+/* hero entrance plays only after the lobby gate opens */
+body.entered .display .row > span{ animation:rise .95s var(--ease) forwards; }
+body.entered .display .row:nth-child(2) > span{ animation-delay:.14s; }
+body.entered .hero .spec{ animation:fade .7s var(--ease) .1s forwards; }
+body.entered .fig{ animation:fade .9s var(--ease) .5s forwards; }
+body.entered .hero-foot p{ animation:fade .8s var(--ease) .55s forwards; }
+body.entered .hero-actions{ animation:fade .8s var(--ease) .7s forwards; }
+body.entered .dim-wrap{ animation:fade .6s var(--ease) .85s forwards; }
+body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
 
 .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
 .reveal.in{ opacity:1; transform:none; }
@@ -609,8 +647,55 @@ body.night header.scrolled{ background:rgba(12,20,40,.93); }
   .tb-cell{ padding-left:22px; }
 }
 </style>
+<noscript><style>
+  #lobby{ display:none !important; }
+  body.locked{ overflow:auto !important; }
+  .display .row > span, .hero .spec, .hero-foot p, .hero-actions, .fig, .dim-wrap,
+  .reveal{ opacity:1 !important; transform:none !important; }
+  .dim{ transform:scaleX(1) !important; }
+</style></noscript>
 </head>
-<body>
+<body class="locked">
+<noscript><style>#lobby{display:none} body.locked{overflow:auto}
+  .display .row > span,.hero .spec,.fig,.hero-foot p,.hero-actions,.dim-wrap{opacity:1;transform:none}
+  .dim{transform:scaleX(1)}</style></noscript>
+
+<!-- ============ LOBBY GATE ============ -->
+<div id="lobby" role="dialog" aria-modal="true" aria-label="Welcome — press Proceed to enter">
+  <span class="lobby-tag tl" aria-hidden="true">Daryll Celestial — Portfolio</span>
+  <span class="lobby-tag br" aria-hidden="true">Rev 3.0 — 2026</span>
+  <div class="orb-wrap"><canvas id="orb" aria-hidden="true"></canvas></div>
+  <div class="lobby-load" aria-hidden="true"><span id="lobbyBar"></span></div>
+</div>
+<script>
+/* Standalone gate — must work even if the main script crashes. */
+(function(){
+  var lb = document.getElementById('lobby'), done = false;
+  function open(){
+    if (done) return; done = true;
+    try{ sessionStorage.setItem('lobbySeen','1'); }catch(e){}
+    lb.classList.add('done');
+    document.body.classList.remove('locked');
+    document.body.classList.add('entered');
+    setTimeout(function(){ if (lb.parentNode) lb.parentNode.removeChild(lb); }, 1000);
+  }
+  var seen = false; try{ seen = sessionStorage.getItem('lobbySeen') === '1'; }catch(e){}
+  var reduceGate = false;
+  try{ reduceGate = matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  if (location.hash || seen || reduceGate){
+    done = true;
+    if (lb.parentNode) lb.parentNode.removeChild(lb);
+    document.body.classList.remove('locked');
+    document.body.classList.add('entered');
+    return;
+  }
+  /* preloader: lifts itself — any click or key skips early */
+  document.getElementById('lobbyBar').classList.add('run');
+  setTimeout(open, 3500);
+  lb.addEventListener('click', open);
+  addEventListener('keydown', function(e){ if (!done) open(); });
+})();
+</script>
 
 <div id="spot" aria-hidden="true"></div>
 <div id="cursor" aria-hidden="true"></div>
@@ -840,11 +925,16 @@ body.night header.scrolled{ background:rgba(12,20,40,.93); }
     <div class="cred-more reveal">
       <a href="https://www.linkedin.com/in/your-username/details/certifications/" target="_blank" class="btn">All certifications on LinkedIn <span class="ar">→</span></a>
     </div>
-      <div class="bridge reveal"><a href="#refs">Next — 04 / References <span class="ar">↓</span></a></div>
+      <div class="bridge reveal"><a href="#creative">Next — 04 / Plates <span class="ar">↓</span></a></div>
   </div>
 </section>
 
-<!-- ============ 05 REFERENCES ============ -->
+<!-- ============ REFERENCES (HIDDEN until you have REAL quotes) ============
+     Fake testimonials can seriously damage trust. When you have 2+ real quotes
+     (professor, client, teammate, with their permission): delete this line and the
+     END marker below, replace the placeholder names/quotes, then renumber this and
+     later sections (see CUSTOMIZE.md).
+
 <section id="refs" style="padding-top:0;">
   <div class="wrap">
     <span class="ghost" aria-hidden="true">04</span>
@@ -877,12 +967,13 @@ body.night header.scrolled{ background:rgba(12,20,40,.93); }
       <div class="bridge reveal"><a href="#creative">Next — 05 / Plates <span class="ar">↓</span></a></div>
   </div>
 </section>
+END OF HIDDEN REFERENCES -->
 
 <!-- ============ 06 PLATES ============ -->
 <section id="creative" style="padding-top:0;">
   <div class="wrap">
-    <span class="ghost" aria-hidden="true">05</span>
-    <div class="idx reveal"><span class="n">05</span><h2>Plates</h2><span class="note-dim right">Design &amp; photography — click to enlarge</span></div>
+    <span class="ghost" aria-hidden="true">04</span>
+    <div class="idx reveal"><span class="n">04</span><h2>Plates</h2><span class="note-dim right">Design &amp; photography — click to enlarge</span></div>
     <div class="lanes reveal" id="gallery">
       <div class="lane">
         <div class="lane-head"><h3>Through the lens</h3><span class="note">Photography</span></div>
@@ -919,30 +1010,30 @@ body.night header.scrolled{ background:rgba(12,20,40,.93); }
         </div>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#process">Next — 06 / How I work <span class="ar">↓</span></a></div>
+      <div class="bridge reveal"><a href="#process">Next — 05 / How I work <span class="ar">↓</span></a></div>
   </div>
 </section>
 
 <!-- ============ 06 HOW I WORK ============ -->
 <section id="process" style="padding-top:0;">
   <div class="wrap">
-    <span class="ghost" aria-hidden="true">06</span>
-    <div class="idx reveal"><span class="n">06</span><h2>How I work</h2><span class="note-dim right">For clients &amp; teams</span></div>
+    <span class="ghost" aria-hidden="true">05</span>
+    <div class="idx reveal"><span class="n">05</span><h2>How I work</h2><span class="note-dim right">For clients &amp; teams</span></div>
     <div class="steps reveal">
       <div class="step"><span class="note">01</span><h4>Chat</h4><p>A quick call or messages — what you need, when, and what it costs. No jargon.</p></div>
       <div class="step"><span class="note">02</span><h4>Plan</h4><p>I send a simple scope: what gets built, the timeline, and one fixed price.</p></div>
       <div class="step"><span class="note">03</span><h4>Build</h4><p>You get progress links as I go — see it live, request changes early.</p></div>
       <div class="step"><span class="note">04</span><h4>Handover</h4><p>Deployed, documented, and yours. I stay reachable after launch.</p></div>
     </div>
-    <div class="bridge reveal"><a href="#principles">Next — 07 / Principles <span class="ar">↓</span></a></div>
+    <div class="bridge reveal"><a href="#principles">Next — 06 / Principles <span class="ar">↓</span></a></div>
   </div>
 </section>
 
 <!-- ============ 07 PRINCIPLES ============ -->
 <section id="principles" style="padding-top:0;">
   <div class="wrap">
-    <span class="ghost" aria-hidden="true">07</span>
-    <div class="idx reveal"><span class="n">07</span><h2>Principles</h2><span class="note-dim right">Each one demonstrates itself</span></div>
+    <span class="ghost" aria-hidden="true">06</span>
+    <div class="idx reveal"><span class="n">06</span><h2>Principles</h2><span class="note-dim right">Each one demonstrates itself</span></div>
 
     <div class="prin">
       <div class="prin-row" data-fx="type" data-text="Code you can read.">
@@ -998,10 +1089,7 @@ body.night header.scrolled{ background:rgba(12,20,40,.93); }
 <!-- blueprint title block -->
 <footer class="titleblock">
   <div class="tb-top">
-    <div class="tb-track" aria-hidden="true">
-      <span>Daryll Celestial — Web &amp; Mobile Developer&nbsp;—&nbsp;</span>
-      <span>Daryll Celestial — Web &amp; Mobile Developer&nbsp;—&nbsp;</span>
-    </div>
+    <span class="tb-status"><span class="live-dot"></span>Open to work — full-time &amp; freelance</span>
     <button class="toTop" id="toTop">Top <span class="ar">↑</span></button>
   </div>
   <div class="tb-grid">
@@ -1069,11 +1157,13 @@ if (canHover && !reduce){
 
 // references: drag to scroll
 const q = document.getElementById('quotesTrack');
+if (q){
 let down=false, sx=0, ss=0, moved=false;
 q.addEventListener('mousedown', e => { down=true; moved=false; sx=e.pageX; ss=q.scrollLeft; q.classList.add('dragging'); });
 addEventListener('mousemove', e => { if(!down) return; const dx=e.pageX-sx; if(Math.abs(dx)>4) moved=true; q.scrollLeft=ss-dx; });
 addEventListener('mouseup', () => { down=false; q.classList.remove('dragging'); });
 q.addEventListener('click', e => { if (moved) e.preventDefault(); }, true);
+}
 
 // lightbox over plates
 const lb = document.getElementById('lightbox');
@@ -1113,11 +1203,15 @@ if (canHover && !reduce){
     spot.style.setProperty('--my', my2 + 'px');
     if (!seen){ seen = true; cursor.classList.add('on'); }
   });
+  let cDown = false;
   (function ringLoop(){
     cx += (mx2 - cx) * .18; cy += (my2 - cy) * .18;
-    cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%) scale(${cDown ? .82 : 1})`;
     requestAnimationFrame(ringLoop);
   })();
+  // cursor: context labels + click squeeze
+  addEventListener('mousedown', () => cDown = true);
+  addEventListener('mouseup', () => cDown = false);
   document.querySelectorAll('a, button, .work-row, .plate').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('big'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
@@ -1169,7 +1263,7 @@ plates.forEach((p,i) => { p.querySelector('img').style.transitionDelay = (i % 3 
 // ===== header sheet indicator + rotating word + letters + copy mail =====
 const loc = document.getElementById('loc');
 const locLabels = { work:'01 / Selected work', skills:'02 / Capabilities', certs:'03 / Credentials',
-  refs:'04 / References', creative:'05 / Plates', process:'06 / How I work', principles:'07 / Principles', contact:'— / Contact' };
+  creative:'04 / Plates', process:'05 / How I work', principles:'06 / Principles', contact:'— / Contact' };
 
 // rotating positioning word
 const rotWord = document.getElementById('rotWord');
@@ -1289,6 +1383,65 @@ if (phTime){
 // footer: back to top + live PH clock
 document.getElementById('toTop').addEventListener('click', () =>
   scrollTo({ top:0, behavior: reduce ? 'auto' : 'smooth' }));
+// ===== LOBBY: blueprint particle sphere =====
+// The site's grid dots, lifted into 3D. No words — just the drawing.
+const lobby = document.getElementById('lobby');
+if (lobby){
+  const cv = document.getElementById('orb'), ctx = cv.getContext('2d');
+  const N = 1400, GA = 2.399963229728653, pts = [];
+  for (let i = 0; i < N; i++){
+    const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * GA;
+    pts.push({ x: Math.cos(th) * r, y, z: Math.sin(th) * r });
+  }
+  let W = 0, H = 0, R = 0;
+  const size = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    R = W / 2 * .84;
+  };
+  size(); addEventListener('resize', size);
+
+  let rotY = 0, tiltX = -.28, tiltT = -.28, pmx = -1e4, pmy = -1e4, running = true;
+  const t0 = performance.now();
+  lobby.addEventListener('pointermove', e => {
+    const r = cv.getBoundingClientRect();
+    pmx = e.clientX - r.left - W / 2; pmy = e.clientY - r.top - H / 2;
+    tiltT = -.28 + ((e.clientY / innerHeight) - .5) * .5;
+  });
+  lobby.addEventListener('pointerleave', () => { pmx = pmy = -1e4; });
+  lobby.addEventListener('pointerup', () => { setTimeout(() => { pmx = pmy = -1e4; }, 600); });
+
+  function frame(now){
+    if (!cv.isConnected){ running = false; return; }
+    rotY += .0035; tiltX += (tiltT - tiltX) * .04;
+    const scanY = -1.25 + (((now - t0) % 7000) / 4000) * 2.5;  // sweep 4s, rest 3s
+    ctx.clearRect(0, 0, W, H);
+    const sy = Math.sin(rotY), cy2 = Math.cos(rotY), sx = Math.sin(tiltX), cx2 = Math.cos(tiltX);
+    for (let i = 0; i < N; i++){
+      const p = pts[i];
+      const x1 = p.x * cy2 + p.z * sy, z1 = -p.x * sy + p.z * cy2;
+      const y2 = p.y * cx2 - z1 * sx, z2 = p.y * sx + z1 * cx2;
+      const per = 1.6 / (1.6 - z2 * .55);
+      let px = x1 * R * per, py = y2 * R * per, hot = 0;
+      const dx = px - pmx, dy = py - pmy, dd = dx * dx + dy * dy;
+      if (dd < 16900){ const d = Math.sqrt(dd) || 1, f = (130 - d) / 130; px += dx / d * f * 26; py += dy / d * f * 26; hot = f; }
+      const depth = (z2 + 1) / 2;
+      const scan = Math.max(0, 1 - Math.abs(p.y - scanY) / .07);
+      const a = Math.min(1, .12 + depth * .55 + scan * .45 + hot * .35);
+      const rad = (.7 + depth * 1.5) + scan * 1.4 + hot * 1.2;
+      ctx.beginPath();
+      ctx.fillStyle = (scan > 0 || hot > 0) ? `rgba(45,136,255,${a})` : `rgba(120,170,255,${a})`;
+      ctx.arc(W / 2 + px, H / 2 + py, rad, 0, 6.2832);
+      ctx.fill();
+    }
+    if (running) requestAnimationFrame(frame);
+  }
+  if (reduce){ frame(t0); running = false; } else requestAnimationFrame(frame);
+
+}
+
 // reveal
 const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
