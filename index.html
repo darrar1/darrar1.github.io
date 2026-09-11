@@ -4,7 +4,7 @@
   EDIT MAP — everything you'll want to change, and how to find it
   (Ctrl+F the ALL-CAPS keys below. Full guide: CUSTOMIZE.md)
   ============================================================
-  EMAIL          -> search: dcbcelestial@gmail.com  (appears more than once — change ALL)
+  EMAIL          -> search: hello@example.com  (appears more than once — change ALL)
   SOCIALS        -> search: href="#"           (GitHub / LinkedIn / Instagram / Behance)
   LINKEDIN       -> search: your-username
   IMAGES         -> files go in the images/ folder; search: images/
@@ -139,6 +139,13 @@ header.scrolled{ border-color:var(--line); }
 .hero-foot{ display:grid; grid-template-columns:minmax(0,560px) 1fr; gap:40px; align-items:end;
   margin-top:54px; padding-bottom:70px; }
 .hero-foot p{ font-size:1.16rem; opacity:0; }
+.hero-stats{ display:flex; gap:34px; align-self:end; flex-wrap:wrap; opacity:0; }
+body.entered .hero-stats{ animation:fade .8s var(--ease) .7s forwards; }
+.hero-stats .hstat b{ display:block; font-family:'Sora'; font-weight:800; font-size:1.35rem;
+  color:var(--ink); letter-spacing:-.02em; line-height:1.1; transition:color .8s var(--ease); }
+.hero-stats .hstat span{ font-family:'JetBrains Mono'; font-size:.66rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--mist); }
+@media (max-width:640px){ .hero-stats{ gap:22px; } .hero-stats .hstat b{ font-size:1.15rem; } }
 .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:30px;
   opacity:0; }
 
@@ -570,28 +577,56 @@ body.night header.scrolled{ background:rgba(12,20,40,.93); }
    LOBBY GATE — blueprint particle sphere
 ========================================================= */
 body.locked{ overflow:hidden; }
-#lobby{ position:fixed; inset:0; z-index:200; background-color:#0C1428;
+#lobby{ position:fixed; inset:0; z-index:200; background-color:var(--pearl);
   background-image:
-    linear-gradient(rgba(120,170,255,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(120,170,255,.05) 1px, transparent 1px);
-  background-size:140px 140px;
+    linear-gradient(rgba(30,111,224,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,111,224,.045) 1px, transparent 1px),
+    radial-gradient(circle, rgba(30,111,224,.09) 1px, transparent 1.5px);
+  background-size:140px 140px, 140px 140px, 28px 28px;
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6vh;
   transition:transform .95s cubic-bezier(.75,0,.25,1); }
 #lobby.done{ transform:translateY(-101%); }
-.orb-wrap{ position:relative; width:min(92vw,80vh); aspect-ratio:1; }
+.orb-wrap{ position:relative; z-index:1; width:min(92vw,80vh); aspect-ratio:1;
+  opacity:0; transform:scale(.92); animation:orbIn 1s var(--ease) 1.35s forwards; }
+@keyframes orbIn{ to{ opacity:1; transform:scale(1); } }
+
+/* kinetic DAR fly-through — plays once, pure CSS (no GSAP) */
+#ktype{ position:absolute; left:50%; top:50%; width:100vmax; height:100vmax;
+  margin:-50vmax 0 0 -50vmax; display:flex; flex-direction:column; justify-content:center;
+  pointer-events:none; z-index:0; user-select:none;
+  animation:ktZoom 2.3s cubic-bezier(.86,0,.07,1) .15s forwards; }
+.kt-line{ white-space:nowrap; text-align:center; font-family:'Sora'; font-weight:800;
+  text-transform:uppercase; letter-spacing:-.02em; line-height:.8;
+  font-size:clamp(4.5rem,15vh,10.5rem); color:var(--azure); opacity:.05; }
+.kt-line:nth-child(odd){ animation:ktOdd 2.3s cubic-bezier(.86,0,.07,1) forwards; }
+.kt-line:nth-child(even){ animation:ktEven 2.3s cubic-bezier(.86,0,.07,1) forwards; }
+.kt-line:nth-child(1){ animation-delay:.15s; } .kt-line:nth-child(2){ animation-delay:.20s; }
+.kt-line:nth-child(3){ animation-delay:.25s; } .kt-line:nth-child(4){ animation-delay:.30s; }
+.kt-line:nth-child(5){ animation-delay:.35s; } .kt-line:nth-child(6){ animation-delay:.40s; }
+.kt-line:nth-child(7){ animation-delay:.45s; } .kt-line:nth-child(8){ animation-delay:.50s; }
+.kt-line:nth-child(9){ animation-delay:.55s; } .kt-line:nth-child(10){ animation-delay:.60s; }
+.kt-line:nth-child(11){ animation-delay:.65s; } .kt-line:nth-child(12){ animation-delay:.70s; }
+@keyframes ktZoom{ 55%{ transform:scale(2.7) rotate(-90deg); } 100%{ transform:scale(2.85) rotate(-90deg); } }
+@keyframes ktOdd{ 0%{ transform:translateX(0); opacity:.05; }
+  38%{ transform:translateX(10%); opacity:.55; }
+  100%{ transform:translateX(-185%); opacity:0; } }
+@keyframes ktEven{ 0%{ transform:translateX(0); opacity:.05; }
+  38%{ transform:translateX(-10%); opacity:.55; }
+  100%{ transform:translateX(185%); opacity:0; } }
 #orb{ position:absolute; inset:0; width:100%; height:100%; display:block; }
-.lobby-tag{ position:absolute; font-family:'JetBrains Mono'; font-size:.62rem;
-  letter-spacing:.2em; text-transform:uppercase; color:#56698F; }
+.lobby-tag{ position:absolute; z-index:2; font-family:'JetBrains Mono'; font-size:.62rem;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--mist); }
 .lobby-tag.tl{ top:26px; left:30px; }
 .lobby-tag.br{ bottom:24px; right:30px; }
-.lobby-load{ width:min(300px,56vw); height:2px; background:#1D2A47;
+.lobby-load{ position:relative; z-index:1; width:min(300px,56vw); height:2px; background:var(--line-strong);
   border-radius:99px; overflow:hidden; margin-top:-3vh; }
 .lobby-load span{ display:block; height:100%; width:0; background:var(--azure-bright); }
-.lobby-load span.run{ animation:lobbyfill 3.5s cubic-bezier(.3,.6,.4,1) forwards; }
+.lobby-load span.run{ animation:lobbyfill 4.2s cubic-bezier(.3,.6,.4,1) forwards; }
 @keyframes lobbyfill{ to{ width:100%; } }
 .orb-wrap{ touch-action:none; }
 @media (max-width:640px){ .lobby-tag.br{ display:none; } }
-@media (prefers-reduced-motion:reduce){ #lobby{ transition:none; } }
+@media (prefers-reduced-motion:reduce){ #lobby{ transition:none; }
+  #ktype{ display:none; } .orb-wrap{ opacity:1; transform:none; animation:none; } }
 
 /* hero entrance plays only after the lobby gate opens */
 body.entered .display .row > span{ animation:rise .95s var(--ease) forwards; }
@@ -664,6 +699,20 @@ body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
 <div id="lobby" role="dialog" aria-modal="true" aria-label="Welcome — press Proceed to enter">
   <span class="lobby-tag tl" aria-hidden="true">Daryll Celestial — Portfolio</span>
   <span class="lobby-tag br" aria-hidden="true">Rev 3.0 — 2026</span>
+  <div id="ktype" aria-hidden="true">
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+    <div class="kt-line">DAR DAR DAR DAR DAR DAR DAR DAR</div>
+  </div>
   <div class="orb-wrap"><canvas id="orb" aria-hidden="true"></canvas></div>
   <div class="lobby-load" aria-hidden="true"><span id="lobbyBar"></span></div>
 </div>
@@ -691,7 +740,7 @@ body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
   }
   /* preloader: lifts itself — any click or key skips early */
   document.getElementById('lobbyBar').classList.add('run');
-  setTimeout(open, 3500);
+  setTimeout(open, 4200);
   lb.addEventListener('click', open);
   addEventListener('keydown', function(e){ if (!done) open(); });
 })();
@@ -739,7 +788,7 @@ body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
   <div class="wrap">
     <div class="spec">
       <span class="note-dim">Field: <b>Web &amp; mobile development</b></span>
-      <span class="note-dim">Also: <b>Graphic design · Photography</b></span>
+      <span class="note-dim">Now: <b>Leading a capstone dev team</b></span>
       <span class="note-dim">Status: <b style="color:var(--azure)">Open to work</b></span>
     </div>
 
@@ -760,11 +809,16 @@ body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
 
     <div class="hero-foot">
       <div>
-        <p>Web &amp; mobile apps for <span class="rot"><span class="rot-in" id="rotWord">small businesses</span></span> — designed, built, and shipped by one person. Trained as a designer first, so it looks as good as it runs.</p>
+        <p>I build web and mobile apps for <span class="rot"><span class="rot-in" id="rotWord">the web</span></span> — front end to back end, shipped and working. Currently leading a capstone team and building toward launching software of my own.</p>
         <div class="hero-actions">
           <a href="#work" class="btn btn-solid">Start at the work <span class="ar">↓</span></a>
           <a href="#contact" class="quiet">or skip to hello →</a>
         </div>
+      </div>
+      <div class="hero-stats" aria-label="Key facts">
+        <div class="hstat"><b class="num" data-count="6" data-suffix="+">0</b><span>Apps shipped</span></div>
+        <div class="hstat"><b>Web · iOS · Android</b><span>Platforms</span></div>
+        <div class="hstat"><b>3 devs</b><span>Team led</span></div>
       </div>
     </div>
   </div>
@@ -888,52 +942,47 @@ body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
 
     <div class="cred-feat reveal">
       <div class="doc">
-        <span class="corner tl">DOC. A-01</span>
+        <span class="corner tl">Award · 2026</span>
         <img src="images/cert-featured.jpg" alt="Featured certificate">
         <span class="corner br">Verified</span>
       </div>
       <div class="info">
-        <span class="note">Latest credential</span>
-        <h3>Full-Stack Web Development</h3>
-        <span class="note-dim">Coursera · Completed Mar 2026</span>
-        <p>A 6-month program covering modern front-end and back-end development, REST APIs, and deployment. Capstone: a full booking platform.</p>
-        <a href="#" target="_blank" class="btn btn-solid">View credential <span class="ar">→</span></a>
+        <span class="note">★ Award · Best in Capstone</span>
+        <h3>Best in Capstone — "Enverga Admission AI"</h3>
+        <span class="note-dim">Open iT Summer Bootcamp · Data Science Track · May 2026</span>
+        <p>Awarded Best in Capstone for <em style="font-style:normal;color:var(--ink)">Enverga Admission AI</em>, recognized for project execution, practical application of learned skills, creativity, collaboration, and dedication throughout the program.</p>
+        <p class="note-dim" style="margin-top:-14px;">Credential ID · b6f4a53d-3e01-482b-837d-ed518389b05a</p>
+        <a href="https://credsverse.com/credentials/b6f4a53d-3e01-482b-837d-ed518389b05a?preview=1" target="_blank" rel="noopener" class="btn btn-solid">Verify certificate <span class="ar">→</span></a>
       </div>
     </div>
 
     <div class="cred-table reveal">
       <div class="cred-row">
-        <span class="note-dim">Cisco</span>
-        <h4>CCNA: Networking Basics</h4>
-        <span class="note-dim">Jan 2026</span>
-        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
+        <span class="note-dim">Open iT</span>
+        <h4>Applied Full-Stack &amp; Data Science Bootcamp — Data Science Track</h4>
+        <span class="note-dim">Jun 2026</span>
+        <a href="https://credsverse.com/credentials/95d62786-9354-49fe-9075-f378a794b22c?preview=1" target="_blank" rel="noopener" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
       </div>
       <div class="cred-row">
-        <span class="note-dim">freeCodeCamp</span>
-        <h4>Responsive Web Design</h4>
-        <span class="note-dim">Nov 2025</span>
-        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
+        <span class="note-dim">IBM</span>
+        <h4>Flutter &amp; Dart: Developing iOS, Android &amp; Mobile Apps</h4>
+        <span class="note-dim">May 2025</span>
+        <a href="https://www.coursera.org/account/accomplishments/verify/4J3YR2V1EXSX" target="_blank" rel="noopener" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
       </div>
       <div class="cred-row">
-        <span class="note-dim">Google</span>
-        <h4>IT Support Fundamentals</h4>
-        <span class="note-dim">Aug 2025</span>
-        <a href="#" target="_blank" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
+        <span class="note-dim">LearnQuest</span>
+        <h4>Basics of Cisco Networking</h4>
+        <span class="note-dim">Mar 2025</span>
+        <a href="https://www.coursera.org/account/accomplishments/verify/CA2WL5OQDZVC" target="_blank" rel="noopener" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View →</a>
       </div>
     </div>
 
     <div class="cred-more reveal">
-      <a href="https://www.linkedin.com/in/your-username/details/certifications/" target="_blank" class="btn">All certifications on LinkedIn <span class="ar">→</span></a>
+      <a href="https://www.linkedin.com/in/darcelestial/details/certifications/" target="_blank" class="btn">All certifications on LinkedIn <span class="ar">→</span></a>
     </div>
-      <div class="bridge reveal"><a href="#creative">Next — 04 / Plates <span class="ar">↓</span></a></div>
+      <div class="bridge reveal"><a href="#refs">Next — 04 / References <span class="ar">↓</span></a></div>
   </div>
 </section>
-
-<!-- ============ REFERENCES (HIDDEN until you have REAL quotes) ============
-     Fake testimonials can seriously damage trust. When you have 2+ real quotes
-     (professor, client, teammate, with their permission): delete this line and the
-     END marker below, replace the placeholder names/quotes, then renumber this and
-     later sections (see CUSTOMIZE.md).
 
 <section id="refs" style="padding-top:0;">
   <div class="wrap">
@@ -944,36 +993,19 @@ body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
     <div class="quotes" id="quotesTrack">
       <div class="quote">
         <span class="qn">Ref. 01</span>
-        <p>"Daryll delivered our event site ahead of schedule and handled every revision patiently. Communication was clear from day one."</p>
-        <div class="who"><h4>Maria Reyes</h4><span>Adviser, Student IT Society</span></div>
-      </div>
-      <div class="quote">
-        <span class="qn">Ref. 02</span>
-        <p>"One of the most dependable students I've supervised. He asks thoughtful questions and takes feedback seriously."</p>
-        <div class="who"><h4>Prof. J. Santos</h4><span>IT Department</span></div>
-      </div>
-      <div class="quote">
-        <span class="qn">Ref. 03</span>
-        <p>"He designed our logo and built our booking page. Customers keep complimenting the site."</p>
-        <div class="who"><h4>A. Cruz</h4><span>Freelance client</span></div>
-      </div>
-      <div class="quote">
-        <span class="qn">Ref. 04</span>
-        <p>"As our team lead, Daryll kept the project organized and stepped in wherever we were stuck."</p>
-        <div class="who"><h4>K. Lim</h4><span>Groupmate, capstone</span></div>
+        <p>"Daryll is one of the most active and top student leaders at the University. He is one of the top students in terms of technical skills and the go-to person when it comes to student events — as a host. These skills — technical and communication — are vital in terms of collaboration. With his stint in a leadership role at the university, I'm sure he will make a good team member in the industry as well."</p>
+        <div class="who"><h4>Jessa Cahilig</h4><span>Technology Leader · Certified Scrum Master · former teacher</span></div>
       </div>
     </div>
-    <div class="drag-hint note-dim">← Drag to browse</div>
       <div class="bridge reveal"><a href="#creative">Next — 05 / Plates <span class="ar">↓</span></a></div>
   </div>
 </section>
-END OF HIDDEN REFERENCES -->
 
-<!-- ============ 06 PLATES ============ -->
+<!-- ============ 05 PLATES ============ -->
 <section id="creative" style="padding-top:0;">
   <div class="wrap">
-    <span class="ghost" aria-hidden="true">04</span>
-    <div class="idx reveal"><span class="n">04</span><h2>Plates</h2><span class="note-dim right">Design &amp; photography — click to enlarge</span></div>
+    <span class="ghost" aria-hidden="true">05</span>
+    <div class="idx reveal"><span class="n">05</span><h2>Plates</h2><span class="note-dim right">Design &amp; photography — click to enlarge</span></div>
     <div class="lanes reveal" id="gallery">
       <div class="lane">
         <div class="lane-head"><h3>Through the lens</h3><span class="note">Photography</span></div>
@@ -1010,30 +1042,31 @@ END OF HIDDEN REFERENCES -->
         </div>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#process">Next — 05 / How I work <span class="ar">↓</span></a></div>
+      <div class="bridge reveal"><a href="#process">Next — 06 / How I work <span class="ar">↓</span></a></div>
   </div>
 </section>
 
 <!-- ============ 06 HOW I WORK ============ -->
 <section id="process" style="padding-top:0;">
   <div class="wrap">
-    <span class="ghost" aria-hidden="true">05</span>
-    <div class="idx reveal"><span class="n">05</span><h2>How I work</h2><span class="note-dim right">For clients &amp; teams</span></div>
+    <span class="ghost" aria-hidden="true">06</span>
+    <div class="idx reveal"><span class="n">06</span><h2>How I work</h2><span class="note-dim right">For clients &amp; teams</span></div>
+
     <div class="steps reveal">
       <div class="step"><span class="note">01</span><h4>Chat</h4><p>A quick call or messages — what you need, when, and what it costs. No jargon.</p></div>
       <div class="step"><span class="note">02</span><h4>Plan</h4><p>I send a simple scope: what gets built, the timeline, and one fixed price.</p></div>
       <div class="step"><span class="note">03</span><h4>Build</h4><p>You get progress links as I go — see it live, request changes early.</p></div>
       <div class="step"><span class="note">04</span><h4>Handover</h4><p>Deployed, documented, and yours. I stay reachable after launch.</p></div>
     </div>
-    <div class="bridge reveal"><a href="#principles">Next — 06 / Principles <span class="ar">↓</span></a></div>
+    <div class="bridge reveal"><a href="#principles">Next — 07 / Principles <span class="ar">↓</span></a></div>
   </div>
 </section>
 
 <!-- ============ 07 PRINCIPLES ============ -->
 <section id="principles" style="padding-top:0;">
   <div class="wrap">
-    <span class="ghost" aria-hidden="true">06</span>
-    <div class="idx reveal"><span class="n">06</span><h2>Principles</h2><span class="note-dim right">Each one demonstrates itself</span></div>
+    <span class="ghost" aria-hidden="true">07</span>
+    <div class="idx reveal"><span class="n">07</span><h2>Principles</h2><span class="note-dim right">Each one demonstrates itself</span></div>
 
     <div class="prin">
       <div class="prin-row" data-fx="type" data-text="Code you can read.">
@@ -1076,10 +1109,9 @@ END OF HIDDEN REFERENCES -->
     <div class="reveal"><a class="mail" id="mail" href="mailto:dcbcelestial@gmail.com">dcbcelestial@gmail.com<span class="hint" id="mailHint">Click to copy</span></a></div>
     <div class="row2 reveal">
       <a href="mailto:dcbcelestial@gmail.com">Open mail app</a>
-      <a href="https://github.com/darrar1" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/darcelestial/" target="_blank">LinkedIn</a>
-      <a href="https://www.instagram.com/darrarpr_/?hl=en" target="_blank">Instagram</a>
-      <a href="#" target="_blank">Behance</a>
+      <a href="https://github.com/darrar1" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/darcelestial/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.instagram.com/darrarpr_/" target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>
 </section>
@@ -1263,11 +1295,33 @@ plates.forEach((p,i) => { p.querySelector('img').style.transitionDelay = (i % 3 
 // ===== header sheet indicator + rotating word + letters + copy mail =====
 const loc = document.getElementById('loc');
 const locLabels = { work:'01 / Selected work', skills:'02 / Capabilities', certs:'03 / Credentials',
-  creative:'04 / Plates', process:'05 / How I work', principles:'06 / Principles', contact:'— / Contact' };
+  refs:'04 / References', creative:'05 / Plates', process:'06 / How I work', principles:'07 / Principles', contact:'— / Contact' };
 
 // rotating positioning word
 const rotWord = document.getElementById('rotWord');
-const rotList = ['small businesses','student orgs','startups','your idea'];
+const rotList = ['the web','iOS','Android','real users'];
+// hero count-up (only the numeric stat)
+(function(){
+  var el = document.querySelector('.hero-stats [data-count]');
+  if (!el) return;
+  var target = +el.dataset.count, suf = el.dataset.suffix || '';
+  if (reduce){ el.textContent = target + suf; return; }
+  var started = false;
+  function run(){
+    if (started) return; started = true;
+    var t0 = performance.now(), dur = 1300;
+    (function tick(t){
+      var p = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suf;
+      if (p < 1) requestAnimationFrame(tick);
+    })(t0);
+  }
+  // start when the gate lifts (or immediately if already entered)
+  if (document.body.classList.contains('entered')) run();
+  else { var mo = new MutationObserver(function(){ if (document.body.classList.contains('entered')){ run(); mo.disconnect(); } });
+    mo.observe(document.body, { attributes:true, attributeFilter:['class'] }); }
+})();
+
 if (rotWord && !reduce){
   let ri = 0;
   setInterval(() => {
@@ -1432,7 +1486,7 @@ if (lobby){
       const a = Math.min(1, .12 + depth * .55 + scan * .45 + hot * .35);
       const rad = (.7 + depth * 1.5) + scan * 1.4 + hot * 1.2;
       ctx.beginPath();
-      ctx.fillStyle = (scan > 0 || hot > 0) ? `rgba(45,136,255,${a})` : `rgba(120,170,255,${a})`;
+      ctx.fillStyle = (scan > 0 || hot > 0) ? `rgba(45,136,255,${a})` : `rgba(30,111,224,${a})`;
       ctx.arc(W / 2 + px, H / 2 + py, rad, 0, 6.2832);
       ctx.fill();
     }
