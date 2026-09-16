@@ -115,6 +115,13 @@ header.scrolled{ border-color:var(--line); }
 .nav-links{ display:flex; gap:2px; align-items:center; }
 .nav-links a{ font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
   color:var(--slate); padding:10px 14px; border-radius:3px; transition:color .2s, background .2s; }
+.nav-links .talk{ margin-left:14px; border:1px solid var(--ink); color:var(--ink); border-radius:3px; }
+.nav-links .talk:hover{ background:var(--ink); color:var(--pearl); }
+.nav-links a.active{ color:var(--azure); }
+.nav-links a.active::after{ content:""; display:block; height:1.5px; background:var(--azure);
+  margin-top:3px; border-radius:2px; animation:navmark .3s var(--ease); }
+@keyframes navmark{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+.nav-links a.active{ position:relative; }
 .nav-links a:hover{ color:var(--azure); background:var(--azure-soft); }
 @media (max-width:900px){ .loc{ display:none; } }
 @media (max-width:640px){ .nav{ padding:0 22px; } .wrap{ padding:0 22px; } }
@@ -261,9 +268,11 @@ section .wrap{ position:relative; }
       <span class="loc note-dim" aria-hidden="true">W.01 / Case study</span>
     </div>
     <nav class="nav-links">
-      <a href="index.html#work">← All work</a>
+      <a href="index.html">Home</a>
+      <a href="index.html#work" class="active">Work</a>
       <a href="about.html">About</a>
       <a href="index.html#contact">Contact</a>
+      <a href="index.html#contact" class="talk">Let's talk</a>
     </nav>
   </div>
 </header>

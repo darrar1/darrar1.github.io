@@ -87,6 +87,11 @@ header.scrolled{ border-color:var(--ln); }
 .nav-links a{ font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
   color:var(--fg); padding:10px 14px; border-radius:3px; transition:color .2s, background .2s; }
 .nav-links a:hover{ color:var(--azure); background:var(--azure-soft); }
+.nav-links a.active{ color:var(--azure); }
+.nav-links a.active::after{ content:""; display:block; height:1.5px; background:var(--azure);
+  margin-top:3px; border-radius:2px; animation:navmark .3s var(--ease); }
+@keyframes navmark{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+.nav-links a.active{ position:relative; }
 .nav-links .talk{ margin-left:14px; border:1px solid var(--hd); color:var(--hd); }
 .nav-links .talk:hover{ background:var(--hd); color:var(--bg); }
 .menu-btn{ display:none; background:none; border:none; cursor:pointer; padding:8px; }
@@ -411,14 +416,13 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
   <div class="nav">
     <div class="brand">
       <a href="index.html" class="logo"><span>DAR</span><span class="lg-rest">YLL CELESTIAL</span><span class="lg-dot" aria-hidden="true"></span></a>
-      <span class="loc note-dim" id="loc" aria-hidden="true">00 / About</span>
+      <span class="loc note-dim" id="loc" aria-hidden="true">About · overview</span>
     </div>
     <nav class="nav-links" id="navlinks">
-      <a href="#intro">Intro</a>
-      <a href="#education">Education</a>
-      <a href="#profile">Profile</a>
-      <a href="#experience">Experience</a>
-      <a href="index.html">← Home</a>
+      <a href="index.html">Home</a>
+      <a href="index.html#work">Work</a>
+      <a href="about.html" class="active">About</a>
+      <a href="index.html#contact">Contact</a>
       <a href="index.html#contact" class="talk">Let's talk</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
@@ -844,8 +848,8 @@ if (canHover){
   });
 }
 const loc = document.getElementById('loc');
-const locLabels = { intro:'A1 / Introduction', education:'A2 / Education',
-  profile:'A3 / Spec sheet', experience:'A4 / Experience' };
+const locLabels = { intro:'About · A1 Introduction', education:'About · A2 Education',
+  profile:'About · A3 Profile', experience:'About · A4 Experience' };
 const lio = new IntersectionObserver(es => {
   es.forEach(e => {
     if (e.isIntersecting && loc && locLabels[e.target.id]) loc.textContent = locLabels[e.target.id];

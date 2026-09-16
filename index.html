@@ -103,6 +103,11 @@ header.scrolled{ border-color:var(--line); }
 .nav-links a{ font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
   color:var(--slate); padding:10px 14px; border-radius:3px; transition:color .2s, background .2s; }
 .nav-links a:hover{ color:var(--azure); background:var(--azure-soft); }
+.nav-links a.active{ color:var(--azure); }
+.nav-links a.active::after{ content:""; display:block; height:1.5px; background:var(--azure);
+  margin-top:3px; border-radius:2px; animation:navmark .3s var(--ease); }
+@keyframes navmark{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+.nav-links a.active{ position:relative; }
 .nav-links .talk{ margin-left:14px; border:1px solid var(--ink); color:var(--ink); }
 .nav-links .talk:hover{ background:var(--ink); color:var(--pearl); }
 .menu-btn{ display:none; background:none; border:none; cursor:pointer; padding:8px; }
@@ -767,14 +772,13 @@ body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
   <div class="nav">
     <div class="brand">
       <a href="#top" class="logo"><span>DAR</span><span class="lg-rest">YLL CELESTIAL</span><span class="lg-dot" aria-hidden="true"></span></a>
-      <span class="loc note-dim" id="loc" aria-hidden="true">00 / Hello</span>
+      <span class="loc note-dim" id="loc" aria-hidden="true">Home · overview</span>
     </div>
     <nav class="nav-links" id="navlinks">
-      <a href="about.html">About</a>
+      <a href="#top" class="active">Home</a>
       <a href="#work">Work</a>
-      <a href="#skills">Skills</a>
-      <a href="#certs">Certs</a>
-      <a href="#creative">Creative</a>
+      <a href="about.html">About</a>
+      <a href="#contact">Contact</a>
       <a href="#contact" class="talk">Let's talk</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
@@ -1294,8 +1298,8 @@ plates.forEach((p,i) => { p.querySelector('img').style.transitionDelay = (i % 3 
 
 // ===== header sheet indicator + rotating word + letters + copy mail =====
 const loc = document.getElementById('loc');
-const locLabels = { work:'01 / Selected work', skills:'02 / Capabilities', certs:'03 / Credentials',
-  refs:'04 / References', creative:'05 / Plates', process:'06 / How I work', principles:'07 / Principles', contact:'— / Contact' };
+const locLabels = { work:'Home · 01 Work', skills:'Home · 02 Capabilities', certs:'Home · 03 Credentials',
+  refs:'Home · 04 References', creative:'Home · 05 Plates', process:'Home · 06 How I work', principles:'Home · 07 Principles', contact:'Home · Contact' };
 
 // rotating positioning word
 const rotWord = document.getElementById('rotWord');
