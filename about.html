@@ -29,7 +29,7 @@
   --pearl:#FBFCFE; --card:#FFFFFF;
   --azure:#1E6FE0; --azure-bright:#2D88FF; --azure-soft:#E7F0FE; --azure-ink:#0B3C8C;
   --ink:#141E36; --slate:#4E5D78; --mist:#8794AC; --line:#DEE6F2; --line-strong:#C6D4E8;
-  --max:1240px; --ease:cubic-bezier(.22,1,.36,1);
+  --rail:64px; --max:1240px; --ease:cubic-bezier(.22,1,.36,1);
 
   --bg:var(--pearl); --fg:var(--slate); --hd:var(--ink);
   --ln:var(--line); --ln2:var(--line-strong); --srf:var(--card);
@@ -75,6 +75,20 @@ img{ display:block; max-width:100%; }
 .btn:not(.btn-solid):hover{ background:var(--hd); color:var(--bg); }
 
 /* top bar */
+/* left rail — matches index */
+.rail{ position:fixed; top:0; left:0; bottom:0; width:var(--rail); z-index:40;
+  border-right:1px solid var(--ln); background:color-mix(in srgb, var(--bg) 72%, transparent); backdrop-filter:blur(6px);
+  transition:background .8s var(--ease), border-color .8s var(--ease);
+  display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:90px 0 26px; }
+.rail .vtext{ writing-mode:vertical-rl; font-family:'JetBrains Mono'; font-size:.66rem;
+  letter-spacing:.3em; text-transform:uppercase; color:var(--mist); }
+.rail .dots{ display:flex; flex-direction:column; gap:14px; }
+.rail .dots a{ width:8px; height:8px; border-radius:50%; border:1px solid var(--ln2);
+  transition:.3s; display:block; }
+.rail .dots a.on{ background:var(--azure); border-color:var(--azure); transform:scale(1.3); }
+main{ margin-left:var(--rail); }
+header{ left:var(--rail); }
+
 header{ position:fixed; top:0; left:0; right:0; z-index:50;
   background:color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter:blur(12px);
   border-bottom:1px solid transparent; transition:border-color .3s, background .8s var(--ease); }
@@ -101,9 +115,8 @@ header.scrolled{ border-color:var(--ln); }
    HERO — headline behind a swinging ID badge
 ========================================================= */
 .hero{ position:relative; padding:150px 0 60px; min-height:82vh; overflow:visible; }
-.hero .display{ font-family:'Sora'; font-weight:800; text-transform:uppercase; color:var(--hd);
-  font-size:clamp(2.6rem,8.5vw,6.6rem); letter-spacing:-.045em; line-height:.95; text-align:left;
-  max-width:60%; }
+.hero .display{ position:relative; z-index:2; font-family:'Sora'; font-weight:800; color:var(--hd);
+  font-size:clamp(3.4rem,11.5vw,8.6rem); line-height:.94; letter-spacing:-.045em; text-transform:uppercase; text-align:left; }
 .hero .display .outline{ color:transparent; -webkit-text-stroke:2.5px var(--azure); }
 .hero .greet{ display:flex; gap:36px; margin:24px 0 0; }
 .hero .resume{ text-align:left; margin-top:42px; }
@@ -263,6 +276,7 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 /* header sheet indicator + interactive letters (shared with index) */
 .nav{ position:relative; }
 /* .loc now static inside .brand (revisions kit) */
+@media (max-width:1100px){ .rail{ display:none; } main{ margin-left:0; } header{ left:0; } }
 @media (max-width:900px){ .loc{ display:none; } }
 .display .lt{ display:inline-block; transition:transform .3s var(--ease), color .3s; }
 .display .lt:hover{ transform:translateY(-7%); color:var(--azure); }
@@ -383,7 +397,6 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 
 @media (max-width:900px){
   .hero{ min-height:auto; padding-top:130px; }
-  .hero .display{ max-width:none; }
   .rig{ position:relative; left:auto; top:0; margin:34px auto 0; width:min(280px,64vw); }
   .strap{ height:120px; min-height:0; }
   .spec-grid{ grid-template-columns:1fr; gap:50px; }
@@ -412,6 +425,18 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 <div id="spot" aria-hidden="true"></div>
 <div id="cursor" aria-hidden="true"><span class="clabel"></span></div>
 
+<aside class="rail" aria-hidden="true">
+  <span class="vtext">Portfolio — Rev 3.0 — 2026</span>
+  <nav class="dots" id="railDots">
+    <a href="index.html" data-s="home" aria-label="Home"></a>
+    <a href="#intro" data-s="intro" aria-label="Introduction"></a>
+    <a href="#education" data-s="education" aria-label="Education"></a>
+    <a href="#profile" data-s="profile" aria-label="Profile"></a>
+    <a href="#experience" data-s="experience" aria-label="Experience"></a>
+  </nav>
+  <span class="vtext">DAR</span>
+</aside>
+
 <header id="topbar">
   <div class="nav">
     <div class="brand">
@@ -429,6 +454,8 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
   </div>
 </header>
 
+<main>
+
 <!-- ============ HERO — swinging ID ============ -->
 <section class="hero">
   <div class="wrap">
@@ -439,7 +466,7 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
       <span class="note-dim">Hello</span>
     </div>
     <div class="resume">
-      <a href="resume.pdf" target="_blank" class="btn btn-solid">View resume <span class="ar">→</span></a>
+      <a href="resume.pdf" target="_blank" class="btn btn-solid">View resume</a>
     </div>
   </div>
 
@@ -471,7 +498,7 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
     <div class="idx reveal"><span class="n">A1</span><h2>Introduction</h2></div>
     <p class="intro-big reveal">I'm Daryll — a BS Information Technology student and developer focused on <em>web and mobile applications</em>. What I enjoy most is the full arc of building something: figuring out what a system needs to do, turning ideas into code, and making sure it works reliably for the people using it.</p>
     <p class="intro-sub reveal">I've worked across front-end and back-end, and I currently lead a small team on our capstone. Beyond making things work, I like understanding <em>why</em> they work — exploring my tools, learning from every problem, and finding better ways to build. For me, development isn't just writing code. It's turning ideas into something useful, thoughtful, and real.</p>
-      <div class="bridge reveal"><a href="#education">Next — A2 / Education <span class="ar">↓</span></a></div>
+      <div class="bridge reveal"><a href="#education">Next — A2 / Education</a></div>
   </div>
 </section>
 
@@ -496,10 +523,10 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
           <h3>Certifications &amp; training</h3>
           <p>Full-stack, networking, and design credentials — the full list lives on the home page.</p>
         </div>
-        <a href="index.html#certs" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View all →</a>
+        <a href="index.html#certs" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View all</a>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#profile">Next — A3 / Spec sheet <span class="ar">↓</span></a></div>
+      <div class="bridge reveal"><a href="#profile">Next — A3 / Spec sheet</a></div>
   </div>
 </section>
 
@@ -557,7 +584,7 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#experience">Next — A4 / Experience <span class="ar">↓</span></a></div>
+      <div class="bridge reveal"><a href="#experience">Next — A4 / Experience</a></div>
   </div>
 </section>
 
@@ -705,16 +732,18 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
     <span class="note reveal">Next</span>
     <h2 class="reveal cta-anim"><span class="cta-see">Seen enough?</span><br><span class="outline cta-see d2">See the work.</span></h2>
     <div class="row2 reveal">
-      <a href="index.html#work" class="btn btn-solid">Selected work <span class="ar">→</span></a>
-      <a href="index.html#contact" class="btn">Contact <span class="ar">→</span></a>
+      <a href="index.html#work" class="btn btn-solid">Selected work</a>
+      <a href="index.html#contact" class="btn">Contact</a>
     </div>
   </div>
 </section>
 
+</main>
+
 <footer class="titleblock">
   <div class="tb-top">
     <span class="tb-status"><span class="live-dot"></span>Open to work — full-time &amp; freelance</span>
-    <button class="toTop" id="toTop">Top <span class="ar">↑</span></button>
+    <button class="toTop" id="toTop">Top</button>
   </div>
   <div class="tb-grid">
     <div class="tb-cell"><small>Document</small><b>About the maker — sheet A</b></div>
@@ -868,6 +897,16 @@ if (phTime){
 // footer: back to top + live PH clock
 document.getElementById('toTop').addEventListener('click', () =>
   scrollTo({ top:0, behavior: reduce ? 'auto' : 'smooth' }));
+
+// rail dots follow sections
+const railDots = [...document.querySelectorAll('#railDots a')];
+const rdMap = { intro:'intro', education:'education', profile:'profile', experience:'experience' };
+const rio = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting){ const id = rdMap[e.target.id];
+    railDots.forEach(d => d.classList.toggle('on', d.dataset.s === id)); } });
+}, { rootMargin:'-40% 0px -50% 0px' });
+Object.keys(rdMap).forEach(id => { const el = document.getElementById(id); if (el) rio.observe(el); });
+
 // reveal
 const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
