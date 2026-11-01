@@ -30,6 +30,9 @@ All images live in the `images/` folder. Ctrl+F `images/` in each file to see wh
 - `images/case-portal-1.jpg`, `case-portal-2.jpg` — case-study screens
 Resize photos to about 1500px wide before adding (smaller file = faster site).
 
+## Capabilities logos (index.html)
+Ctrl+F `LOGOS`. Each tool is one `<li>` line. To add one, copy a line and change the name in `aria-label` / `title` and in the URL: `https://cdn.simpleicons.org/<name>` (find names at simpleicons.org — e.g. `typescript`, `firebase`, `kotlin`). The carousel repeats the logos by itself; you only list each tool once.
+
 ## 3. Projects (index.html)
 Ctrl+F `work-row`. Each project block contains:
 - `<h3>` title (W.01's title links to its case-study page)

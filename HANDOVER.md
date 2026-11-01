@@ -59,8 +59,8 @@ lobbySeen`, and reduced-motion). Hero: giant name with per-letter hover, second
 line stroke-outlined, rotating positioning word (`rotList` in JS), dimension
 line "SCALE 1:1 — BUILT BY HAND", tilting portrait with crop marks, spec line.
 Sections: 01 Work (index rows + cursor-following image preview + outcome
-metrics + role labels; W.01 links to work-portal.html), 02 Capabilities (ruled
-columns), 03 Credentials (featured doc + ledger + LinkedIn button), 04 Plates
+metrics + role labels; W.01 links to work-portal.html), 02 Capabilities (logo carousel, two lanes, pause button;
+CDN masks from cdn.simpleicons.org, Adobe marks drawn inline), 03 Credentials (featured doc + ledger + LinkedIn button), 04 Plates
 (two lanes + lightbox w/ keyboard), 05 How I work, 06 Principles (kinetic
 typography: typewriter / cursor-wave letters / progress+stamp / AI
 Tab-autocomplete), Contact (animated heading, click-to-copy email). **Night mode is a header toggle** (`#themeBtn`) — the old scroll trigger was removed. Wow kit: grid spotlight

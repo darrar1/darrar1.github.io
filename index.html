@@ -167,17 +167,38 @@ section{ padding:110px 0; }
 
 /* (About section moved to about.html) */
 
-/* 02 CAPABILITIES — three ruled columns, no cards */
-.caps{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:0; border-top:1px solid var(--line-strong); }
-.cap{ padding:34px 30px 40px; border-bottom:1px solid var(--line-strong); }
-.cap + .cap{ border-left:1px solid var(--line); }
-.cap.primary{ border-left:4px solid var(--azure); padding-left:30px; background:linear-gradient(90deg, rgba(30,111,224,.05), transparent 70%); }
-.cap h3{ font-size:1.3rem; margin:10px 0 20px; }
-.cap ul{ list-style:none; }
-.cap li{ font-family:'JetBrains Mono'; font-size:.85rem; color:var(--slate);
-  padding:9px 0; border-bottom:1px dashed var(--line); display:flex; justify-content:space-between; }
-.cap li:last-child{ border-bottom:none; }
-.cap li em{ font-style:normal; color:var(--mist); font-size:.72rem; }
+/* 02 CAPABILITIES — logo carousel: two ruled lanes drifting in opposite directions */
+.logo-rail{ display:grid; gap:34px; padding:40px 0; overflow:hidden;
+  border-top:1px solid var(--line-strong); border-bottom:1px solid var(--line-strong);
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.lane-track{ display:flex; width:max-content; animation:marq 44s linear infinite; }
+.lane-track.rev{ animation-direction:reverse; animation-duration:36s; }
+.logo-rail:hover .lane-track, .logo-rail.paused .lane-track{ animation-play-state:paused; }
+@keyframes marq{ to{ transform:translateX(-50%); } }
+.lane-set{ display:flex; align-items:center; gap:72px; padding-right:72px; list-style:none; }
+.lane-set li{ display:block; }
+/* monochrome logo: the file is a mask, the colour is ours — so it follows light/dark */
+.brand-i{ display:block; width:42px; height:42px; background:currentColor; color:var(--slate);
+  -webkit-mask:var(--src) center/contain no-repeat; mask:var(--src) center/contain no-repeat;
+  transition:color .25s; }
+.brand-i:hover{ color:var(--azure); }
+/* Adobe marks aren't on the icon CDN: drawn as outline app tiles */
+.bi-ps{ --src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='1.5' width='21' height='21' rx='4' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='10'%3EPs%3C/text%3E%3C/svg%3E"); }
+.bi-ai{ --src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='1.5' width='21' height='21' rx='4' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='10'%3EAi%3C/text%3E%3C/svg%3E"); }
+.bi-lr{ --src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='1.5' width='21' height='21' rx='4' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='10'%3ELr%3C/text%3E%3C/svg%3E"); }
+#capPause{ align-self:center; }
+#capPause .i{ grid-area:1/1; transition:opacity .3s cubic-bezier(.2,0,0,1), scale .3s cubic-bezier(.2,0,0,1), filter .3s cubic-bezier(.2,0,0,1); }
+#capPause .pl, #capPause[aria-pressed="true"] .pz{ opacity:0; scale:.25; filter:blur(4px); }
+#capPause[aria-pressed="true"] .pl{ opacity:1; scale:1; filter:blur(0); }
+@media (max-width:640px){ .lane-set{ gap:48px; padding-right:48px; } .brand-i{ width:34px; height:34px; } }
+/* reduced motion: no drift — one static, centred grid of logos */
+@media (prefers-reduced-motion:reduce){
+  .logo-rail{ -webkit-mask-image:none; mask-image:none; }
+  .lane-track{ width:auto; justify-content:center; }
+  .lane-set{ flex-wrap:wrap; justify-content:center; padding:0 20px; gap:40px 56px; }
+  .lane-set[aria-hidden="true"], .lane-set li[aria-hidden="true"], #capPause{ display:none; }
+}
 
 /* 03 CREDENTIALS — featured document + ledger table */
 .cred-feat{ display:grid; grid-template-columns:1fr 1.1fr; gap:0; border:1px solid var(--line-strong);
@@ -660,8 +681,6 @@ body.entered .dim{ animation:draw 1.1s var(--ease) 1s forwards; }
 @media (max-width:900px){
   .fig{ position:relative; right:auto; top:auto; width:min(300px,70vw); margin:44px 0 0; }
   .hero-foot{ grid-template-columns:1fr; }
-  .caps{ grid-template-columns:1fr; }
-  .cap + .cap{ border-left:none; }
   .cred-feat{ grid-template-columns:1fr; }
   .cred-row{ grid-template-columns:1fr; gap:6px; padding:20px 22px; }
   .work-row{ grid-template-columns:44px 1fr; }
@@ -942,37 +961,28 @@ body.night{ color-scheme:dark; }
 <section id="skills" style="padding-top:0;">
   <div class="wrap">
     <span class="ghost" aria-hidden="true">02</span>
-    <div class="idx reveal"><span class="n">02</span><h2>Capabilities</h2></div>
-    <div class="caps reveal">
-      <div class="cap primary">
-        <span class="note">Primary</span>
-        <h3>Development</h3>
-        <ul>
-          <li>JavaScript / React <em>frontend</em></li>
-          <li>Node.js / PHP <em>backend</em></li>
-          <li>Python <em>scripting</em></li>
-          <li>MySQL <em>data</em></li>
-          <li>REST APIs <em>integration</em></li>
-          <li>Git / GitHub <em>workflow</em></li>
+    <div class="idx reveal"><span class="n">02</span><h2>Capabilities</h2>
+      <button class="ic sm right" id="capPause" type="button" aria-pressed="false" aria-label="Pause logos" title="Pause"><svg class="i pz" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5v14"/><path d="M15 5v14"/></svg><svg class="i pl" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7 4.5v15l12-7.5z"/></svg></button></div>
+    <!-- LOGOS: one <li> per tool. Logo files come from cdn.simpleicons.org/<name> -->
+    <div class="logo-rail reveal" id="capRail">
+      <div class="lane-track">
+        <ul class="lane-set" aria-label="Development">
+          <li><span class="brand-i" role="img" aria-label="JavaScript" title="JavaScript" style="--src:url(https://cdn.simpleicons.org/javascript)"></span></li>
+          <li><span class="brand-i" role="img" aria-label="React" title="React" style="--src:url(https://cdn.simpleicons.org/react)"></span></li>
+          <li><span class="brand-i" role="img" aria-label="Node.js" title="Node.js" style="--src:url(https://cdn.simpleicons.org/nodedotjs)"></span></li>
+          <li><span class="brand-i" role="img" aria-label="PHP" title="PHP" style="--src:url(https://cdn.simpleicons.org/php)"></span></li>
+          <li><span class="brand-i" role="img" aria-label="Python" title="Python" style="--src:url(https://cdn.simpleicons.org/python)"></span></li>
+          <li><span class="brand-i" role="img" aria-label="MySQL" title="MySQL" style="--src:url(https://cdn.simpleicons.org/mysql)"></span></li>
+          <li><span class="brand-i" role="img" aria-label="Git" title="Git" style="--src:url(https://cdn.simpleicons.org/git)"></span></li>
+          <li><span class="brand-i" role="img" aria-label="GitHub" title="GitHub" style="--src:url(https://cdn.simpleicons.org/github)"></span></li>
         </ul>
       </div>
-      <div class="cap">
-        <span class="note-dim">Supporting</span>
-        <h3>Design</h3>
-        <ul>
-          <li>Figma <em>UI/UX</em></li>
-          <li>Photoshop <em>raster</em></li>
-          <li>Illustrator <em>vector</em></li>
-          <li>Brand identity <em>systems</em></li>
-        </ul>
-      </div>
-      <div class="cap">
-        <span class="note-dim">Supporting</span>
-        <h3>Photography</h3>
-        <ul>
-          <li>Lightroom <em>editing</em></li>
-          <li>Portrait <em>people</em></li>
-          <li>Product <em>commercial</em></li>
+      <div class="lane-track rev">
+        <ul class="lane-set" aria-label="Design and photography">
+          <li><span class="brand-i" role="img" aria-label="Figma" title="Figma" style="--src:url(https://cdn.simpleicons.org/figma)"></span></li>
+          <li><span class="brand-i bi-ps" role="img" aria-label="Photoshop" title="Photoshop"></span></li>
+          <li><span class="brand-i bi-ai" role="img" aria-label="Illustrator" title="Illustrator"></span></li>
+          <li><span class="brand-i bi-lr" role="img" aria-label="Lightroom" title="Lightroom"></span></li>
         </ul>
       </div>
     </div>
@@ -1575,6 +1585,27 @@ const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold:.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ===== 02 capabilities: logo carousel =====
+// Each lane is filled past the rail width, then duplicated once so translateX(-50%) loops seamlessly.
+// Copies are aria-hidden: screen readers hear each logo once.
+const capRail = document.getElementById('capRail');
+if (capRail){
+  capRail.querySelectorAll('.lane-track').forEach(track => {
+    const set = track.querySelector('.lane-set'), items = [...set.children];
+    for (let n = 0; set.scrollWidth < capRail.clientWidth && n < 8; n++)
+      items.forEach(li => { const c = li.cloneNode(true); c.setAttribute('aria-hidden', 'true'); set.appendChild(c); });
+    const copy = set.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true'); copy.removeAttribute('aria-label');
+    track.appendChild(copy);
+  });
+  const capPause = document.getElementById('capPause');
+  capPause.addEventListener('click', () => {
+    const paused = capRail.classList.toggle('paused');
+    capPause.setAttribute('aria-pressed', paused);
+    capPause.title = paused ? 'Play' : 'Pause';
+  });
+}
 
 // ===== theme toggle (dark / light) — choice is remembered across pages =====
 const themeBtn = document.getElementById('themeBtn');
