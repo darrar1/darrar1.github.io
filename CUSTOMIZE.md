@@ -17,8 +17,10 @@ Every page also has an **EDIT MAP** comment at the very top — open the file, a
 | LinkedIn | index.html | `your-username` | Your real LinkedIn handle |
 | Socials | index.html | `href="#" target="_blank"` | Put real profile URLs in place of `#` |
 | Rotating hero words | index.html | `rotList` | Edit the list: `['small businesses','student orgs',...]` |
-| Hero spec line | index.html | `Field:` | Edit the three spec items |
+| Hero spec line | index.html | `Now:` | Edit the two spec items |
 | Resume | about.html | `Resume.pdf` | Your resume lives at `images/Resume.pdf`. To update it, replace that file and keep the exact name (capital R — GitHub Pages is case-sensitive) |
+
+**Icon buttons** (Code, Live, View, socials) have no visible text. Their name for screen readers is the `aria-label` (socials) or `data-label` (Code / Live / View) — keep it when you edit the link.
 
 ## 2. Images
 All images live in the `images/` folder. Ctrl+F `images/` in each file to see what is expected:
@@ -41,7 +43,7 @@ Ctrl+F `work-row`. Each project block contains:
 `work-portal.html` is a template. For each new project:
 1. Copy the file, rename it (e.g. `work-inventory.html`)
 2. Edit title, meta strip, the 3 stats, Problem/Solution, screens, process, outcome
-3. On index.html, point that project's title + "Case study" link at the new file
+3. On index.html, point that project's title link at the new file
 
 ## 5. Certifications (index.html)
 - Featured: Ctrl+F `Latest credential` — title, issuer, description, screenshot, and the `View credential` link (paste your verification URL over `#`)

@@ -442,6 +442,20 @@ body.night{ color-scheme:dark; }
   .theme-btn{ margin-left:0; padding:10px; }
   .theme-btn .tlabel{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 }
+
+/* =========================================================
+   ICONS — one stroke set (1.5px, currentColor); every icon-only control is named via aria-label
+========================================================= */
+.i{ width:18px; height:18px; flex:none; display:block; }
+.btn .i{ width:16px; height:16px; }
+.ic{ display:inline-grid; place-items:center; width:44px; height:44px; border:1px solid var(--ln2); border-radius:3px;
+  color:var(--fg); transition:color .2s, border-color .2s; }
+.ic:hover{ color:var(--azure); border-color:var(--azure); }
+.ic.sm{ width:32px; height:32px; } .ic.sm .i{ width:16px; height:16px; }
+.btn:hover .ar.dn{ transform:translateY(3px); }
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.theme-btn{ width:40px; height:40px; padding:0; justify-content:center; }
+.toTop{ width:40px; height:40px; padding:0; font-size:1rem; letter-spacing:0; }
 </style>
 </head>
 <body>
@@ -477,7 +491,7 @@ body.night{ color-scheme:dark; }
       <a href="about.html" class="active">About</a>
       <a href="index.html#contact" class="talk">Let's talk</a>
     </nav>
-    <button class="theme-btn" id="themeBtn" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg><span class="tlabel">Dark mode</span></button>
+    <button class="theme-btn" id="themeBtn" type="button" aria-pressed="false" aria-label="Dark mode" title="Dark mode"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg></button>
     <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -495,7 +509,7 @@ body.night{ color-scheme:dark; }
       <span class="note-dim">Hello</span>
     </div>
     <div class="resume">
-      <a href="images/Resume.pdf" target="_blank" rel="noopener" class="btn btn-solid">View resume</a>
+      <a href="images/Resume.pdf" target="_blank" rel="noopener" class="btn btn-solid">Resume <span class="ar" aria-hidden="true">↗</span></a>
     </div>
   </div>
 
@@ -525,9 +539,9 @@ body.night{ color-scheme:dark; }
   <div class="wrap">
     <span class="ghost" aria-hidden="true">A1</span>
     <div class="idx reveal"><span class="n">A1</span><h2>Introduction</h2></div>
-    <p class="intro-big reveal">I'm Daryll — a BS Information Technology student and developer focused on <em>web and mobile applications</em>. What I enjoy most is the full arc of building something: figuring out what a system needs to do, turning ideas into code, and making sure it works reliably for the people using it.</p>
-    <p class="intro-sub reveal">I've worked across front-end and back-end, and I currently lead a small team on our capstone. Beyond making things work, I like understanding <em>why</em> they work — exploring my tools, learning from every problem, and finding better ways to build. For me, development isn't just writing code. It's turning ideas into something useful, thoughtful, and real.</p>
-      <div class="bridge reveal"><a href="#education">Next — A2 / Education</a></div>
+    <p class="intro-big reveal">I'm Daryll — a BS Information Technology student building <em>web and mobile applications</em>, from idea to working system.</p>
+    <p class="intro-sub reveal">I lead a small capstone team, and I like knowing <em>why</em> things work — not just that they do.</p>
+      <div class="bridge reveal"><a href="#education" aria-label="A2 Education">A2 <span class="ar" aria-hidden="true">↓</span></a></div>
   </div>
 </section>
 
@@ -550,12 +564,12 @@ body.night{ color-scheme:dark; }
         <span class="note">Ongoing</span>
         <div>
           <h3>Certifications &amp; training</h3>
-          <p>Full-stack, networking, and design credentials — the full list lives on the home page.</p>
+          <p>Full-stack, networking, and design credentials.</p>
         </div>
-        <a href="index.html#certs" class="note" style="border-bottom:1px solid var(--azure); padding-bottom:2px;">View all</a>
+        <a href="index.html#certs" class="ic sm" aria-label="All credentials" title="All credentials"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#profile">Next — A3 / Spec sheet</a></div>
+      <div class="bridge reveal"><a href="#profile" aria-label="A3 Spec sheet">A3 <span class="ar" aria-hidden="true">↓</span></a></div>
   </div>
 </section>
 
@@ -563,7 +577,7 @@ body.night{ color-scheme:dark; }
 <section id="profile" style="padding-top:0;">
   <div class="wrap">
     <span class="ghost" aria-hidden="true">A3</span>
-    <div class="idx reveal"><span class="n">A3</span><h2>Profile &amp; skills</h2><span class="note-dim right">Datasheet + stack, by tier</span></div>
+    <div class="idx reveal"><span class="n">A3</span><h2>Profile &amp; skills</h2></div>
     <div class="spec-grid">
       <div class="sheet reveal">
         <div class="sh-head"><span class="note">Backstory</span><span class="note-dim">Unit: Human</span></div>
@@ -613,7 +627,7 @@ body.night{ color-scheme:dark; }
         </div>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#experience">Next — A4 / Experience</a></div>
+      <div class="bridge reveal"><a href="#experience" aria-label="A4 Experience">A4 <span class="ar" aria-hidden="true">↓</span></a></div>
   </div>
 </section>
 
@@ -621,7 +635,7 @@ body.night{ color-scheme:dark; }
 <section id="experience" style="padding-top:0;">
   <div class="wrap">
     <span class="ghost" aria-hidden="true">A4</span>
-    <div class="idx reveal"><span class="n">A4</span><h2>Experience</h2><span class="note-dim right">Leadership &amp; roles · key ones flagged</span></div>
+    <div class="idx reveal"><span class="n">A4</span><h2>Experience</h2></div>
     <div class="acc reveal">
       <div class="acc-item key">
         <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
@@ -761,8 +775,8 @@ body.night{ color-scheme:dark; }
     <span class="note reveal">Next</span>
     <h2 class="reveal cta-anim"><span class="cta-see">Seen enough?</span><br><span class="outline cta-see d2">See the work.</span></h2>
     <div class="row2 reveal">
-      <a href="index.html#work" class="btn btn-solid">Selected work</a>
-      <a href="index.html#contact" class="btn">Contact</a>
+      <a href="index.html#work" class="btn btn-solid">Work <span class="ar" aria-hidden="true">→</span></a>
+      <a href="index.html#contact" class="btn">Contact <span class="ar" aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -771,8 +785,8 @@ body.night{ color-scheme:dark; }
 
 <footer class="titleblock">
   <div class="tb-top">
-    <span class="tb-status"><span class="live-dot"></span>Open to work — full-time &amp; freelance</span>
-    <button class="toTop" id="toTop">Top</button>
+    <span class="tb-status"><span class="live-dot"></span>Open to work</span>
+    <button class="toTop" id="toTop" aria-label="Back to top" title="Back to top"><span class="ar" aria-hidden="true">↑</span></button>
   </div>
   <div class="tb-grid">
     <div class="tb-cell"><small>Document</small><b>About the maker — sheet A</b></div>

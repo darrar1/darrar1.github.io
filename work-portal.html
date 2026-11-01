@@ -304,6 +304,20 @@ body.night{ color-scheme:dark; }
   .theme-btn{ margin-left:0; padding:10px; }
   .theme-btn .tlabel{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 }
+
+/* =========================================================
+   ICONS — one stroke set (1.5px, currentColor); every icon-only control is named via aria-label
+========================================================= */
+.i{ width:18px; height:18px; flex:none; display:block; }
+.btn .i{ width:16px; height:16px; }
+.ic{ display:inline-grid; place-items:center; width:44px; height:44px; border:1px solid var(--line-strong); border-radius:3px;
+  color:var(--slate); transition:color .2s, border-color .2s; }
+.ic:hover{ color:var(--azure); border-color:var(--azure); }
+.ic.sm{ width:32px; height:32px; } .ic.sm .i{ width:16px; height:16px; }
+.btn:hover .ar.dn{ transform:translateY(3px); }
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.theme-btn{ width:40px; height:40px; padding:0; justify-content:center; }
+.toTop{ width:40px; height:40px; padding:0; font-size:1rem; letter-spacing:0; }
 </style>
 </head>
 <body>
@@ -328,7 +342,7 @@ body.night{ color-scheme:dark; }
       <a href="about.html">About</a>
       <a href="index.html#contact" class="talk">Let's talk</a>
     </nav>
-      <button class="theme-btn" id="themeBtn" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg><span class="tlabel">Dark mode</span></button>
+      <button class="theme-btn" id="themeBtn" type="button" aria-pressed="false" aria-label="Dark mode" title="Dark mode"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg></button>
       <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -387,7 +401,7 @@ body.night{ color-scheme:dark; }
 <section style="padding-top:0;">
   <div class="wrap">
     <span class="ghost" aria-hidden="true">02</span>
-    <div class="idx reveal"><span class="n">02</span><h2>The build</h2><span class="note-dim right">Screens &amp; details</span></div>
+    <div class="idx reveal"><span class="n">02</span><h2>The build</h2></div>
     <figure class="plate reveal">
       <div class="ph"><img src="images/case-portal-1.jpg" alt="Main dashboard screen"></div>
       <div class="cap"><b>Student dashboard — file &amp; track requests</b><span class="note-dim">Fig. 01</span></div>
@@ -410,7 +424,7 @@ body.night{ color-scheme:dark; }
       <div class="prow"><span class="note">P.03</span><h3>Build</h3><p>React front end, Node/Express API, MySQL. Weekly progress links to the stakeholders.</p></div>
       <div class="prow"><span class="note">P.04</span><h3>Ship</h3><p>Deployed, wrote a one-page admin guide, trained the staff in one session.</p></div>
     </div>
-    <div class="bridge reveal"><a href="#outcome">Next — 04 / Outcome</a></div>
+    <div class="bridge reveal"><a href="#outcome" aria-label="04 Outcome">04 <span class="ar" aria-hidden="true">↓</span></a></div>
   </div>
 </section>
 
@@ -428,8 +442,8 @@ body.night{ color-scheme:dark; }
         <h3>What I'd do next</h3>
         <p>One honest paragraph on limitations or the next iteration. This reads as maturity, not weakness.</p>
         <div style="display:flex; gap:14px; margin-top:22px; flex-wrap:wrap;">
-          <a href="#" target="_blank" class="btn btn-solid">View code</a>
-          <a href="#" target="_blank" class="btn">Live demo</a>
+          <a href="#" target="_blank" class="btn btn-solid"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg> Code</a>
+          <a href="#" target="_blank" class="btn">Live <span class="ar" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
@@ -442,8 +456,8 @@ body.night{ color-scheme:dark; }
     <span class="note reveal">Next sheet</span>
     <h2 class="reveal">W.02 —<br><span class="outline">Inventory Dashboard</span></h2>
     <div class="row2 reveal">
-      <a href="index.html#work" class="btn btn-solid">Back to all work</a>
-      <a href="index.html#contact" class="btn">Start a project</a>
+      <a href="index.html#work" class="btn btn-solid"><span aria-hidden="true">←</span> All work</a>
+      <a href="index.html#contact" class="btn">Contact <span class="ar" aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -452,8 +466,8 @@ body.night{ color-scheme:dark; }
 
 <footer class="titleblock">
   <div class="tb-top">
-    <span class="tb-status"><span class="live-dot"></span>Open to work — full-time &amp; freelance</span>
-    <button class="toTop" id="toTop">Top</button>
+    <span class="tb-status"><span class="live-dot"></span>Open to work</span>
+    <button class="toTop" id="toTop" aria-label="Back to top" title="Back to top"><span class="ar" aria-hidden="true">↑</span></button>
   </div>
   <div class="tb-grid">
     <div class="tb-cell"><small>Document</small><b>Case study — sheet W.01</b></div>
