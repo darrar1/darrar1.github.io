@@ -58,7 +58,7 @@ skipped for `#hash` arrivals, same-session returns via `sessionStorage
 lobbySeen`, and reduced-motion). Hero: giant name with per-letter hover, second
 line stroke-outlined, rotating positioning word (`rotList` in JS), dimension
 line "SCALE 1:1 — BUILT BY HAND", tilting portrait with crop marks, spec line.
-Sections: 01 Work (index rows + cursor-following image preview + outcome
+Sections: 01 Work (bento: W.01 photo hero tile w/ stretched case-study link, W.02 wide, W.03/W.04 small; fills not borders; crop-mark hover; small tiles reveal their data-img faintly in-tile on hover (old floating #preview removed — it covered neighbouring tiles) + outcome
 metrics + role labels; W.01 links to work-portal.html), 02 Capabilities (logo carousel, two JS-driven lanes over drafting rulers, logos glow on
 mouse hover or touch-and-hold, scroll-velocity boost + skew, no hover-pause, pause button;
 CDN masks from cdn.simpleicons.org, Adobe marks drawn inline), 03 Credentials (featured doc + ledger + LinkedIn button), 04 Plates

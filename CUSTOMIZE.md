@@ -34,13 +34,11 @@ Resize photos to about 1500px wide before adding (smaller file = faster site).
 Ctrl+F `LOGOS`. Each tool is one `<li>` line. To add one, copy a line and change the name in `aria-label` / `title` and in the URL: `https://cdn.simpleicons.org/<name>` (find names at simpleicons.org — e.g. `typescript`, `firebase`, `kotlin`). The carousel repeats the logos by itself; you only list each tool once.
 
 ## 3. Projects (index.html)
-Ctrl+F `work-row`. Each project block contains:
-- `<h3>` title (W.01's title links to its case-study page)
-- `.desc` — one-sentence description
+Ctrl+F `work-row`. The projects are a bento grid of 4 tiles — keep the order, the tile sizes come from it:
+- **W.01 (big photo tile)** — your best project. Its photo is the `<img>` inside `w-photo` (use a real screenshot); the whole tile opens its case study. It is the only tile with a `.desc` sentence.
+- **W.02–W.04** — title, `.outcome`, role (`w-role`), stack (`w-stack`). `data-img="..."` is the faint photo that appears inside the tile on hover.
 - `.outcome` — your REAL result (delete the "(edit: ...)" note)
-- `.note` — your role, `.note-dim` — the stack
-- `Code` / `Live` links — your GitHub repo + deployed URL
-- `data-img="..."` on the row — the hover-preview image
+- `Code` / `Live` icons — put your GitHub repo + deployed URL in the two `href="#"`
 
 ## 4. Case-study pages
 `work-portal.html` is a template. For each new project:
