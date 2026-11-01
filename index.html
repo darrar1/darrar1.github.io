@@ -180,27 +180,19 @@ section{ padding:110px 0; }
     linear-gradient(90deg, color-mix(in srgb, var(--azure) 55%, transparent) 0 1px, transparent 1px);
   background-size:var(--pitch) 5px, var(--pitch) 12px; background-position:var(--half) 100%, var(--half) 100%;
   background-repeat:repeat-x; }
-.lane-set li{ display:block; transition:filter .3s; }
-.lane-set li.hot{ filter:drop-shadow(0 0 12px color-mix(in srgb, var(--azure) 55%, transparent)); }
+/* glow: mouse hover, or touch-and-hold on phones (JS adds .hot) */
+.logo-rail{ -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
+.lane-set li{ display:block; transition:filter .3s var(--ease), transform .3s var(--ease); }
+.lane-set li.hot{ filter:drop-shadow(0 0 14px color-mix(in srgb, var(--azure) 60%, transparent)); transform:scale(1.15); }
 .lane-set li.hot .brand-i{ color:var(--azure); }
-/* inspection lens: crop marks like the hero portrait; follows the pointer, rests at centre */
-.lens{ --c:var(--azure); position:absolute; top:16px; bottom:12px; left:0; width:132px; margin-left:-66px;
-  z-index:2; pointer-events:none;
-  background:
-    linear-gradient(var(--c),var(--c)) left top/16px 1.5px, linear-gradient(var(--c),var(--c)) left top/1.5px 16px,
-    linear-gradient(var(--c),var(--c)) right top/16px 1.5px, linear-gradient(var(--c),var(--c)) right top/1.5px 16px,
-    linear-gradient(var(--c),var(--c)) left bottom/16px 1.5px, linear-gradient(var(--c),var(--c)) left bottom/1.5px 16px,
-    linear-gradient(var(--c),var(--c)) right bottom/16px 1.5px, linear-gradient(var(--c),var(--c)) right bottom/1.5px 16px;
-  background-repeat:no-repeat; }
-.lens::before{ content:""; position:absolute; left:50%; top:0; bottom:0; width:1px;
-  background:linear-gradient(transparent, color-mix(in srgb, var(--azure) 40%, transparent) 25% 75%, transparent); }
-.lens::after{ content:""; position:absolute; inset:0;
-  background:radial-gradient(closest-side, color-mix(in srgb, var(--azure) 10%, transparent), transparent); }
+@media (hover:hover){
+  .lane-set li:hover{ filter:drop-shadow(0 0 14px color-mix(in srgb, var(--azure) 60%, transparent)); transform:scale(1.15); }
+  .lane-set li:hover .brand-i{ color:var(--azure); }
+}
 /* monochrome logo: the file is a mask, the colour is ours — so it follows light/dark */
 .brand-i{ display:block; width:42px; height:42px; background:currentColor; color:var(--slate);
   -webkit-mask:var(--src) center/contain no-repeat; mask:var(--src) center/contain no-repeat;
   transition:color .25s; }
-.brand-i:hover{ color:var(--azure); }
 /* Adobe marks aren't on the icon CDN: drawn as outline app tiles */
 .bi-ps{ --src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='1.5' width='21' height='21' rx='4' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='10'%3EPs%3C/text%3E%3C/svg%3E"); }
 .bi-ai{ --src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='1.5' width='21' height='21' rx='4' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='10'%3EAi%3C/text%3E%3C/svg%3E"); }
@@ -216,7 +208,7 @@ section{ padding:110px 0; }
   .lane-track{ width:auto; justify-content:center; }
   .lane-set{ flex-wrap:wrap; justify-content:center; padding:0 20px; gap:40px 56px; }
   .lane-set{ background:none; }
-  .lane-set[aria-hidden="true"], .lane-set li[aria-hidden="true"], #capPause, .lens{ display:none; }
+  .lane-set[aria-hidden="true"], .lane-set li[aria-hidden="true"], #capPause{ display:none; }
 }
 
 /* 03 CREDENTIALS — featured document + ledger table */
@@ -984,7 +976,6 @@ body.night{ color-scheme:dark; }
       <button class="ic sm right" id="capPause" type="button" aria-pressed="false" aria-label="Pause logos" title="Pause"><svg class="i pz" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5v14"/><path d="M15 5v14"/></svg><svg class="i pl" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7 4.5v15l12-7.5z"/></svg></button></div>
     <!-- LOGOS: one <li> per tool. Logo files come from cdn.simpleicons.org/<name> -->
     <div class="logo-rail reveal" id="capRail">
-      <span class="lens" aria-hidden="true"></span>
       <div class="lane-track">
         <ul class="lane-set" aria-label="Development">
           <li><span class="brand-i" role="img" aria-label="JavaScript" title="JavaScript" style="--src:url(https://cdn.simpleicons.org/javascript)"></span></li>
@@ -1606,7 +1597,7 @@ const io = new IntersectionObserver(es => {
 }, { threshold:.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// ===== 02 capabilities: logo carousel with an inspection lens =====
+// ===== 02 capabilities: logo carousel =====
 // Each lane is filled past the rail width, then duplicated once so it can loop seamlessly.
 // Copies are aria-hidden: screen readers hear each logo once.
 const capRail = document.getElementById('capRail');
@@ -1627,46 +1618,43 @@ if (capRail){
     capPause.title = paused ? 'Play' : 'Pause';
   });
 
+  // phones: touch-and-hold a logo to make it glow (mouse uses CSS :hover)
+  let held = null;
+  const release = () => { if (held){ held.classList.remove('hot'); held = null; } };
+  capRail.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse') return;
+    release();
+    const li = e.target.closest('.lane-set li');
+    if (li){ held = li; li.classList.add('hot'); }
+  });
+  ['pointerup', 'pointercancel'].forEach(t => addEventListener(t, release));
+  capRail.addEventListener('contextmenu', e => { if (held) e.preventDefault(); }); // no long-press menu
+
   if (!reduce){
-    const lens = capRail.querySelector('.lens');
-    // lane state: x offset, travel direction, base speed (px/s), item centres in rail coordinates
-    const lanes = tracks.map((t, i) => ({ t, dir: t.classList.contains('rev') ? 1 : -1, base: i ? 30 : 38, x: 0, w: 0, items: [] }));
+    // lane state: x offset, travel direction, base speed (px/s), width of one set
+    const lanes = tracks.map((t, i) => ({ t, dir: t.classList.contains('rev') ? 1 : -1, base: i ? 30 : 38, x: 0, w: 0 }));
     const measure = () => lanes.forEach(L => {
       L.w = L.t.querySelector('.lane-set').offsetWidth;
-      L.items = [...L.t.querySelectorAll('li')].map(li => ({ li, c: li.offsetLeft + li.offsetWidth / 2, hot: false }));
       if (L.dir > 0 && L.x === 0) L.x = -L.w;
     });
     measure(); addEventListener('resize', measure);
 
-    // scrolling speeds the lanes up (scroll up reverses them); the lens follows the pointer
-    let boost = 0, lastY = scrollY, lensX = null, lensTarget = null, last = 0, running = false, spun = false;
+    // scrolling speeds the lanes up and leans them (scroll up reverses them)
+    let boost = 0, lastY = scrollY, last = 0, running = false, spun = false;
     addEventListener('scroll', () => {
       boost = Math.max(-1, Math.min(1, boost + (scrollY - lastY) * .004)); lastY = scrollY;
     }, { passive:true });
-    capRail.addEventListener('pointermove', e => { lensTarget = e.clientX - capRail.getBoundingClientRect().left; });
-    capRail.addEventListener('pointerleave', () => { lensTarget = null; });
 
     const frame = now => {
       if (!running) return;
       const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now;
-      const W = capRail.clientWidth, paused = capRail.classList.contains('paused');
+      const paused = capRail.classList.contains('paused');
       boost *= Math.pow(.9, dt * 60);
-      const target = lensTarget ?? W / 2;
-      lensX = lensX === null ? target : lensX + (target - lensX) * Math.min(1, dt * 9);
-      lens.style.transform = `translateX(${lensX}px)`;
       const skew = Math.max(-9, Math.min(9, boost * 12));
       lanes.forEach(L => {
         if (!paused) L.x += L.dir * L.base * (1 + boost * 8) * dt;
         if (L.x <= -L.w) L.x += L.w; else if (L.x > 0) L.x -= L.w;
         L.t.style.transform = `translate3d(${L.x}px,0,0) skewX(${skew * L.dir}deg)`;
-        L.items.forEach(it => {
-          const f = Math.max(0, 1 - Math.abs(it.c + L.x - lensX) / 190);
-          const e = f * f * (3 - 2 * f); // smoothstep: logos swell as they cross the lens
-          it.li.style.transform = `scale(${1 + e * .5})`;
-          it.li.style.opacity = .42 + e * .58;
-          const hot = f > .55;
-          if (hot !== it.hot){ it.hot = hot; it.li.classList.toggle('hot', hot); }
-        });
       });
       requestAnimationFrame(frame);
     };
