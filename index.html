@@ -168,16 +168,34 @@ section{ padding:110px 0; }
 /* (About section moved to about.html) */
 
 /* 02 CAPABILITIES — logo carousel: two ruled lanes drifting in opposite directions */
-.logo-rail{ display:grid; gap:34px; padding:40px 0; overflow:hidden;
+.logo-rail{ position:relative; display:grid; gap:30px; padding:44px 0 36px; overflow:hidden;
   border-top:1px solid var(--line-strong); border-bottom:1px solid var(--line-strong);
   -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
           mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-.lane-track{ display:flex; width:max-content; animation:marq 44s linear infinite; }
-.lane-track.rev{ animation-direction:reverse; animation-duration:36s; }
-.logo-rail:hover .lane-track, .logo-rail.paused .lane-track{ animation-play-state:paused; }
-@keyframes marq{ to{ transform:translateX(-50%); } }
-.lane-set{ display:flex; align-items:center; gap:72px; padding-right:72px; list-style:none; }
-.lane-set li{ display:block; }
+.lane-track{ display:flex; width:max-content; will-change:transform; } /* moved by JS */
+/* each lane rides a drafting ruler: one major tick under every logo (pitch = logo + gap) */
+.lane-set{ --pitch:114px; --half:21px; display:flex; align-items:center; gap:72px; padding:0 72px 24px 0; list-style:none;
+  background-image:
+    repeating-linear-gradient(90deg, var(--line-strong) 0 1px, transparent 1px calc(var(--pitch) / 6)),
+    linear-gradient(90deg, color-mix(in srgb, var(--azure) 55%, transparent) 0 1px, transparent 1px);
+  background-size:var(--pitch) 5px, var(--pitch) 12px; background-position:var(--half) 100%, var(--half) 100%;
+  background-repeat:repeat-x; }
+.lane-set li{ display:block; transition:filter .3s; }
+.lane-set li.hot{ filter:drop-shadow(0 0 12px color-mix(in srgb, var(--azure) 55%, transparent)); }
+.lane-set li.hot .brand-i{ color:var(--azure); }
+/* inspection lens: crop marks like the hero portrait; follows the pointer, rests at centre */
+.lens{ --c:var(--azure); position:absolute; top:16px; bottom:12px; left:0; width:132px; margin-left:-66px;
+  z-index:2; pointer-events:none;
+  background:
+    linear-gradient(var(--c),var(--c)) left top/16px 1.5px, linear-gradient(var(--c),var(--c)) left top/1.5px 16px,
+    linear-gradient(var(--c),var(--c)) right top/16px 1.5px, linear-gradient(var(--c),var(--c)) right top/1.5px 16px,
+    linear-gradient(var(--c),var(--c)) left bottom/16px 1.5px, linear-gradient(var(--c),var(--c)) left bottom/1.5px 16px,
+    linear-gradient(var(--c),var(--c)) right bottom/16px 1.5px, linear-gradient(var(--c),var(--c)) right bottom/1.5px 16px;
+  background-repeat:no-repeat; }
+.lens::before{ content:""; position:absolute; left:50%; top:0; bottom:0; width:1px;
+  background:linear-gradient(transparent, color-mix(in srgb, var(--azure) 40%, transparent) 25% 75%, transparent); }
+.lens::after{ content:""; position:absolute; inset:0;
+  background:radial-gradient(closest-side, color-mix(in srgb, var(--azure) 10%, transparent), transparent); }
 /* monochrome logo: the file is a mask, the colour is ours — so it follows light/dark */
 .brand-i{ display:block; width:42px; height:42px; background:currentColor; color:var(--slate);
   -webkit-mask:var(--src) center/contain no-repeat; mask:var(--src) center/contain no-repeat;
@@ -191,13 +209,14 @@ section{ padding:110px 0; }
 #capPause .i{ grid-area:1/1; transition:opacity .3s cubic-bezier(.2,0,0,1), scale .3s cubic-bezier(.2,0,0,1), filter .3s cubic-bezier(.2,0,0,1); }
 #capPause .pl, #capPause[aria-pressed="true"] .pz{ opacity:0; scale:.25; filter:blur(4px); }
 #capPause[aria-pressed="true"] .pl{ opacity:1; scale:1; filter:blur(0); }
-@media (max-width:640px){ .lane-set{ gap:48px; padding-right:48px; } .brand-i{ width:34px; height:34px; } }
+@media (max-width:640px){ .lane-set{ --pitch:82px; --half:17px; gap:48px; padding-right:48px; } .brand-i{ width:34px; height:34px; } }
 /* reduced motion: no drift — one static, centred grid of logos */
 @media (prefers-reduced-motion:reduce){
   .logo-rail{ -webkit-mask-image:none; mask-image:none; }
   .lane-track{ width:auto; justify-content:center; }
   .lane-set{ flex-wrap:wrap; justify-content:center; padding:0 20px; gap:40px 56px; }
-  .lane-set[aria-hidden="true"], .lane-set li[aria-hidden="true"], #capPause{ display:none; }
+  .lane-set{ background:none; }
+  .lane-set[aria-hidden="true"], .lane-set li[aria-hidden="true"], #capPause, .lens{ display:none; }
 }
 
 /* 03 CREDENTIALS — featured document + ledger table */
@@ -729,7 +748,7 @@ body.night{ color-scheme:dark; }
 .i{ width:18px; height:18px; flex:none; display:block; }
 .btn .i{ width:16px; height:16px; }
 .ic{ display:inline-grid; place-items:center; width:44px; height:44px; border:1px solid var(--line-strong); border-radius:3px;
-  color:var(--slate); transition:color .2s, border-color .2s; }
+  color:var(--slate); background:none; cursor:pointer; transition:color .2s, border-color .2s; }
 .ic:hover{ color:var(--azure); border-color:var(--azure); }
 .ic.sm{ width:32px; height:32px; } .ic.sm .i{ width:16px; height:16px; }
 .btn:hover .ar.dn{ transform:translateY(3px); }
@@ -965,6 +984,7 @@ body.night{ color-scheme:dark; }
       <button class="ic sm right" id="capPause" type="button" aria-pressed="false" aria-label="Pause logos" title="Pause"><svg class="i pz" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5v14"/><path d="M15 5v14"/></svg><svg class="i pl" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7 4.5v15l12-7.5z"/></svg></button></div>
     <!-- LOGOS: one <li> per tool. Logo files come from cdn.simpleicons.org/<name> -->
     <div class="logo-rail reveal" id="capRail">
+      <span class="lens" aria-hidden="true"></span>
       <div class="lane-track">
         <ul class="lane-set" aria-label="Development">
           <li><span class="brand-i" role="img" aria-label="JavaScript" title="JavaScript" style="--src:url(https://cdn.simpleicons.org/javascript)"></span></li>
@@ -1586,12 +1606,13 @@ const io = new IntersectionObserver(es => {
 }, { threshold:.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// ===== 02 capabilities: logo carousel =====
-// Each lane is filled past the rail width, then duplicated once so translateX(-50%) loops seamlessly.
+// ===== 02 capabilities: logo carousel with an inspection lens =====
+// Each lane is filled past the rail width, then duplicated once so it can loop seamlessly.
 // Copies are aria-hidden: screen readers hear each logo once.
 const capRail = document.getElementById('capRail');
 if (capRail){
-  capRail.querySelectorAll('.lane-track').forEach(track => {
+  const tracks = [...capRail.querySelectorAll('.lane-track')];
+  tracks.forEach(track => {
     const set = track.querySelector('.lane-set'), items = [...set.children];
     for (let n = 0; set.scrollWidth < capRail.clientWidth && n < 8; n++)
       items.forEach(li => { const c = li.cloneNode(true); c.setAttribute('aria-hidden', 'true'); set.appendChild(c); });
@@ -1605,6 +1626,59 @@ if (capRail){
     capPause.setAttribute('aria-pressed', paused);
     capPause.title = paused ? 'Play' : 'Pause';
   });
+
+  if (!reduce){
+    const lens = capRail.querySelector('.lens');
+    // lane state: x offset, travel direction, base speed (px/s), item centres in rail coordinates
+    const lanes = tracks.map((t, i) => ({ t, dir: t.classList.contains('rev') ? 1 : -1, base: i ? 30 : 38, x: 0, w: 0, items: [] }));
+    const measure = () => lanes.forEach(L => {
+      L.w = L.t.querySelector('.lane-set').offsetWidth;
+      L.items = [...L.t.querySelectorAll('li')].map(li => ({ li, c: li.offsetLeft + li.offsetWidth / 2, hot: false }));
+      if (L.dir > 0 && L.x === 0) L.x = -L.w;
+    });
+    measure(); addEventListener('resize', measure);
+
+    // scrolling speeds the lanes up (scroll up reverses them); the lens follows the pointer
+    let boost = 0, lastY = scrollY, lensX = null, lensTarget = null, last = 0, running = false, spun = false;
+    addEventListener('scroll', () => {
+      boost = Math.max(-1, Math.min(1, boost + (scrollY - lastY) * .004)); lastY = scrollY;
+    }, { passive:true });
+    capRail.addEventListener('pointermove', e => { lensTarget = e.clientX - capRail.getBoundingClientRect().left; });
+    capRail.addEventListener('pointerleave', () => { lensTarget = null; });
+
+    const frame = now => {
+      if (!running) return;
+      const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now;
+      const W = capRail.clientWidth, paused = capRail.classList.contains('paused');
+      boost *= Math.pow(.9, dt * 60);
+      const target = lensTarget ?? W / 2;
+      lensX = lensX === null ? target : lensX + (target - lensX) * Math.min(1, dt * 9);
+      lens.style.transform = `translateX(${lensX}px)`;
+      const skew = Math.max(-9, Math.min(9, boost * 12));
+      lanes.forEach(L => {
+        if (!paused) L.x += L.dir * L.base * (1 + boost * 8) * dt;
+        if (L.x <= -L.w) L.x += L.w; else if (L.x > 0) L.x -= L.w;
+        L.t.style.transform = `translate3d(${L.x}px,0,0) skewX(${skew * L.dir}deg)`;
+        L.items.forEach(it => {
+          const f = Math.max(0, 1 - Math.abs(it.c + L.x - lensX) / 190);
+          const e = f * f * (3 - 2 * f); // smoothstep: logos swell as they cross the lens
+          it.li.style.transform = `scale(${1 + e * .5})`;
+          it.li.style.opacity = .42 + e * .58;
+          const hot = f > .55;
+          if (hot !== it.hot){ it.hot = hot; it.li.classList.toggle('hot', hot); }
+        });
+      });
+      requestAnimationFrame(frame);
+    };
+    // only animate while visible; the first arrival spins the lanes up
+    new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting && !running){
+        running = true; last = 0;
+        if (!spun){ spun = true; boost = 1; }
+        requestAnimationFrame(frame);
+      } else if (!e.isIntersecting) running = false;
+    })).observe(capRail);
+  }
 }
 
 // ===== theme toggle (dark / light) — choice is remembered across pages =====
