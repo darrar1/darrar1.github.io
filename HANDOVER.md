@@ -38,7 +38,7 @@ dependencies, no build step**. This is a deliberate brand point (footer says
 mono annotations (JetBrains Mono) as the vernacular; hairline rules; sharp
 3px-radius buttons; numbered document sections (`01 / Selected work`) with
 `Next — 0X / …` **bridge** links; photography as numbered **Plates**; footer as
-a blueprint **title block**; **night mode** = the draft becoming the blueprint
+a blueprint **title block**; **night mode** = the draft becoming the blueprint, switched by the header **theme toggle** (saved in localStorage `theme`, defaults to the OS setting)
 (deep navy, glowing grid). Fonts: Sora (display), Inter (body), JetBrains Mono
 (annotations). Tokens live in `:root`; index flips them wholesale under
 `body.night`; about.html uses an indirection layer (`--bg/--fg/--hd/--ln/--srf`)
@@ -63,8 +63,7 @@ metrics + role labels; W.01 links to work-portal.html), 02 Capabilities (ruled
 columns), 03 Credentials (featured doc + ledger + LinkedIn button), 04 Plates
 (two lanes + lightbox w/ keyboard), 05 How I work, 06 Principles (kinetic
 typography: typewriter / cursor-wave letters / progress+stamp / AI
-Tab-autocomplete), Contact (animated heading, click-to-copy email). **Night
-mode triggers at #creative** and runs to the footer. Wow kit: grid spotlight
+Tab-autocomplete), Contact (animated heading, click-to-copy email). **Night mode is a header toggle** (`#themeBtn`) — the old scroll trigger was removed. Wow kit: grid spotlight
 (#spot), crosshair cursor ring + click squeeze, paper grain, ghost numerals w/
 parallax, self-drawing header rules, magnetic buttons. Header: expanding logo
 (DAR → DARYLL CELESTIAL, crosshair dot), live sheet indicator (#loc). Footer:
@@ -74,8 +73,7 @@ status strip w/ pulsing live-dot + Top button, hover cells, live PH clock
 instructions in CUSTOMIZE.md §8 (requires renumbering 04–06 back to 05–07).
 
 **about.html** — Swinging ID badge (spring pendulum chasing cursor; the ONLY
-remaining cursor context label: "HI ^_^" on the badge). A1 Intro, A2 Education
-(**night mode triggers here**, "Lights off — blueprint mode" hint), A3 Spec
+remaining cursor context label: "HI ^_^" on the badge). A1 Intro, A2 Education, A3 Spec
 sheet (playful datasheet + animated gauges + locked "hire to unlock" bar),
 A4 Experience accordion. Own loc indicator (A1–A4), letter-hover on heading,
 CTA "Seen enough? / See the work." blur-to-focus.

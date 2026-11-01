@@ -18,7 +18,7 @@ Every page also has an **EDIT MAP** comment at the very top — open the file, a
 | Socials | index.html | `href="#" target="_blank"` | Put real profile URLs in place of `#` |
 | Rotating hero words | index.html | `rotList` | Edit the list: `['small businesses','student orgs',...]` |
 | Hero spec line | index.html | `Field:` | Edit the three spec items |
-| Resume | about.html | `resume.pdf` | Export your resume as PDF, name it exactly `resume.pdf`, put it beside index.html |
+| Resume | about.html | `Resume.pdf` | Your resume lives at `images/Resume.pdf`. To update it, replace that file and keep the exact name (capital R — GitHub Pages is case-sensitive) |
 
 ## 2. Images
 All images live in the `images/` folder. Ctrl+F `images/` in each file to see what is expected:

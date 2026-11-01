@@ -25,7 +25,7 @@
 :root{
   --pearl:#FBFCFE; --card:#FFFFFF;
   --azure:#1E6FE0; --azure-bright:#2D88FF; --azure-soft:#E7F0FE; --azure-ink:#0B3C8C;
-  --ink:#141E36; --slate:#4E5D78; --mist:#8794AC; --line:#DEE6F2; --line-strong:#C6D4E8;
+  --ink:#141E36; --slate:#4E5D78; --mist:#64718A; --line:#DEE6F2; --line-strong:#C6D4E8;
   --max:1240px; --ease:cubic-bezier(.22,1,.36,1);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
@@ -52,7 +52,7 @@ main{ position:relative; z-index:1; }
 .btn{ display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono';
   font-weight:600; font-size:.82rem; letter-spacing:.08em; text-transform:uppercase;
   padding:15px 26px; border-radius:3px; cursor:pointer; border:1px solid var(--ink);
-  color:var(--ink); background:transparent; transition:background .25s, color .25s, border-color .25s; }
+  color:var(--ink); background:transparent; transition:background .25s, color .25s, border-color .25s, transform .3s var(--ease); }
 .btn .ar{ transition:transform .25s var(--ease); }
 .btn:hover .ar{ transform:translateX(5px); }
 .btn-solid{ background:var(--azure); border-color:var(--azure); color:#fff; }
@@ -124,7 +124,16 @@ header.scrolled{ border-color:var(--line); }
 .nav-links a.active{ position:relative; }
 .nav-links a:hover{ color:var(--azure); background:var(--azure-soft); }
 @media (max-width:900px){ .loc{ display:none; } }
-@media (max-width:640px){ .nav{ padding:0 22px; } .wrap{ padding:0 22px; } }
+.menu-btn{ display:none; background:none; border:none; cursor:pointer; padding:8px; }
+.menu-btn span{ display:block; width:24px; height:2px; background:var(--ink); margin:5px 0; }
+@media (max-width:640px){ .nav{ padding:0 22px; } .wrap{ padding:0 22px; }
+  .nav-links{ position:fixed; inset:70px 0 auto 0; flex-direction:column; gap:0;
+    background:var(--pearl); border-bottom:1px solid var(--line);
+    padding:14px 22px 20px; transform:translateY(-130%); visibility:hidden;
+    transition:transform .35s var(--ease), visibility 0s linear .35s; }
+  .nav-links.open{ transform:translateY(0); visibility:visible; transition:transform .35s var(--ease); }
+  .nav-links a{ width:100%; padding:14px 4px; }
+  .menu-btn{ display:block; } }
 
 /* wow kit (lite) */
 #spot{ position:fixed; inset:0; z-index:-1; pointer-events:none;
@@ -196,7 +205,7 @@ section .wrap{ position:relative; }
 .plist{ border-top:1px solid var(--line-strong); }
 .prow{ display:grid; grid-template-columns:70px 200px 1fr; gap:26px; padding:24px 8px;
   border-bottom:1px solid var(--line); align-items:baseline; }
-.prow h4{ font-size:1.05rem; }
+.prow h3{ font-size:1.05rem; line-height:1.3; }
 @media (max-width:700px){ .prow{ grid-template-columns:50px 1fr; } .prow p{ grid-column:2; } }
 
 /* bridges + next project */
@@ -254,9 +263,55 @@ section .wrap{ position:relative; }
   .ghost{ transform:none !important; } body::after{ display:none; }
   html{ scroll-behavior:auto; }
 }
+
+/* NIGHT — dark theme (header toggle), same tokens as index */
+body.night{
+  --pearl:#0C1428; --card:#111B33; --azure-soft:#16233F; --azure:#2D88FF;
+  --ink:#EAF1FC; --slate:#9FB0CC; --mist:#7286A8;
+  --line:#1D2A47; --line-strong:#28395F;
+  background-image:
+    linear-gradient(rgba(120,170,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,170,255,.05) 1px, transparent 1px),
+    radial-gradient(circle, rgba(120,170,255,.10) 1px, transparent 1.5px);
+}
+body.night #spot{
+  background-image:
+    linear-gradient(rgba(120,170,255,.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,170,255,.22) 1px, transparent 1px),
+    radial-gradient(circle, rgba(120,170,255,.34) 1px, transparent 1.5px);
+}
+body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
+body.night::after{ mix-blend-mode:screen; opacity:.04; }
+body.night header{ background:rgba(12,20,40,.85); }
+body.night .plate .ph{ background:linear-gradient(135deg,var(--azure-soft),var(--line)); }
+/* solid fills keep the original blue so white labels stay readable */
+body.night .btn-solid:not(:hover){ background:#1E6FE0; border-color:#1E6FE0; }
+body.night .toTop:hover{ background:#1E6FE0; }
+
+/* =========================================================
+   THEME TOGGLE — light (draft) / dark (blueprint)
+========================================================= */
+.nav-end{ display:flex; align-items:center; gap:6px; }
+.theme-btn{ display:inline-flex; align-items:center; gap:8px; margin-left:8px;
+  font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--slate); background:none; border:1px solid var(--line-strong); border-radius:3px;
+  padding:9px 12px; cursor:pointer; transition:color .2s, border-color .2s; }
+.theme-btn:hover{ color:var(--azure); border-color:var(--azure); }
+.theme-btn svg{ width:14px; height:14px; flex:none; transition:transform .4s var(--ease); }
+.theme-btn[aria-pressed="true"] svg{ transform:rotate(180deg); }
+body.night{ color-scheme:dark; }
+@media (max-width:640px){
+  .theme-btn{ margin-left:0; padding:10px; }
+  .theme-btn .tlabel{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+}
 </style>
 </head>
 <body>
+<script>
+/* theme: the visitor's saved choice, otherwise their system setting (runs before paint) */
+(function(){ var t = null; try{ t = localStorage.getItem('theme'); }catch(e){}
+  if (t === 'dark' || (t === null && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('night'); })();
+</script>
 
 <div id="spot" aria-hidden="true"></div>
 <div id="cursor" aria-hidden="true"></div>
@@ -267,11 +322,15 @@ section .wrap{ position:relative; }
       <a href="index.html" class="logo"><span>DAR</span><span class="lg-rest">YLL CELESTIAL</span><span class="lg-dot" aria-hidden="true"></span></a>
       <span class="loc note-dim" aria-hidden="true">W.01 / Case study</span>
     </div>
-    <nav class="nav-links">
+    <div class="nav-end">
+    <nav class="nav-links" id="navlinks">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="index.html#contact" class="talk">Let's talk</a>
     </nav>
+      <button class="theme-btn" id="themeBtn" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg><span class="tlabel">Dark mode</span></button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
@@ -346,10 +405,10 @@ section .wrap{ position:relative; }
     <span class="ghost" aria-hidden="true">03</span>
     <div class="idx reveal"><span class="n">03</span><h2>Process notes</h2></div>
     <div class="plist reveal">
-      <div class="prow"><span class="note">P.01</span><h4>Research</h4><p>Interviewed the office staff and students; mapped the paper flow before designing anything.</p></div>
-      <div class="prow"><span class="note">P.02</span><h4>Design</h4><p>Wireframes in Figma, tested with five students, two rounds of revisions.</p></div>
-      <div class="prow"><span class="note">P.03</span><h4>Build</h4><p>React front end, Node/Express API, MySQL. Weekly progress links to the stakeholders.</p></div>
-      <div class="prow"><span class="note">P.04</span><h4>Ship</h4><p>Deployed, wrote a one-page admin guide, trained the staff in one session.</p></div>
+      <div class="prow"><span class="note">P.01</span><h3>Research</h3><p>Interviewed the office staff and students; mapped the paper flow before designing anything.</p></div>
+      <div class="prow"><span class="note">P.02</span><h3>Design</h3><p>Wireframes in Figma, tested with five students, two rounds of revisions.</p></div>
+      <div class="prow"><span class="note">P.03</span><h3>Build</h3><p>React front end, Node/Express API, MySQL. Weekly progress links to the stakeholders.</p></div>
+      <div class="prow"><span class="note">P.04</span><h3>Ship</h3><p>Deployed, wrote a one-page admin guide, trained the staff in one session.</p></div>
     </div>
     <div class="bridge reveal"><a href="#outcome">Next — 04 / Outcome</a></div>
   </div>
@@ -407,6 +466,12 @@ section .wrap{ position:relative; }
 <script>
 const topbar = document.getElementById('topbar');
 addEventListener('scroll', () => topbar.classList.toggle('scrolled', scrollY > 20));
+const mb = document.getElementById('menuBtn');
+const nl = document.getElementById('navlinks');
+function setMenu(open){ nl.classList.toggle('open', open); mb.setAttribute('aria-expanded', open); }
+mb.addEventListener('click', () => setMenu(!nl.classList.contains('open')));
+nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+addEventListener('keydown', e => { if (e.key === 'Escape' && nl.classList.contains('open')){ setMenu(false); mb.focus(); } });
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canHover = matchMedia('(hover:hover)').matches;
@@ -476,6 +541,18 @@ const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold:.1 });
 document.querySelectorAll('.reveal, .idx').forEach(el => io.observe(el));
+
+// ===== theme toggle (dark / light) — choice is remembered across pages =====
+const themeBtn = document.getElementById('themeBtn');
+if (themeBtn){
+  const syncTheme = () => themeBtn.setAttribute('aria-pressed', document.body.classList.contains('night'));
+  syncTheme();
+  themeBtn.addEventListener('click', () => {
+    const dark = document.body.classList.toggle('night');
+    try{ localStorage.setItem('theme', dark ? 'dark' : 'light'); }catch(e){}
+    syncTheme();
+  });
+}
 </script>
 </body>
 </html>

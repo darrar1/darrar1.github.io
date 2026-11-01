@@ -28,7 +28,7 @@
 :root{
   --pearl:#FBFCFE; --card:#FFFFFF;
   --azure:#1E6FE0; --azure-bright:#2D88FF; --azure-soft:#E7F0FE; --azure-ink:#0B3C8C;
-  --ink:#141E36; --slate:#4E5D78; --mist:#8794AC; --line:#DEE6F2; --line-strong:#C6D4E8;
+  --ink:#141E36; --slate:#4E5D78; --mist:#64718A; --line:#DEE6F2; --line-strong:#C6D4E8;
   --rail:64px; --max:1240px; --ease:cubic-bezier(.22,1,.36,1);
 
   --bg:var(--pearl); --fg:var(--slate); --hd:var(--ink);
@@ -39,7 +39,7 @@
 body.night{
   --bg:#0C1428; --fg:#9FB0CC; --hd:#EAF1FC;
   --ln:#1D2A47; --ln2:#28395F; --srf:#111B33;
-  --azure-soft:#16233F;
+  --azure-soft:#16233F; --azure:#2D88FF; --mist:#8794AC;
   --grid-dot:rgba(120,170,255,.10); --grid-line:rgba(120,170,255,.05);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
@@ -67,7 +67,7 @@ img{ display:block; max-width:100%; }
 .btn{ display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono';
   font-weight:600; font-size:.82rem; letter-spacing:.08em; text-transform:uppercase;
   padding:15px 26px; border-radius:3px; cursor:pointer; border:1px solid var(--hd);
-  color:var(--hd); background:transparent; transition:background .25s, color .25s, border-color .25s; }
+  color:var(--hd); background:transparent; transition:background .25s, color .25s, border-color .25s, transform .3s var(--ease); }
 .btn .ar{ transition:transform .25s var(--ease); }
 .btn:hover .ar{ transform:translateX(5px); }
 .btn-solid{ background:var(--azure); border-color:var(--azure); color:#fff; }
@@ -82,9 +82,10 @@ img{ display:block; max-width:100%; }
   display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:90px 0 26px; }
 .rail .vtext{ writing-mode:vertical-rl; font-family:'JetBrains Mono'; font-size:.66rem;
   letter-spacing:.3em; text-transform:uppercase; color:var(--mist); }
-.rail .dots{ display:flex; flex-direction:column; gap:14px; }
-.rail .dots a{ width:8px; height:8px; border-radius:50%; border:1px solid var(--ln2);
-  transition:.3s; display:block; }
+.rail .dots{ display:flex; flex-direction:column; gap:16px; }
+.rail .dots a{ position:relative; width:8px; height:8px; border-radius:50%; border:1px solid var(--ln2);
+  transition:background-color .3s, border-color .3s, transform .3s; display:block; }
+.rail .dots a::before{ content:""; position:absolute; inset:-8px; } /* 24px hit area */
 .rail .dots a.on{ background:var(--azure); border-color:var(--azure); transform:scale(1.3); }
 main{ margin-left:var(--rail); }
 header{ left:var(--rail); }
@@ -194,7 +195,7 @@ section{ padding:104px 0; }
   background:var(--azure-soft); color:var(--azure); }
 .tchip.ghosted{ background:transparent; border:1px solid var(--ln2); color:var(--fg); }
 
-/* A4 experience — accordion (this is where night falls) */
+/* A4 experience — accordion */
 #experience .acc{ border-top:1px solid var(--ln2); transition:border-color .8s; }
 .acc-item{ border-bottom:1px solid var(--ln2); transition:border-color .8s; }
 .acc-head{ width:100%; display:grid; grid-template-columns:64px 1fr auto auto; gap:22px; align-items:center;
@@ -202,7 +203,9 @@ section{ padding:104px 0; }
   font-family:inherit; transition:background .25s, padding-left .3s var(--ease); }
 .acc-head:hover{ background:color-mix(in srgb, var(--azure) 7%, transparent); padding-left:20px; }
 .acc-head .num{ font-family:'JetBrains Mono'; font-size:.8rem; color:var(--mist); }
-.acc-head h3{ font-size:clamp(1.1rem,2.4vw,1.5rem); letter-spacing:-.02em; }
+.acc-h{ font-size:inherit; line-height:inherit; letter-spacing:normal; }
+.acc-head .acc-title{ font-family:'Sora',sans-serif; font-weight:700; color:var(--hd); line-height:1.25;
+  font-size:clamp(1.1rem,2.4vw,1.5rem); letter-spacing:-.02em; transition:color .8s var(--ease); }
 .acc-head .when{ font-family:'JetBrains Mono'; font-size:.72rem; letter-spacing:.1em; color:var(--mist); text-transform:uppercase; }
 .acc-head .pm{ font-family:'JetBrains Mono'; font-size:1.3rem; color:var(--azure); width:28px; text-align:center;
   transition:transform .35s var(--ease); }
@@ -257,6 +260,9 @@ section .wrap{ position:relative; }
   color:transparent; -webkit-text-stroke:1.5px rgba(30,111,224,.10); will-change:transform;
   transition:-webkit-text-stroke .8s; }
 body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
+/* night: --azure brightens for small text; solid fills keep the original blue so white labels stay readable */
+body.night .btn-solid:not(:hover){ background:#1E6FE0; border-color:#1E6FE0; }
+body.night .toTop:hover{ background:#1E6FE0; }
 
 .idx{ border-bottom:none; position:relative; }
 .idx::after{ content:""; position:absolute; left:0; bottom:0; height:1px; width:100%;
@@ -410,17 +416,40 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
   .wrap{ padding:0 22px; } .nav{ padding:0 22px; }
   .nav-links{ position:fixed; inset:70px 0 auto 0; flex-direction:column; gap:0;
     background:var(--bg); border-bottom:1px solid var(--ln);
-    padding:14px 22px 20px; transform:translateY(-130%); transition:transform .35s var(--ease); }
-  .nav-links.open{ transform:translateY(0); }
+    padding:14px 22px 20px; transform:translateY(-130%); visibility:hidden;
+    transition:transform .35s var(--ease), visibility 0s linear .35s; }
+  .nav-links.open{ transform:translateY(0); visibility:visible; transition:transform .35s var(--ease); }
   .nav-links a{ width:100%; padding:14px 4px; }
   .menu-btn{ display:block; }
   section{ padding:78px 0; }
   .tb-grid{ grid-template-columns:1fr; }
   .tb-cell{ padding-left:22px; border-bottom:1px solid var(--ln); }
 }
+
+/* =========================================================
+   THEME TOGGLE — light (draft) / dark (blueprint)
+========================================================= */
+.nav-end{ display:flex; align-items:center; gap:6px; }
+.theme-btn{ display:inline-flex; align-items:center; gap:8px; margin-left:8px;
+  font-family:'JetBrains Mono'; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--fg); background:none; border:1px solid var(--ln2); border-radius:3px;
+  padding:9px 12px; cursor:pointer; transition:color .2s, border-color .2s; }
+.theme-btn:hover{ color:var(--azure); border-color:var(--azure); }
+.theme-btn svg{ width:14px; height:14px; flex:none; transition:transform .4s var(--ease); }
+.theme-btn[aria-pressed="true"] svg{ transform:rotate(180deg); }
+body.night{ color-scheme:dark; }
+@media (max-width:640px){
+  .theme-btn{ margin-left:0; padding:10px; }
+  .theme-btn .tlabel{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+}
 </style>
 </head>
 <body>
+<script>
+/* theme: the visitor's saved choice, otherwise their system setting (runs before paint) */
+(function(){ var t = null; try{ t = localStorage.getItem('theme'); }catch(e){}
+  if (t === 'dark' || (t === null && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('night'); })();
+</script>
 
 <div id="spot" aria-hidden="true"></div>
 <div id="cursor" aria-hidden="true"><span class="clabel"></span></div>
@@ -428,10 +457,10 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 <aside class="rail" aria-hidden="true">
   <span class="vtext">Portfolio — Rev 3.0 — 2026</span>
   <nav class="dots" id="railDots">
-    <a href="#intro" data-s="intro" aria-label="Introduction"></a>
-    <a href="#education" data-s="education" aria-label="Education"></a>
-    <a href="#profile" data-s="profile" aria-label="Profile"></a>
-    <a href="#experience" data-s="experience" aria-label="Experience"></a>
+    <a href="#intro" data-s="intro" tabindex="-1" aria-label="Introduction"></a>
+    <a href="#education" data-s="education" tabindex="-1" aria-label="Education"></a>
+    <a href="#profile" data-s="profile" tabindex="-1" aria-label="Profile"></a>
+    <a href="#experience" data-s="experience" tabindex="-1" aria-label="Experience"></a>
   </nav>
   <span class="vtext">DAR</span>
 </aside>
@@ -442,12 +471,15 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
       <a href="index.html" class="logo"><span>DAR</span><span class="lg-rest">YLL CELESTIAL</span><span class="lg-dot" aria-hidden="true"></span></a>
       <span class="loc note-dim" id="loc" aria-hidden="true">About · overview</span>
     </div>
+    <div class="nav-end">
     <nav class="nav-links" id="navlinks">
       <a href="index.html">Home</a>
       <a href="about.html" class="active">About</a>
       <a href="index.html#contact" class="talk">Let's talk</a>
     </nav>
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <button class="theme-btn" id="themeBtn" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg><span class="tlabel">Dark mode</span></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
@@ -463,7 +495,7 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
       <span class="note-dim">Hello</span>
     </div>
     <div class="resume">
-      <a href="resume.pdf" target="_blank" class="btn btn-solid">View resume</a>
+      <a href="images/Resume.pdf" target="_blank" rel="noopener" class="btn btn-solid">View resume</a>
     </div>
   </div>
 
@@ -503,7 +535,7 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
 <section id="education" style="padding-top:0;">
   <div class="wrap">
     <span class="ghost" aria-hidden="true">A2</span>
-    <div class="idx reveal"><span class="n">A2</span><h2>Education</h2><span class="note-dim right">Lights off from here</span></div>
+    <div class="idx reveal"><span class="n">A2</span><h2>Education</h2></div>
     <div class="edu reveal">
       <div class="edu-row">
         <span class="note">2023 — 2027</span>
@@ -585,19 +617,19 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
   </div>
 </section>
 
-<!-- ============ A4 EXPERIENCE — night falls here ============ -->
+<!-- ============ A4 EXPERIENCE ============ -->
 <section id="experience" style="padding-top:0;">
   <div class="wrap">
     <span class="ghost" aria-hidden="true">A4</span>
     <div class="idx reveal"><span class="n">A4</span><h2>Experience</h2><span class="note-dim right">Leadership &amp; roles · key ones flagged</span></div>
     <div class="acc reveal">
       <div class="acc-item key">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.01</span>
-          <h3>BantAI — Capstone Team Lead <span class="acc-flag">Key</span></h3>
+          <span class="acc-title">BantAI — Capstone Team Lead <span class="acc-flag">Key</span></span>
           <span class="when">2026</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">MSEUF · 2026</span>
           <ul>
@@ -607,12 +639,12 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div></div>
       </div>
       <div class="acc-item key">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.02</span>
-          <h3>CCMS Representative <span class="acc-flag">Key</span></h3>
+          <span class="acc-title">CCMS Representative <span class="acc-flag">Key</span></span>
           <span class="when">2024 — 2025</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">University Collegiate Student Council · 2024 — 2025</span>
           <ul>
@@ -621,12 +653,12 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div></div>
       </div>
       <div class="acc-item key">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.03</span>
-          <h3>Vice President for Internal Affairs <span class="acc-flag">Key</span></h3>
+          <span class="acc-title">Vice President for Internal Affairs <span class="acc-flag">Key</span></span>
           <span class="when">2023 — 2024</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">Philippine Society of Information Technology Students · 2023 — 2024</span>
           <ul>
@@ -635,12 +667,12 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div></div>
       </div>
       <div class="acc-item">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.04</span>
-          <h3>Editor-in-Chief</h3>
+          <span class="acc-title">Editor-in-Chief</span>
           <span class="when">2025</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">KALYE · 2025</span>
           <ul>
@@ -650,12 +682,12 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div></div>
       </div>
       <div class="acc-item">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.05</span>
-          <h3>Chairman</h3>
+          <span class="acc-title">Chairman</span>
           <span class="when">2026 — Now</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">Department Student Commission of Election · 2026 — Present</span>
           <ul>
@@ -664,12 +696,12 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div></div>
       </div>
       <div class="acc-item">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.06</span>
-          <h3>Communications Department Head</h3>
+          <span class="acc-title">Communications Department Head</span>
           <span class="when">2025</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">LENTECH Studios · 2025</span>
           <ul>
@@ -678,12 +710,12 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div></div>
       </div>
       <div class="acc-item">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.07</span>
-          <h3>President</h3>
+          <span class="acc-title">President</span>
           <span class="when">2025</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">MSEUF Wildcats Esports · 2025</span>
           <ul>
@@ -692,12 +724,12 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div></div>
       </div>
       <div class="acc-item">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.08</span>
-          <h3>Social Media Manager & Support Staff</h3>
+          <span class="acc-title">Social Media Manager & Support Staff</span>
           <span class="when">2022 — Now</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">BUGHAW · 2022 — Present</span>
           <ul>
@@ -706,12 +738,12 @@ body.night .ghost{ -webkit-text-stroke:1.5px rgba(120,170,255,.13); }
         </div></div>
       </div>
       <div class="acc-item">
-        <button class="acc-head" aria-expanded="false">
+        <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.09</span>
-          <h3>Administrative Staff III</h3>
+          <span class="acc-title">Administrative Staff III</span>
           <span class="when">2021 — 2022</span>
-          <span class="pm">+</span>
-        </button>
+          <span class="pm" aria-hidden="true">+</span>
+        </button></h3>
         <div class="acc-body"><div class="acc-inner">
           <span class="note">Office of the Vice Governor, Quezon Province · 2021 — 2022</span>
           <ul>
@@ -756,8 +788,10 @@ const topbar = document.getElementById('topbar');
 addEventListener('scroll', () => topbar.classList.toggle('scrolled', scrollY > 20));
 const mb = document.getElementById('menuBtn');
 const nl = document.getElementById('navlinks');
-mb.addEventListener('click', () => nl.classList.toggle('open'));
-nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nl.classList.remove('open')));
+function setMenu(open){ nl.classList.toggle('open', open); mb.setAttribute('aria-expanded', open); }
+mb.addEventListener('click', () => setMenu(!nl.classList.contains('open')));
+nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+addEventListener('keydown', e => { if (e.key === 'Escape' && nl.classList.contains('open')){ setMenu(false); mb.focus(); } });
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -783,11 +817,13 @@ if (!reduce){
 
 // ===== accordion =====
 document.querySelectorAll('.acc-head').forEach(head => {
+  const item = head.closest('.acc-item');
+  const body = item.querySelector('.acc-body');
+  body.inert = true; // collapsed panels stay out of the screen-reader flow
   head.addEventListener('click', () => {
-    const item = head.parentElement;
-    const body = item.querySelector('.acc-body');
     const open = item.classList.toggle('open');
     head.setAttribute('aria-expanded', open);
+    body.inert = !open;
     body.style.maxHeight = open ? body.scrollHeight + 'px' : 0;
   });
 });
@@ -802,12 +838,6 @@ const gio = new IntersectionObserver(es => {
 }, { threshold:.4 });
 document.querySelectorAll('.gauges').forEach(g => gio.observe(g));  // (gauges removed; harmless if none)
 
-// ===== night mode from Education down =====
-const nightStart = document.getElementById('education');
-const nio = new IntersectionObserver(es => {
-  es.forEach(e => document.body.classList.toggle('night', e.isIntersecting || e.boundingClientRect.top < 0));
-}, { rootMargin:'-35% 0px -35% 0px' });
-nio.observe(nightStart);
 
 // ===== wow kit =====
 const canHover = matchMedia('(hover:hover)').matches;
@@ -909,6 +939,18 @@ const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold:.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ===== theme toggle (dark / light) — choice is remembered across pages =====
+const themeBtn = document.getElementById('themeBtn');
+if (themeBtn){
+  const syncTheme = () => themeBtn.setAttribute('aria-pressed', document.body.classList.contains('night'));
+  syncTheme();
+  themeBtn.addEventListener('click', () => {
+    const dark = document.body.classList.toggle('night');
+    try{ localStorage.setItem('theme', dark ? 'dark' : 'light'); }catch(e){}
+    syncTheme();
+  });
+}
 </script>
 </body>
 </html>
