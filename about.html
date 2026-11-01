@@ -176,24 +176,56 @@ section{ padding:104px 0; }
 .edu-row p{ margin-top:6px; max-width:560px; font-size:.96rem; }
 .edu-honors{ font-family:'JetBrains Mono'; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--azure); margin-top:8px !important; }
 
-/* A3 spec sheet + gauges */
-.spec-grid{ display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start; }
-.sheet{ border:1px solid var(--ln2); border-radius:4px; background:var(--srf); transition:background .8s, border-color .8s; }
-.sheet .sh-head{ display:flex; justify-content:space-between; padding:14px 22px; border-bottom:1px solid var(--ln); }
-.sheet .rowline{ display:flex; justify-content:space-between; gap:18px; padding:14px 22px;
-  border-bottom:1px dashed var(--ln); font-family:'JetBrains Mono'; font-size:.8rem;
-  letter-spacing:.06em; text-transform:uppercase; }
-.sheet .rowline:last-child{ border-bottom:none; }
-.sheet .rowline span{ color:var(--mist); } .sheet .rowline b{ color:var(--hd); font-weight:600; transition:color .8s; }
-.tiers{ display:flex; flex-direction:column; gap:24px; }
-.tier-head{ display:flex; align-items:center; gap:14px; margin-bottom:12px; }
-.tier-bar{ display:inline-flex; gap:3px; }
-.tier-bar i{ width:16px; height:4px; border-radius:99px; background:color-mix(in srgb, var(--mist) 30%, transparent); }
-.tier-bar.t3 i, .tier-bar.t2 i:nth-child(-n+2), .tier-bar.t1 i:nth-child(1){ background:var(--azure); }
-.tchips{ display:flex; flex-wrap:wrap; gap:8px; }
-.tchip{ font-family:'JetBrains Mono'; font-size:.76rem; padding:7px 13px; border-radius:3px;
-  background:var(--azure-soft); color:var(--azure); }
-.tchip.ghosted{ background:transparent; border:1px solid var(--ln2); color:var(--fg); }
+/* A3 skill depth — logo size, weight and bar thickness encode the level; no chip text */
+.depth{ display:grid; grid-template-columns:1.3fr 1.3fr .9fr; border-top:1px solid var(--ln2); border-bottom:1px solid var(--ln2); }
+.tier-col{ display:flex; flex-direction:column; gap:24px; padding:38px 30px 28px; }
+.tier-col + .tier-col{ border-left:1px dashed var(--ln); }
+.tier-logos{ flex:1; list-style:none; display:flex; flex-wrap:wrap; align-content:flex-start; gap:26px 30px; }
+.tier-logos li{ display:block; opacity:0; scale:.25; filter:blur(4px);
+  transition:opacity .4s cubic-bezier(.2,0,0,1), scale .45s cubic-bezier(.2,0,0,1), filter .4s cubic-bezier(.2,0,0,1);
+  transition-delay:calc(var(--d) * .55s + .5s + var(--i, 0) * 60ms); }
+.depth.in .tier-logos li{ opacity:1; scale:1; filter:blur(0); }
+.depth.settled .tier-logos li{ transition-delay:0s; }
+.brand-i{ display:block; background:currentColor;
+  -webkit-mask:var(--src) center/contain no-repeat; mask:var(--src) center/contain no-repeat; transition:color .25s; }
+.t3 .brand-i{ width:42px; height:42px; color:var(--hd); }
+.t2 .brand-i{ width:34px; height:34px; color:var(--fg); }
+.t1 .brand-i{ width:28px; height:28px; color:var(--mist); }
+/* glow: mouse hover, or touch-and-hold on phones (JS adds .hot) */
+.depth{ -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
+.tier-logos li.hot{ filter:drop-shadow(0 0 14px color-mix(in srgb, var(--azure) 60%, transparent)); scale:1.15; }
+.tier-logos li.hot .brand-i{ color:var(--azure); }
+@media (hover:hover){
+  .depth.settled .tier-logos li:hover{ filter:drop-shadow(0 0 14px color-mix(in srgb, var(--azure) 60%, transparent)); scale:1.15; }
+  .tier-logos li:hover .brand-i{ color:var(--azure); }
+}
+/* the level bar: a drafting dimension line that draws in, tier after tier */
+.tier-scale{ position:relative; background:var(--ln); }
+.t3 .tier-scale{ height:4px; } .t2 .tier-scale{ height:3px; } .t1 .tier-scale{ height:2px; }
+.tier-scale::before,.tier-scale::after{ content:""; position:absolute; top:-5px; bottom:-5px; width:1px; background:var(--ln2); }
+.tier-scale::before{ left:0; } .tier-scale::after{ right:0; }
+.tier-scale i{ position:absolute; inset:0; background:var(--azure); transform:scaleX(0); transform-origin:left;
+  transition:transform .9s var(--ease) calc(var(--d) * .55s); }
+.t2 .tier-scale i{ opacity:.65; } .t1 .tier-scale i{ opacity:.35; }
+.depth.in .tier-scale i{ transform:scaleX(1); }
+.tier-col .tlabel{ opacity:.35; transition:opacity .4s calc(var(--d) * .55s + .6s); }
+.depth.in .tlabel{ opacity:1; }
+/* facts strip — what's left of the old spec sheet */
+.facts{ display:grid; grid-template-columns:repeat(3,1fr); margin-top:44px; border:1px solid var(--ln2); border-radius:4px;
+  background:var(--srf); transition:background .8s, border-color .8s; }
+.facts div{ padding:18px 22px; }
+.facts div + div{ border-left:1px solid var(--ln); }
+.facts small{ display:block; font-family:'JetBrains Mono'; font-size:.62rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--mist); margin-bottom:6px; }
+.facts b{ font-family:'JetBrains Mono'; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--hd); font-weight:600; }
+@media (max-width:900px){
+  .depth{ grid-template-columns:1fr; }
+  .tier-col + .tier-col{ border-left:none; border-top:1px dashed var(--ln); }
+  .facts{ grid-template-columns:1fr; } .facts div + div{ border-left:none; border-top:1px solid var(--ln); }
+}
+@media (prefers-reduced-motion:reduce){
+  .tier-logos li{ opacity:1; scale:1; filter:none; } .tier-scale i{ transform:none; } .tier-col .tlabel{ opacity:1; }
+}
 
 /* A4 experience — accordion */
 #experience .acc{ border-top:1px solid var(--ln2); transition:border-color .8s; }
@@ -405,7 +437,6 @@ body.night .toTop:hover{ background:#1E6FE0; }
   .hero{ min-height:auto; padding-top:130px; }
   .rig{ position:relative; left:auto; top:0; margin:34px auto 0; width:min(280px,64vw); }
   .strap{ height:120px; min-height:0; }
-  .spec-grid{ grid-template-columns:1fr; gap:50px; }
   .edu-row{ grid-template-columns:1fr; gap:8px; }
   .acc-head{ grid-template-columns:40px 1fr auto; }
   .acc-head .when{ display:none; }
@@ -569,65 +600,62 @@ body.night{ color-scheme:dark; }
         <a href="index.html#certs" class="ic sm" aria-label="All credentials" title="All credentials"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#profile" aria-label="A3 Spec sheet">A3 <span class="ar" aria-hidden="true">↓</span></a></div>
+      <div class="bridge reveal"><a href="#profile" aria-label="A3 Profile and skills">A3 <span class="ar" aria-hidden="true">↓</span></a></div>
   </div>
 </section>
 
-<!-- ============ A3 PROFILE: spec sheet + gauges ============ -->
+<!-- ============ A3 PROFILE: skill depth + facts ============ -->
+<!-- SKILLS: one <li> per tool, in the column for your level. Logo = cdn.simpleicons.org/<name> -->
 <section id="profile" style="padding-top:0;">
   <div class="wrap">
     <span class="ghost" aria-hidden="true">A3</span>
     <div class="idx reveal"><span class="n">A3</span><h2>Profile &amp; skills</h2></div>
-    <div class="spec-grid">
-      <div class="sheet reveal">
-        <div class="sh-head"><span class="note">Backstory</span><span class="note-dim">Unit: Human</span></div>
-        <div class="rowline"><span>Name</span><b>Daryll Celestial</b></div>
-        <div class="rowline"><span>Origin</span><b>Philippines</b></div>
-        <div class="rowline"><span>Role</span><b>IT student · developer</b></div>
-        <div class="rowline"><span>Currently</span><b>Leading a capstone dev team</b></div>
-        <div class="rowline"><span>Off-hours</span><b>Projects · games · photos · sleep</b></div>
-        <div class="rowline"><span>Building toward</span><b>Launching software of my own</b></div>
-        <div class="rowline"><span>Toolkit</span><b>AI-assisted · every line human-reviewed</b></div>
+    <div class="depth reveal" id="depth">
+      <div class="tier-col t3" style="--d:0">
+        <ul class="tier-logos" aria-label="Proficient">
+          <li style="--i:0"><span class="brand-i" role="img" aria-label="JavaScript" title="JavaScript" style="--src:url(https://cdn.simpleicons.org/javascript)"></span></li>
+          <li style="--i:1"><span class="brand-i" role="img" aria-label="React" title="React" style="--src:url(https://cdn.simpleicons.org/react)"></span></li>
+          <li style="--i:2"><span class="brand-i" role="img" aria-label="Vite" title="Vite" style="--src:url(https://cdn.simpleicons.org/vite)"></span></li>
+          <li style="--i:3"><span class="brand-i" role="img" aria-label="React Native (Expo)" title="React Native (Expo)" style="--src:url(https://cdn.simpleicons.org/expo)"></span></li>
+          <li style="--i:4"><span class="brand-i" role="img" aria-label="HTML5" title="HTML5" style="--src:url(https://cdn.simpleicons.org/html5)"></span></li>
+          <li style="--i:5"><span class="brand-i" role="img" aria-label="CSS" title="CSS" style="--src:url(https://cdn.simpleicons.org/css)"></span></li>
+          <li style="--i:6"><span class="brand-i" role="img" aria-label="Git" title="Git" style="--src:url(https://cdn.simpleicons.org/git)"></span></li>
+          <li style="--i:7"><span class="brand-i" role="img" aria-label="GitHub" title="GitHub" style="--src:url(https://cdn.simpleicons.org/github)"></span></li>
+        </ul>
+        <div class="tier-scale" aria-hidden="true"><i></i></div>
+        <span class="note tlabel" aria-hidden="true">Proficient</span>
       </div>
-      <div class="tiers reveal">
-        <div class="tier">
-          <div class="tier-head"><span class="note">Proficient</span><span class="tier-bar t3"><i></i><i></i><i></i></span></div>
-          <div class="tchips">
-            <span class="tchip">JavaScript</span><span class="tchip">React + Vite</span><span class="tchip">React Native (Expo)</span>
-            <span class="tchip">HTML / CSS</span><span class="tchip">REST APIs</span><span class="tchip">Git / GitHub</span>
-          </div>
-        </div>
-        <div class="tier">
-          <div class="tier-head"><span class="note">Working knowledge</span><span class="tier-bar t2"><i></i><i></i><i></i></span></div>
-          <div class="tchips">
-            <span class="tchip">Java + Spring Boot</span><span class="tchip">PostgreSQL</span><span class="tchip">Swift / SwiftUI</span>
-            <span class="tchip">Kotlin + Jetpack Compose</span><span class="tchip">Firebase</span><span class="tchip">Python</span><span class="tchip">SQL</span>
-          </div>
-        </div>
-        <div class="tier">
-          <div class="tier-head"><span class="note">Exposure</span><span class="tier-bar t1"><i></i><i></i><i></i></span></div>
-          <div class="tchips">
-            <span class="tchip">IoT sensor integration</span><span class="tchip">Cisco Packet Tracer</span>
-            <span class="tchip">MQTT / Kafka concepts</span><span class="tchip">Figma prototyping</span>
-          </div>
-        </div>
-        <div class="tier">
-          <div class="tier-head"><span class="note-dim">Also</span></div>
-          <div class="tchips">
-            <span class="tchip ghosted">Team leadership</span><span class="tchip ghosted">Technical documentation</span>
-            <span class="tchip ghosted">AI-assisted development &amp; prompt design</span>
-          </div>
-        </div>
-        <div class="tier">
-          <div class="tier-head"><span class="note-dim">Creative — supporting</span></div>
-          <div class="tchips">
-            <span class="tchip ghosted">Photoshop</span><span class="tchip ghosted">Lightroom</span><span class="tchip ghosted">Canva</span>
-            <span class="tchip ghosted">Landscape</span><span class="tchip ghosted">Portrait</span><span class="tchip ghosted">Street</span><span class="tchip ghosted">Events</span>
-          </div>
-        </div>
+      <div class="tier-col t2" style="--d:1">
+        <ul class="tier-logos" aria-label="Working">
+          <li style="--i:0"><span class="brand-i" role="img" aria-label="Java" title="Java" style="--src:url(https://cdn.simpleicons.org/openjdk)"></span></li>
+          <li style="--i:1"><span class="brand-i" role="img" aria-label="Spring Boot" title="Spring Boot" style="--src:url(https://cdn.simpleicons.org/springboot)"></span></li>
+          <li style="--i:2"><span class="brand-i" role="img" aria-label="PostgreSQL" title="PostgreSQL" style="--src:url(https://cdn.simpleicons.org/postgresql)"></span></li>
+          <li style="--i:3"><span class="brand-i" role="img" aria-label="Swift" title="Swift" style="--src:url(https://cdn.simpleicons.org/swift)"></span></li>
+          <li style="--i:4"><span class="brand-i" role="img" aria-label="Kotlin" title="Kotlin" style="--src:url(https://cdn.simpleicons.org/kotlin)"></span></li>
+          <li style="--i:5"><span class="brand-i" role="img" aria-label="Jetpack Compose" title="Jetpack Compose" style="--src:url(https://cdn.simpleicons.org/jetpackcompose)"></span></li>
+          <li style="--i:6"><span class="brand-i" role="img" aria-label="Firebase" title="Firebase" style="--src:url(https://cdn.simpleicons.org/firebase)"></span></li>
+          <li style="--i:7"><span class="brand-i" role="img" aria-label="Python" title="Python" style="--src:url(https://cdn.simpleicons.org/python)"></span></li>
+        </ul>
+        <div class="tier-scale" aria-hidden="true"><i></i></div>
+        <span class="note-dim tlabel" aria-hidden="true">Working</span>
+      </div>
+      <div class="tier-col t1" style="--d:2">
+        <ul class="tier-logos" aria-label="Exposure">
+          <li style="--i:0"><span class="brand-i" role="img" aria-label="Cisco Packet Tracer" title="Cisco Packet Tracer" style="--src:url(https://cdn.simpleicons.org/cisco)"></span></li>
+          <li style="--i:1"><span class="brand-i" role="img" aria-label="MQTT" title="MQTT" style="--src:url(https://cdn.simpleicons.org/mqtt)"></span></li>
+          <li style="--i:2"><span class="brand-i" role="img" aria-label="Kafka" title="Kafka" style="--src:url(https://cdn.simpleicons.org/apachekafka)"></span></li>
+          <li style="--i:3"><span class="brand-i" role="img" aria-label="Figma prototyping" title="Figma prototyping" style="--src:url(https://cdn.simpleicons.org/figma)"></span></li>
+        </ul>
+        <div class="tier-scale" aria-hidden="true"><i></i></div>
+        <span class="note-dim tlabel" aria-hidden="true">Exposure</span>
       </div>
     </div>
-      <div class="bridge reveal"><a href="#experience" aria-label="A4 Experience">A4 <span class="ar" aria-hidden="true">↓</span></a></div>
+    <div class="facts reveal">
+      <div><small>Origin</small><b>Philippines</b></div>
+      <div><small>Off-hours</small><b>Projects · games · photos · sleep</b></div>
+      <div><small>Building toward</small><b>Software of my own</b></div>
+    </div>
+    <div class="bridge reveal"><a href="#experience" aria-label="A4 Experience">A4 <span class="ar" aria-hidden="true">↓</span></a></div>
   </div>
 </section>
 
@@ -842,15 +870,25 @@ document.querySelectorAll('.acc-head').forEach(head => {
   });
 });
 
-// ===== gauges fill on view =====
-const gio = new IntersectionObserver(es => {
-  es.forEach(e => {
-    if (!e.isIntersecting) return;
-    e.target.querySelectorAll('.fill').forEach(f => f.style.width = f.dataset.w + '%');
-    gio.unobserve(e.target);
+// ===== A3 skill depth: bars draw in tier by tier, logos pop in behind them =====
+const depth = document.getElementById('depth');
+if (depth){
+  // once the entrance has played, drop the stagger delays so hover reacts instantly
+  new MutationObserver((m, mo) => {
+    if (depth.classList.contains('in')){ mo.disconnect(); setTimeout(() => depth.classList.add('settled'), 2600); }
+  }).observe(depth, { attributes:true, attributeFilter:['class'] });
+  // phones: touch-and-hold a logo to make it glow
+  let held = null;
+  const release = () => { if (held){ held.classList.remove('hot'); held = null; } };
+  depth.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse') return;
+    release();
+    const li = e.target.closest('.tier-logos li');
+    if (li){ held = li; li.classList.add('hot'); }
   });
-}, { threshold:.4 });
-document.querySelectorAll('.gauges').forEach(g => gio.observe(g));  // (gauges removed; harmless if none)
+  ['pointerup', 'pointercancel'].forEach(t => addEventListener(t, release));
+  depth.addEventListener('contextmenu', e => { if (held) e.preventDefault(); });
+}
 
 
 // ===== wow kit =====

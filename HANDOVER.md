@@ -23,7 +23,7 @@ are harmless — tell him so if he asks again.
 | File | Role |
 |---|---|
 | `index.html` | Home. Preloader + hero + sections 01–06 + contact + footer. |
-| `about.html` | About page. ID badge hero, intro, education, spec sheet, experience. |
+| `about.html` | About page. ID badge hero, intro, education, skill depth, experience. |
 | `work-portal.html` | Case-study TEMPLATE (duplicate per project). |
 | `CUSTOMIZE.md` | His self-service manual. **Update it whenever you change structure.** |
 | `resume.pdf`, `images/*` | User-supplied. Expected names: `portrait.jpg`, `cert-featured.jpg`, `photo1–3.jpg`, `design1–3.jpg`, `case-portal-1/2.jpg`. |
@@ -74,8 +74,8 @@ status strip w/ pulsing live-dot + Top button, hover cells, live PH clock
 instructions in CUSTOMIZE.md §8 (requires renumbering 04–06 back to 05–07).
 
 **about.html** — Swinging ID badge (spring pendulum chasing cursor; the ONLY
-remaining cursor context label: "HI ^_^" on the badge). A1 Intro, A2 Education, A3 Spec
-sheet (playful datasheet + animated gauges + locked "hire to unlock" bar),
+remaining cursor context label: "HI ^_^" on the badge). A1 Intro, A2 Education, A3 Skill depth
+(logo depth chart: size/weight = level, bars draw in tier by tier, logos pop in, glow on hover/hold; 3-cell facts strip),
 A4 Experience accordion. Own loc indicator (A1–A4), letter-hover on heading,
 CTA "Seen enough? / See the work." blur-to-focus.
 

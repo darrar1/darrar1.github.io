@@ -56,8 +56,8 @@ Ctrl+F `work-row`. Each project block contains:
 ## 6. About page
 - Intro paragraph: Ctrl+F `Kumusta! I'm Daryll`
 - Education: Ctrl+F `edu-row` (note the "(edit me)" marks)
-- Spec sheet rows: Ctrl+F `rowline`
-- Skill gauges: Ctrl+F `data-w=` — the number is the % fill; also update the % label next to it
+- Skills (logos by level): Ctrl+F `SKILLS`. Move a `<li>` line into the Proficient / Working / Exposure column to change its level; copy a line to add a tool (logo names at simpleicons.org)
+- Facts strip (Origin · Off-hours · Building toward): Ctrl+F `class="facts"`
 - Experience accordion: Ctrl+F `acc-item` — title, dates, bullets. Copy a whole `acc-item` to add one.
 - ID badge fields: Ctrl+F `BSIT-2026-001`
 
