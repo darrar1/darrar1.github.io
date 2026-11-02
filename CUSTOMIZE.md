@@ -10,6 +10,30 @@ Every page also has an **EDIT MAP** comment at the very top — open the file, a
 
 ---
 
+## 0. The admin page — the easy way (recommended)
+
+Most content is now edited in your private **admin page** instead of in the HTML: projects, case studies, skills, credentials, plates, experience, references, hero words, the facts strip and your resume. Sections still edited by hand (this guide): How I work, Principles, contact links, footer.
+
+> ⚠ Never hand-edit HTML between `<!-- CMS:name -->` markers — the admin rewrites those sections on every publish (it warns you first).
+
+**One-time: go live.** Upload/push *all* the new files (including the `admin/` and `content/` folders) to GitHub. The admin reads your site from GitHub, so it only works after that.
+
+**One-time per device: connect GitHub**
+1. GitHub → your photo → **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**.
+2. Name: `portfolio admin` · Expiration: **90 days**.
+3. Repository access: **Only select repositories → darrar1.github.io**.
+4. Permissions → Repository permissions → **Contents: Read and write**. Nothing else.
+5. Generate, then copy the token (it starts with `github_pat_`).
+6. On your site press **Shift + |** (on a phone: open `darrar1.github.io/admin/`). Paste the token, choose a passphrase of 12+ characters (not your GitHub password), press **Encrypt & continue**. The token is stored only encrypted, only in that browser.
+
+**Every time:** Shift + | → passphrase → edit → **Preview** → **Publish**. The site updates in about a minute. It locks itself after 15 minutes idle, or press **Lock**.
+
+**Photos:** upload any JPG / PNG / WebP — the admin resizes it, strips location data and names the file for you.
+
+**Safety:** turn on two-factor login for your GitHub account. If a device is lost or you suspect anything, delete the token on GitHub (Fine-grained tokens → Delete) — the encrypted copy becomes useless. When the token expires, the admin says GitHub rejected it: click *Remove the saved key from this device* and repeat the one-time steps. Every publish is a commit, so any change can be undone from the repository history.
+
+---
+
 ## 1. Your identity
 | What | File(s) | Ctrl+F | Change |
 |---|---|---|---|

@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Campus Service Portal — Case study — Daryll Celestial</title>
+<!-- CMS:case-title --><title>Campus Service Portal — Case study — Daryll Celestial</title><!-- /CMS:case-title -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -334,7 +334,7 @@ body.night{ color-scheme:dark; }
   <div class="nav">
     <div class="brand">
       <a href="index.html" class="logo"><span>DAR</span><span class="lg-rest">YLL CELESTIAL</span><span class="lg-dot" aria-hidden="true"></span></a>
-      <span class="loc note-dim" aria-hidden="true">W.01 / Case study</span>
+      <span class="loc note-dim" aria-hidden="true"><!-- CMS:case-loc -->W.01 / Case study<!-- /CMS:case-loc --></span>
     </div>
     <div class="nav-end">
     <nav class="nav-links" id="navlinks">
@@ -349,7 +349,7 @@ body.night{ color-scheme:dark; }
 </header>
 
 <main>
-
+<!-- CMS:case-main -->
 <!-- ===== CASE HERO ===== -->
 <section class="chero" style="padding-bottom:40px;">
   <div class="wrap">
@@ -442,8 +442,8 @@ body.night{ color-scheme:dark; }
         <h3>What I'd do next</h3>
         <p>One honest paragraph on limitations or the next iteration. This reads as maturity, not weakness.</p>
         <div style="display:flex; gap:14px; margin-top:22px; flex-wrap:wrap;">
-          <a href="#" target="_blank" class="btn btn-solid"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg> Code</a>
-          <a href="#" target="_blank" class="btn">Live <span class="ar" aria-hidden="true">↗</span></a>
+          <a href="#" target="_blank" rel="noopener" class="btn btn-solid"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg> Code</a>
+          <a href="#" target="_blank" rel="noopener" class="btn">Live <span class="ar" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
@@ -461,7 +461,7 @@ body.night{ color-scheme:dark; }
     </div>
   </div>
 </section>
-
+<!-- /CMS:case-main -->
 </main>
 
 <footer class="titleblock">
@@ -470,7 +470,7 @@ body.night{ color-scheme:dark; }
     <button class="toTop" id="toTop" aria-label="Back to top" title="Back to top"><span class="ar" aria-hidden="true">↑</span></button>
   </div>
   <div class="tb-grid">
-    <div class="tb-cell"><small>Document</small><b>Case study — sheet W.01</b></div>
+    <div class="tb-cell"><small>Document</small><b><!-- CMS:case-doc -->Case study — sheet W.01<!-- /CMS:case-doc --></b></div>
     <div class="tb-cell"><small>Drawn by</small><b>Daryll Celestial</b></div>
     <div class="tb-cell"><small>Location</small><b>Philippines · <span id="phTime">--:--</span></b></div>
     <div class="tb-cell"><small>Revision</small><b>1.0 — 2026</b></div>
@@ -555,6 +555,13 @@ const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold:.1 });
 document.querySelectorAll('.reveal, .idx').forEach(el => io.observe(el));
+
+// ===== admin shortcut: Shift + | opens the private admin page (still locked behind your passphrase) =====
+addEventListener("keydown", e => {
+  if (e.key !== "|" || !e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.target.closest && e.target.closest("input, textarea, select, [contenteditable=\"true\"]")) return;
+  location.href = "admin/";
+});
 
 // ===== theme toggle (dark / light) — choice is remembered across pages =====
 const themeBtn = document.getElementById('themeBtn');

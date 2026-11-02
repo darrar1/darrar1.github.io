@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Security policy: only this site's own scripts run; the page can only talk to GitHub's API. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://cdn.simpleicons.org https://images.unsplash.com; connect-src 'self' https://api.github.com; frame-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; manifest-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Daryll Celestial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+<script type="module" src="admin.js"></script>
+</head>
+<body>
+
+<header class="bar">
+  <div class="brand"><span class="mark" aria-hidden="true"></span>DAR <span class="dim">/ admin</span></div>
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+  <div class="bar-actions" id="barActions" hidden>
+    <button type="button" class="btn" id="btnPreview">Preview</button>
+    <button type="button" class="btn btn-solid" id="btnPublish">Publish</button>
+    <button type="button" class="btn btn-ghost" id="btnLock" title="Lock now">Lock</button>
+  </div>
+</header>
+
+<!-- 1 · first time on this device: connect GitHub -->
+<section class="view card" id="vSetup" hidden>
+  <p class="eyebrow">First time on this device</p>
+  <h1>Connect your GitHub key</h1>
+  <p>Paste a <b>fine-grained token</b> that can only edit this one repository, then choose a passphrase. The token is encrypted with your passphrase and stored only in this browser. Step-by-step: <code>CUSTOMIZE.md</code> → <i>Admin page</i>.</p>
+  <form id="fSetup" autocomplete="off">
+    <label for="sToken">GitHub token</label>
+    <input id="sToken" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" required>
+    <label for="sPass1">Passphrase <span class="dim">(12+ characters)</span></label>
+    <input id="sPass1" type="password" autocomplete="new-password" minlength="12" required>
+    <label for="sPass2">Repeat passphrase</label>
+    <input id="sPass2" type="password" autocomplete="new-password" minlength="12" required>
+    <p class="err" id="sErr" role="alert"></p>
+    <button class="btn btn-solid" type="submit">Encrypt &amp; continue</button>
+  </form>
+</section>
+
+<!-- 2 · returning: unlock -->
+<section class="view card" id="vUnlock" hidden>
+  <p class="eyebrow">Locked</p>
+  <h1>Unlock</h1>
+  <form id="fUnlock" autocomplete="off">
+    <label for="uPass">Passphrase</label>
+    <input id="uPass" type="password" autocomplete="current-password" required>
+    <p class="err" id="uErr" role="alert"></p>
+    <button class="btn btn-solid" type="submit">Unlock</button>
+  </form>
+  <button type="button" class="link" id="btnForget">Remove the saved key from this device</button>
+</section>
+
+<!-- 3 · editor -->
+<section class="view editor" id="vEditor" hidden>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  <div class="pane">
+    <div class="banner" id="banner" hidden></div>
+    <div id="editorBody"></div>
+  </div>
+</section>
+
+<!-- preview -->
+<dialog class="sheet" id="dPreview" aria-labelledby="pvTitle">
+  <div class="sheet-bar">
+    <h2 id="pvTitle">Preview</h2>
+    <label class="inline">Page <select id="pvPage"></select></label>
+    <button type="button" class="btn btn-ghost" id="pvClose">Close</button>
+  </div>
+  <p class="hint">Animations are off in preview; everything is shown in its final state.</p>
+  <iframe id="pvFrame" title="Page preview" sandbox="allow-same-origin"></iframe>
+</dialog>
+
+<!-- publish -->
+<dialog class="sheet small" id="dPublish" aria-labelledby="pbTitle">
+  <div class="sheet-bar">
+    <h2 id="pbTitle">Publish</h2>
+    <button type="button" class="btn btn-ghost" id="pbClose">Cancel</button>
+  </div>
+  <div id="pbBody"></div>
+</dialog>
+
+</body>
+</html>

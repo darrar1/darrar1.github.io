@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "basics": {
+    "now": "Leading a capstone dev team",
+    "status": "Open to work",
+    "rotating": ["the web", "iOS", "Android", "real users"],
+    "facts": [
+      { "label": "Origin", "value": "Philippines" },
+      { "label": "Off-hours", "value": "Projects · games · photos · sleep" },
+      { "label": "Building toward", "value": "Software of my own" }
+    ]
+  },
+  "projects": [
+    {
+      "title": "Campus Service Portal",
+      "role": "Full-stack developer",
+      "stack": "React · Node · MySQL",
+      "outcome": "300+ students onboarded · paper forms eliminated (edit: your real result)",
+      "desc": "Students file and track requests online instead of on paper. Built end-to-end with role-based access.",
+      "photo": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=80",
+      "code": "#",
+      "live": "#",
+      "case": {
+        "file": "work-portal.html",
+        "summary": "Students used to file service requests on paper and wait in line to check the status. I built a web portal where they file, track, and get notified — end to end.",
+        "templateNotice": true,
+        "timeline": "6 weeks",
+        "client": "University dept.",
+        "year": "2026",
+        "stats": [
+          { "big": "300+", "label": "students onboarded in the first month" },
+          { "big": "0", "label": "paper forms — the old process fully retired" },
+          { "big": "6 wks", "label": "from kickoff to deployment, on schedule" }
+        ],
+        "problem": [
+          "Describe the situation before your work: what was slow, broken, or manual. Keep it concrete — queues, lost forms, hours wasted. One or two short paragraphs.",
+          "What made it hard? A constraint, a legacy process, a tight deadline. This is where the reader starts rooting for you."
+        ],
+        "solution": [
+          "What you built, in plain language. Who uses it, what they can do now, and the one design/engineering decision you're proudest of.",
+          "Mention your role honestly — solo, or which parts were yours in a team."
+        ],
+        "screens": [
+          { "image": "images/case-portal-1.jpg", "caption": "Student dashboard — file & track requests", "alt": "Main dashboard screen" },
+          { "image": "images/case-portal-2.jpg", "caption": "Admin queue with role-based access", "alt": "Admin view screen" }
+        ],
+        "process": [
+          { "title": "Research", "text": "Interviewed the office staff and students; mapped the paper flow before designing anything." },
+          { "title": "Design", "text": "Wireframes in Figma, tested with five students, two rounds of revisions." },
+          { "title": "Build", "text": "React front end, Node/Express API, MySQL. Weekly progress links to the stakeholders." },
+          { "title": "Ship", "text": "Deployed, wrote a one-page admin guide, trained the staff in one session." }
+        ],
+        "changed": [
+          "The result in the user's terms: time saved, errors gone, people served. If you have a quote from the client or adviser, this is where it lives."
+        ],
+        "next": [
+          "One honest paragraph on limitations or the next iteration. This reads as maturity, not weakness."
+        ]
+      }
+    },
+    {
+      "title": "Inventory Dashboard",
+      "role": "Backend developer",
+      "stack": "Python · Flask",
+      "outcome": "2-week build · stockouts down 40% (edit: your real result)",
+      "desc": "Stock tracking for a small business: live charts, low-stock alerts, exportable reports.",
+      "photo": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80",
+      "code": "#",
+      "live": "#",
+      "case": null
+    },
+    {
+      "title": "Booking System",
+      "role": "Team lead · Frontend",
+      "stack": "PHP · JavaScript",
+      "outcome": "bookings handled online end-to-end (edit: your real result)",
+      "desc": "Appointment scheduling with email confirmations and an admin calendar view.",
+      "photo": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=700&q=80",
+      "code": "#",
+      "live": "#",
+      "case": null
+    },
+    {
+      "title": "Weather & Maps App",
+      "role": "Solo project",
+      "stack": "React · APIs",
+      "outcome": "solo project · shipped in 10 days (edit: your real result)",
+      "desc": "A responsive app pulling live weather and mapping data through public APIs.",
+      "photo": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&q=80",
+      "code": "#",
+      "live": "#",
+      "case": null
+    }
+  ],
+  "skills": [
+    { "name": "JavaScript", "logo": "javascript", "home": "dev", "level": "proficient" },
+    { "name": "React", "logo": "react", "home": "dev", "level": "proficient" },
+    { "name": "Vite", "logo": "vite", "home": "", "level": "proficient" },
+    { "name": "React Native (Expo)", "logo": "expo", "home": "", "level": "proficient" },
+    { "name": "HTML5", "logo": "html5", "home": "", "level": "proficient" },
+    { "name": "CSS", "logo": "css", "home": "", "level": "proficient" },
+    { "name": "Node.js", "logo": "nodedotjs", "home": "dev", "level": "" },
+    { "name": "PHP", "logo": "php", "home": "dev", "level": "" },
+    { "name": "Java", "logo": "openjdk", "home": "", "level": "working" },
+    { "name": "Spring Boot", "logo": "springboot", "home": "", "level": "working" },
+    { "name": "PostgreSQL", "logo": "postgresql", "home": "", "level": "working" },
+    { "name": "Swift", "logo": "swift", "home": "", "level": "working" },
+    { "name": "Kotlin", "logo": "kotlin", "home": "", "level": "working" },
+    { "name": "Jetpack Compose", "logo": "jetpackcompose", "home": "", "level": "working" },
+    { "name": "Firebase", "logo": "firebase", "home": "", "level": "working" },
+    { "name": "Python", "logo": "python", "home": "dev", "level": "working" },
+    { "name": "MySQL", "logo": "mysql", "home": "dev", "level": "" },
+    { "name": "Git", "logo": "git", "home": "dev", "level": "proficient" },
+    { "name": "GitHub", "logo": "github", "home": "dev", "level": "proficient" },
+    { "name": "Figma", "logo": "figma", "home": "design", "level": "" },
+    { "name": "Photoshop", "logo": "adobe-photoshop", "home": "design", "level": "" },
+    { "name": "Illustrator", "logo": "adobe-illustrator", "home": "design", "level": "" },
+    { "name": "Lightroom", "logo": "adobe-lightroom", "home": "design", "level": "" },
+    { "name": "Cisco Packet Tracer", "logo": "cisco", "home": "", "level": "exposure" },
+    { "name": "MQTT", "logo": "mqtt", "home": "", "level": "exposure" },
+    { "name": "Kafka", "logo": "apachekafka", "home": "", "level": "exposure" },
+    { "name": "Figma prototyping", "logo": "figma", "home": "", "level": "exposure" }
+  ],
+  "credentials": {
+    "featured": {
+      "corner": "Award · 2026",
+      "image": "images/cert-featured.jpg",
+      "imageAlt": "Featured certificate",
+      "label": "★ Award · Best in Capstone",
+      "title": "Best in Capstone — \"Enverga Admission AI\"",
+      "sub": "Open iT Summer Bootcamp · Data Science Track · May 2026",
+      "text": "Recognized for execution, creativity, and collaboration.",
+      "url": "https://credsverse.com/credentials/b6f4a53d-3e01-482b-837d-ed518389b05a?preview=1"
+    },
+    "list": [
+      { "issuer": "Open iT", "title": "Applied Full-Stack & Data Science Bootcamp — Data Science Track", "date": "Jun 2026", "url": "https://credsverse.com/credentials/95d62786-9354-49fe-9075-f378a794b22c?preview=1" },
+      { "issuer": "IBM", "title": "Flutter & Dart: Developing iOS, Android & Mobile Apps", "date": "May 2025", "url": "https://www.coursera.org/account/accomplishments/verify/4J3YR2V1EXSX" },
+      { "issuer": "LearnQuest", "title": "Basics of Cisco Networking", "date": "Mar 2025", "url": "https://www.coursera.org/account/accomplishments/verify/CA2WL5OQDZVC" }
+    ]
+  },
+  "references": [
+    {
+      "text": "Daryll is one of the most active and top student leaders at the University. He is one of the top students in terms of technical skills and the go-to person when it comes to student events — as a host. These skills — technical and communication — are vital in terms of collaboration. With his stint in a leadership role at the university, I'm sure he will make a good team member in the industry as well.",
+      "name": "Jessa Cahilig",
+      "role": "Technology Leader · Certified Scrum Master · former teacher"
+    }
+  ],
+  "plates": [
+    { "lane": "photo", "title": "Photo title", "meta": "Camera · Lens · Settings", "image": "images/photo1.jpg", "alt": "Photography work 1" },
+    { "lane": "photo", "title": "Photo title", "meta": "Camera · Lens · Settings", "image": "images/photo2.jpg", "alt": "Photography work 2" },
+    { "lane": "photo", "title": "Photo title", "meta": "Camera · Lens · Settings", "image": "images/photo3.jpg", "alt": "Photography work 3" },
+    { "lane": "design", "title": "Design title", "meta": "Tool · Type · Year", "image": "images/design1.jpg", "alt": "Design work 1" },
+    { "lane": "design", "title": "Design title", "meta": "Tool · Type · Year", "image": "images/design2.jpg", "alt": "Design work 2" },
+    { "lane": "design", "title": "Design title", "meta": "Tool · Type · Year", "image": "images/design3.jpg", "alt": "Design work 3" }
+  ],
+  "experience": [
+    { "title": "BantAI — Capstone Team Lead", "org": "MSEUF", "when": "2026", "key": true, "bullets": ["Led a small development team in planning and building our capstone project.", "Worked across development, system design, and project coordination."] },
+    { "title": "CCMS Representative", "org": "University Collegiate Student Council", "when": "2024 — 2025", "key": true, "bullets": ["Represented the College of Computing and Multimedia Studies in the University Student Council."] },
+    { "title": "Vice President for Internal Affairs", "org": "Philippine Society of Information Technology Students", "when": "2023 — 2024", "key": true, "bullets": ["Supported internal operations and student activities of the organization."] },
+    { "title": "Editor-in-Chief", "org": "KALYE", "when": "2025", "key": false, "bullets": ["Led the creation of a Figma-based online magazine on Filipino local street culture.", "Oversaw editorial direction, content organization, and visual presentation."] },
+    { "title": "Chairman", "org": "Department Student Commission of Election", "when": "2026 — Now", "key": false, "bullets": ["Oversees departmental student elections and helps ensure a fair, organized electoral process."] },
+    { "title": "Communications Department Head", "org": "LENTECH Studios", "when": "2025", "key": false, "bullets": ["Led communications initiatives and coordinated content and messaging for the organization."] },
+    { "title": "President", "org": "MSEUF Wildcats Esports", "when": "2025", "key": false, "bullets": ["Led student initiatives across esports, gaming, and creative activities."] },
+    { "title": "Social Media Manager & Support Staff", "org": "BUGHAW", "when": "2022 — Now", "key": false, "bullets": ["Manages social media content while supporting the organization’s programs and activities."] },
+    { "title": "Administrative Staff III", "org": "Office of the Vice Governor, Quezon Province", "when": "2021 — 2022", "key": false, "bullets": ["Assisted with administrative operations, documentation, and day-to-day office activities."] }
+  ]
+}

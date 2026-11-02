@@ -149,3 +149,8 @@ features, the right first response is gentle pushback: every hour on effects
 now has negative return. He knows this; hold the line kindly.
 
 *— Fable, July 2026. It was a good build. Take care of it — and of him.*
+
+## 9. Content admin (added Nov 2026) — read CLAUDE.md
+
+Content now lives in `content/portfolio.json` and is edited through a private admin at `/admin/` (Shift + | on any page). Security: fine-grained GitHub token (this repo, Contents read/write), stored only AES-GCM-encrypted with a PBKDF2 passphrase key, memory-only when unlocked, 15-minute idle lock, strict CSP, no third-party scripts. Publishing = one Git commit through the GitHub API (content JSON + regenerated pages + images).
+CMS sections are marked `<!-- CMS:name -->` in index/about/work-portal; their markup comes ONLY from `admin/templates.js`. After any template change run `node admin/tools/regenerate.mjs`, then `--check`. `work-portal.html` doubles as the template for new case-study pages. Full rules: `CLAUDE.md`.

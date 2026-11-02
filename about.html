@@ -188,6 +188,10 @@ section{ padding:104px 0; }
 .depth.settled .tier-logos li{ transition-delay:0s; }
 .brand-i{ display:block; background:currentColor;
   -webkit-mask:var(--src) center/contain no-repeat; mask:var(--src) center/contain no-repeat; transition:color .25s; }
+/* drawn Adobe marks (not on the logo CDN) */
+.bi-ps{ --src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='1.5' width='21' height='21' rx='4' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='10'%3EPs%3C/text%3E%3C/svg%3E"); }
+.bi-ai{ --src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='1.5' width='21' height='21' rx='4' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='10'%3EAi%3C/text%3E%3C/svg%3E"); }
+.bi-lr{ --src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='1.5' width='21' height='21' rx='4' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='10'%3ELr%3C/text%3E%3C/svg%3E"); }
 .t3 .brand-i{ width:42px; height:42px; color:var(--hd); }
 .t2 .brand-i{ width:34px; height:34px; color:var(--fg); }
 .t1 .brand-i{ width:28px; height:28px; color:var(--mist); }
@@ -611,6 +615,7 @@ body.night{ color-scheme:dark; }
     <span class="ghost" aria-hidden="true">A3</span>
     <div class="idx reveal"><span class="n">A3</span><h2>Profile &amp; skills</h2></div>
     <div class="depth reveal" id="depth">
+      <!-- CMS:depth -->
       <div class="tier-col t3" style="--d:0">
         <ul class="tier-logos" aria-label="Proficient">
           <li style="--i:0"><span class="brand-i" role="img" aria-label="JavaScript" title="JavaScript" style="--src:url(https://cdn.simpleicons.org/javascript)"></span></li>
@@ -649,11 +654,14 @@ body.night{ color-scheme:dark; }
         <div class="tier-scale" aria-hidden="true"><i></i></div>
         <span class="note-dim tlabel" aria-hidden="true">Exposure</span>
       </div>
+      <!-- /CMS:depth -->
     </div>
     <div class="facts reveal">
+      <!-- CMS:facts -->
       <div><small>Origin</small><b>Philippines</b></div>
       <div><small>Off-hours</small><b>Projects · games · photos · sleep</b></div>
       <div><small>Building toward</small><b>Software of my own</b></div>
+      <!-- /CMS:facts -->
     </div>
     <div class="bridge reveal"><a href="#experience" aria-label="A4 Experience">A4 <span class="ar" aria-hidden="true">↓</span></a></div>
   </div>
@@ -665,6 +673,7 @@ body.night{ color-scheme:dark; }
     <span class="ghost" aria-hidden="true">A4</span>
     <div class="idx reveal"><span class="n">A4</span><h2>Experience</h2></div>
     <div class="acc reveal">
+      <!-- CMS:exp -->
       <div class="acc-item key">
         <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.01</span>
@@ -768,7 +777,7 @@ body.night{ color-scheme:dark; }
       <div class="acc-item">
         <h3 class="acc-h"><button class="acc-head" aria-expanded="false">
           <span class="num">E.08</span>
-          <span class="acc-title">Social Media Manager & Support Staff</span>
+          <span class="acc-title">Social Media Manager &amp; Support Staff</span>
           <span class="when">2022 — Now</span>
           <span class="pm" aria-hidden="true">+</span>
         </button></h3>
@@ -793,6 +802,7 @@ body.night{ color-scheme:dark; }
           </ul>
         </div></div>
       </div>
+      <!-- /CMS:exp -->
     </div>
   </div>
 </section>
@@ -991,6 +1001,13 @@ const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold:.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ===== admin shortcut: Shift + | opens the private admin page (still locked behind your passphrase) =====
+addEventListener("keydown", e => {
+  if (e.key !== "|" || !e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.target.closest && e.target.closest("input, textarea, select, [contenteditable=\"true\"]")) return;
+  location.href = "admin/";
+});
 
 // ===== theme toggle (dark / light) — choice is remembered across pages =====
 const themeBtn = document.getElementById('themeBtn');
