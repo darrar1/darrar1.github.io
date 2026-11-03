@@ -283,7 +283,7 @@
   "credentials": {
     "featured": {
       "corner": "Award · 2026",
-      "image": "images/cert-featured.jpg",
+      "image": "images/best-in-capstone-enverga-admis-d5ec72.jpg",
       "imageAlt": "Featured certificate",
       "label": "★ Award · Best in Capstone",
       "title": "Best in Capstone — \"Enverga Admission AI\"",
@@ -297,18 +297,6 @@
         "title": "Applied Full-Stack & Data Science Bootcamp — Data Science Track",
         "date": "Jun 2026",
         "url": "https://credsverse.com/credentials/95d62786-9354-49fe-9075-f378a794b22c?preview=1"
-      },
-      {
-        "issuer": "IBM",
-        "title": "Flutter & Dart: Developing iOS, Android & Mobile Apps",
-        "date": "May 2025",
-        "url": "https://www.coursera.org/account/accomplishments/verify/4J3YR2V1EXSX"
-      },
-      {
-        "issuer": "LearnQuest",
-        "title": "Basics of Cisco Networking",
-        "date": "Mar 2025",
-        "url": "https://www.coursera.org/account/accomplishments/verify/CA2WL5OQDZVC"
       }
     ]
   },
