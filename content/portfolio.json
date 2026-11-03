@@ -26,113 +26,94 @@
   },
   "projects": [
     {
-      "title": "Campus Service Portal",
-      "role": "Full-stack developer",
-      "stack": "React · Node · MySQL",
-      "outcome": "300+ students onboarded · paper forms eliminated (edit: your real result)",
-      "desc": "Students file and track requests online instead of on paper. Built end-to-end with role-based access.",
-      "photo": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=80",
-      "code": "#",
-      "live": "#",
+      "title": "BantAI Elderly Monitoring System",
+      "role": "Full-stack developer · IoT",
+      "stack": "Spring Boot · React · Expo · ESP32",
+      "outcome": "Defended Capstone : 96.8% of falls caught, families alerted in 20s, no cameras & wearables",
+      "desc": "An IoT system that watches older adults with contactless radar sensors and alerts caregivers on the web and families on their phones.",
+      "photo": "images/bantai-elderly-monitoring-syst-0a1e76.jpg",
+      "code": "",
+      "live": "https://bantai.up.railway.app",
       "case": {
         "file": "work-portal.html",
-        "summary": "Students used to file service requests on paper and wait in line to check the status. I built a web portal where they file, track, and get notified — end to end.",
+        "summary": "Older adults at home or in care facilities can fall and stay unattended, and most tools give caregivers raw data, not next steps. I built BantAI with two teammates: radar sensors, a cloud backend, AI guidance, and web and mobile apps. It caught 30 of 31 test falls. Demo access on request.",
         "templateNotice": true,
-        "timeline": "6 weeks",
-        "client": "University dept.",
+        "timeline": "10 months, Jan to Oct",
+        "client": "BSIT Capstone Requirement, MSEUF",
         "year": "2026",
         "stats": [
           {
-            "big": "300+",
-            "label": "students onboarded in the first month"
+            "big": "30 of 31",
+            "label": "acted falls that sent an alert to the phone"
           },
           {
-            "big": "0",
-            "label": "paper forms — the old process fully retired"
+            "big": "20 s",
+            "label": "median time from the floor to the alert on the phone"
           },
           {
-            "big": "6 wks",
-            "label": "from kickoff to deployment, on schedule"
+            "big": "69 of 70",
+            "label": "black-box test cases passed by all three testers"
           }
         ],
         "problem": [
-          "Describe the situation before your work: what was slow, broken, or manual. Keep it concrete — queues, lost forms, hours wasted. One or two short paragraphs.",
-          "What made it hard? A constraint, a legacy process, a tight deadline. This is where the reader starts rooting for you."
+          "Older adults who live alone or in care facilities can fall and stay unattended, because caregivers and family members cannot watch them at all times. Checks are usually manual, through visits and phone calls, and most monitoring tools give non-clinical caregivers raw data instead of clear next steps.",
+          "Wearables depend on the person remembering to wear and charge them, and cameras raise privacy concerns. The system also had to stay non-clinical: it can tell people to check on someone, but it must never diagnose."
         ],
         "solution": [
-          "What you built, in plain language. Who uses it, what they can do now, and the one design/engineering decision you're proudest of.",
-          "Mention your role honestly — solo, or which parts were yours in a team."
+          "BantAI uses two Seeed Studio 60 GHz mmWave radar sensors that detect falls, presence, heart rate and breathing without capturing images. Each sensor sends a reading every five seconds over HTTPS to a Spring Boot backend on Railway. When a fall is found, the backend raises an alert, asks Google Gemini for short non-clinical guidance (with a fixed template if the AI does not answer within 10 seconds), and sends a push notification. Facility caregivers use a React web app and family members use a React Native Android app, both on the same backend.",
+          "My parts: the backend (REST API, sign-in and role-based access, the rule engine, AI guidance, push notifications and cloud deployment), the React web app, the firmware for both sensor boards, and most of the mobile app. Edgar Paul Darryl Ingente helped with the web design and the backend, and John Allen Seares redesigned the mobile app's interface."
         ],
         "screens": [
           {
-            "image": "images/case-portal-1.jpg",
-            "caption": "Student dashboard — file & track requests",
-            "alt": "Main dashboard screen"
+            "image": "images/caregiver-dashboard-residents--6e389b.jpg",
+            "caption": "Caregiver dashboard: residents grouped by status",
+            "alt": "Web dashboard with resident, present and need-attention totals, an unanswered-fall banner, and residents by status."
           },
           {
-            "image": "images/case-portal-2.jpg",
-            "caption": "Admin queue with role-based access",
-            "alt": "Admin view screen"
+            "image": "images/admin-queue-with-role-based-ac-5d7003.jpg",
+            "caption": "A confirmed fall with AI-generated, non-clinical guidance",
+            "alt": "Alert card showing who was confirmed, the caregiver's note, AI guidance and the facts the AI considered."
+          },
+          {
+            "image": "images/the-family-app-on-a-relative-s-71fbcd.jpg",
+            "caption": "The family app on a relative's Android phone",
+            "alt": "Mobile screen for one elderly person with status, AI guidance, heart and breathing rates, and Acknowledge."
+          },
+          {
+            "image": "images/sensors-found-and-registered-w-ea41a8.jpg",
+            "caption": "Sensors found and registered without typing an address",
+            "alt": "Setup page listing each sensor with what it covers, Working or Offline, and buttons to test or reset its Wi-Fi."
           }
         ],
         "process": [
           {
-            "title": "Research",
-            "text": "Interviewed the office staff and students; mapped the paper flow before designing anything."
+            "title": "Requirements",
+            "text": "We interviewed three people involved in elderly care and reviewed existing monitoring tools, then set eight functional and eight non-functional requirements."
           },
           {
             "title": "Design",
-            "text": "Wireframes in Figma, tested with five students, two rounds of revisions."
+            "text": "The team designed eight screens as a Figma prototype and modeled the system with UML use case, architecture, activity, deployment and ER diagrams."
           },
           {
-            "title": "Build",
-            "text": "React front end, Node/Express API, MySQL. Weekly progress links to the stakeholders."
+            "title": "Short build cycles",
+            "text": "Each task had its own branch and pull request: 276 commits and 98 merged pull requests across four repositories. A simulator let us build before the sensors arrived."
           },
           {
-            "title": "Ship",
-            "text": "Deployed, wrote a one-page admin guide, trained the staff in one session."
+            "title": "Changes from testing",
+            "text": "User testing and our adviser led to shared-room sensors, setup from a phone, a move to the cloud so families get alerts anywhere, and approval of new facilities.\n```"
+          },
+          {
+            "title": "Testing and evaluation",
+            "text": "We ran 70 black-box test cases with three testers, 111 fall and everyday-movement trials, and an ISO/IEC 25010 evaluation with 13 respondents."
           }
         ],
         "changed": [
-          "The result in the user's terms: time saved, errors gone, people served. If you have a quote from the client or adviser, this is where it lives."
+          "In 111 trials, BantAI raised an alert in 30 of 31 acted falls (96.8%), with a median of 20 seconds from the floor to the phone, and in only 5 of 80 everyday movements (6.3%), mostly while lying on a low sofa near the 0.5 m fall line. Families now get alerts on any network instead of only the facility Wi-Fi, and moving the servers to Singapore cut the response time from the Philippines from about 430 ms to about 222 ms. Thirteen respondents (seven healthcare professionals, four IT experts or students, a family member and a UX researcher) rated the system 4.26 out of 5 on ISO/IEC 25010, highest for functional suitability (4.43) and security (4.35)."
         ],
         "next": [
-          "One honest paragraph on limitations or the next iteration. This reads as maturity, not weakness."
+          "The System Usability Scale score was 53.08, below the usual benchmark of 68, so first-time users found BantAI hard to learn. I would start there, using the UX researcher's list of fixes and testing with caregivers again. I would also add the option to rewrite the AI guidance on the mobile app, the only black-box case that failed, and work on false alerts near low furniture and on the breathing rate, which read about 3.6 breaths per minute high. Finally, I would run the five sensor checks we skipped and test the system for several months in a real care facility."
         ]
       }
-    },
-    {
-      "title": "Inventory Dashboard",
-      "role": "Backend developer",
-      "stack": "Python · Flask",
-      "outcome": "2-week build · stockouts down 40% (edit: your real result)",
-      "desc": "Stock tracking for a small business: live charts, low-stock alerts, exportable reports.",
-      "photo": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80",
-      "code": "#",
-      "live": "#",
-      "case": null
-    },
-    {
-      "title": "Booking System",
-      "role": "Team lead · Frontend",
-      "stack": "PHP · JavaScript",
-      "outcome": "bookings handled online end-to-end (edit: your real result)",
-      "desc": "Appointment scheduling with email confirmations and an admin calendar view.",
-      "photo": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=700&q=80",
-      "code": "#",
-      "live": "#",
-      "case": null
-    },
-    {
-      "title": "Weather & Maps App",
-      "role": "Solo project",
-      "stack": "React · APIs",
-      "outcome": "solo project · shipped in 10 days (edit: your real result)",
-      "desc": "A responsive app pulling live weather and mapping data through public APIs.",
-      "photo": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&q=80",
-      "code": "#",
-      "live": "#",
-      "case": null
     }
   ],
   "skills": [

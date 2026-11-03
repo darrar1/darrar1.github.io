@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!-- CMS:case-title --><title>Campus Service Portal — Case study — Daryll Celestial</title><!-- /CMS:case-title -->
+<!-- CMS:case-title --><title>BantAI Elderly Monitoring System — Case study — Daryll Celestial</title><!-- /CMS:case-title -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -358,21 +358,21 @@ body.night{ color-scheme:dark; }
       <span class="note">Case study</span>
       <span class="note-dim">Sheet W.01 — Rev 1.0</span>
     </div>
-    <h1>Campus Service Portal</h1>
-    <p class="sum">Students used to file service requests on paper and wait in line to check the status. I built a web portal where they file, track, and get notified — end to end. <em style="font-style:normal;color:var(--mist)">(All content on this page is a template — replace with your real project.)</em></p>
+    <h1>BantAI Elderly Monitoring System</h1>
+    <p class="sum">Older adults at home or in care facilities can fall and stay unattended, and most tools give caregivers raw data, not next steps. I built BantAI with two teammates: radar sensors, a cloud backend, AI guidance, and web and mobile apps. It caught 30 of 31 test falls. Demo access on request. <em style="font-style:normal;color:var(--mist)">(All content on this page is a template — replace with your real project.)</em></p>
 
     <div class="meta reveal">
-      <div><small>Role</small><b>Full-stack developer</b></div>
-      <div><small>Stack</small><b>React · Node · MySQL</b></div>
-      <div><small>Timeline</small><b>6 weeks</b></div>
-      <div><small>For</small><b>University dept.</b></div>
+      <div><small>Role</small><b>Full-stack developer · IoT</b></div>
+      <div><small>Stack</small><b>Spring Boot · React · Expo · ESP32</b></div>
+      <div><small>Timeline</small><b>10 months, Jan to Oct</b></div>
+      <div><small>For</small><b>BSIT Capstone Requirement, MSEUF</b></div>
       <div><small>Year</small><b>2026</b></div>
     </div>
 
     <div class="stats reveal">
-      <div class="stat"><div class="big">300+</div><p>students onboarded in the first month</p></div>
-      <div class="stat"><div class="big">0</div><p>paper forms — the old process fully retired</p></div>
-      <div class="stat"><div class="big">6 wks</div><p>from kickoff to deployment, on schedule</p></div>
+      <div class="stat"><div class="big">30 of 31</div><p>acted falls that sent an alert to the phone</p></div>
+      <div class="stat"><div class="big">20 s</div><p>median time from the floor to the alert on the phone</p></div>
+      <div class="stat"><div class="big">69 of 70</div><p>black-box test cases passed by all three testers</p></div>
     </div>
   </div>
 </section>
@@ -385,13 +385,13 @@ body.night{ color-scheme:dark; }
     <div class="two reveal">
       <div>
         <h3>The problem</h3>
-        <p>Describe the situation before your work: what was slow, broken, or manual. Keep it concrete — queues, lost forms, hours wasted. One or two short paragraphs.</p>
-        <p>What made it hard? A constraint, a legacy process, a tight deadline. This is where the reader starts rooting for you.</p>
+        <p>Older adults who live alone or in care facilities can fall and stay unattended, because caregivers and family members cannot watch them at all times. Checks are usually manual, through visits and phone calls, and most monitoring tools give non-clinical caregivers raw data instead of clear next steps.</p>
+        <p>Wearables depend on the person remembering to wear and charge them, and cameras raise privacy concerns. The system also had to stay non-clinical: it can tell people to check on someone, but it must never diagnose.</p>
       </div>
       <div>
         <h3>The solution</h3>
-        <p>What you built, in plain language. Who uses it, what they can do now, and the one design/engineering decision you're proudest of.</p>
-        <p>Mention your role honestly — solo, or which parts were yours in a team.</p>
+        <p>BantAI uses two Seeed Studio 60 GHz mmWave radar sensors that detect falls, presence, heart rate and breathing without capturing images. Each sensor sends a reading every five seconds over HTTPS to a Spring Boot backend on Railway. When a fall is found, the backend raises an alert, asks Google Gemini for short non-clinical guidance (with a fixed template if the AI does not answer within 10 seconds), and sends a push notification. Facility caregivers use a React web app and family members use a React Native Android app, both on the same backend.</p>
+        <p>My parts: the backend (REST API, sign-in and role-based access, the rule engine, AI guidance, push notifications and cloud deployment), the React web app, the firmware for both sensor boards, and most of the mobile app. Edgar Paul Darryl Ingente helped with the web design and the backend, and John Allen Seares redesigned the mobile app's interface.</p>
       </div>
     </div>
   </div>
@@ -403,12 +403,20 @@ body.night{ color-scheme:dark; }
     <span class="ghost" aria-hidden="true">02</span>
     <div class="idx reveal"><span class="n">02</span><h2>The build</h2></div>
     <figure class="plate reveal">
-      <div class="ph"><img src="images/case-portal-1.jpg" alt="Main dashboard screen"></div>
-      <div class="cap"><b>Student dashboard — file &amp; track requests</b><span class="note-dim">Fig. 01</span></div>
+      <div class="ph"><img src="images/caregiver-dashboard-residents--6e389b.jpg" alt="Web dashboard with resident, present and need-attention totals, an unanswered-fall banner, and residents by status."></div>
+      <div class="cap"><b>Caregiver dashboard: residents grouped by status</b><span class="note-dim">Fig. 01</span></div>
     </figure>
     <figure class="plate reveal">
-      <div class="ph"><img src="images/case-portal-2.jpg" alt="Admin view screen"></div>
-      <div class="cap"><b>Admin queue with role-based access</b><span class="note-dim">Fig. 02</span></div>
+      <div class="ph"><img src="images/admin-queue-with-role-based-ac-5d7003.jpg" alt="Alert card showing who was confirmed, the caregiver&#39;s note, AI guidance and the facts the AI considered."></div>
+      <div class="cap"><b>A confirmed fall with AI-generated, non-clinical guidance</b><span class="note-dim">Fig. 02</span></div>
+    </figure>
+    <figure class="plate reveal">
+      <div class="ph"><img src="images/the-family-app-on-a-relative-s-71fbcd.jpg" alt="Mobile screen for one elderly person with status, AI guidance, heart and breathing rates, and Acknowledge."></div>
+      <div class="cap"><b>The family app on a relative's Android phone</b><span class="note-dim">Fig. 03</span></div>
+    </figure>
+    <figure class="plate reveal">
+      <div class="ph"><img src="images/sensors-found-and-registered-w-ea41a8.jpg" alt="Setup page listing each sensor with what it covers, Working or Offline, and buttons to test or reset its Wi-Fi."></div>
+      <div class="cap"><b>Sensors found and registered without typing an address</b><span class="note-dim">Fig. 04</span></div>
     </figure>
   </div>
 </section>
@@ -419,10 +427,12 @@ body.night{ color-scheme:dark; }
     <span class="ghost" aria-hidden="true">03</span>
     <div class="idx reveal"><span class="n">03</span><h2>Process notes</h2></div>
     <div class="plist reveal">
-      <div class="prow"><span class="note">P.01</span><h3>Research</h3><p>Interviewed the office staff and students; mapped the paper flow before designing anything.</p></div>
-      <div class="prow"><span class="note">P.02</span><h3>Design</h3><p>Wireframes in Figma, tested with five students, two rounds of revisions.</p></div>
-      <div class="prow"><span class="note">P.03</span><h3>Build</h3><p>React front end, Node/Express API, MySQL. Weekly progress links to the stakeholders.</p></div>
-      <div class="prow"><span class="note">P.04</span><h3>Ship</h3><p>Deployed, wrote a one-page admin guide, trained the staff in one session.</p></div>
+      <div class="prow"><span class="note">P.01</span><h3>Requirements</h3><p>We interviewed three people involved in elderly care and reviewed existing monitoring tools, then set eight functional and eight non-functional requirements.</p></div>
+      <div class="prow"><span class="note">P.02</span><h3>Design</h3><p>The team designed eight screens as a Figma prototype and modeled the system with UML use case, architecture, activity, deployment and ER diagrams.</p></div>
+      <div class="prow"><span class="note">P.03</span><h3>Short build cycles</h3><p>Each task had its own branch and pull request: 276 commits and 98 merged pull requests across four repositories. A simulator let us build before the sensors arrived.</p></div>
+      <div class="prow"><span class="note">P.04</span><h3>Changes from testing</h3><p>User testing and our adviser led to shared-room sensors, setup from a phone, a move to the cloud so families get alerts anywhere, and approval of new facilities.
+```</p></div>
+      <div class="prow"><span class="note">P.05</span><h3>Testing and evaluation</h3><p>We ran 70 black-box test cases with three testers, 111 fall and everyday-movement trials, and an ISO/IEC 25010 evaluation with 13 respondents.</p></div>
     </div>
     <div class="bridge reveal"><a href="#outcome" aria-label="04 Outcome">04 <span class="ar" aria-hidden="true">↓</span></a></div>
   </div>
@@ -436,14 +446,13 @@ body.night{ color-scheme:dark; }
     <div class="two reveal">
       <div>
         <h3>What changed</h3>
-        <p>The result in the user's terms: time saved, errors gone, people served. If you have a quote from the client or adviser, this is where it lives.</p>
+        <p>In 111 trials, BantAI raised an alert in 30 of 31 acted falls (96.8%), with a median of 20 seconds from the floor to the phone, and in only 5 of 80 everyday movements (6.3%), mostly while lying on a low sofa near the 0.5 m fall line. Families now get alerts on any network instead of only the facility Wi-Fi, and moving the servers to Singapore cut the response time from the Philippines from about 430 ms to about 222 ms. Thirteen respondents (seven healthcare professionals, four IT experts or students, a family member and a UX researcher) rated the system 4.26 out of 5 on ISO/IEC 25010, highest for functional suitability (4.43) and security (4.35).</p>
       </div>
       <div>
         <h3>What I'd do next</h3>
-        <p>One honest paragraph on limitations or the next iteration. This reads as maturity, not weakness.</p>
+        <p>The System Usability Scale score was 53.08, below the usual benchmark of 68, so first-time users found BantAI hard to learn. I would start there, using the UX researcher's list of fixes and testing with caregivers again. I would also add the option to rewrite the AI guidance on the mobile app, the only black-box case that failed, and work on false alerts near low furniture and on the breathing rate, which read about 3.6 breaths per minute high. Finally, I would run the five sensor checks we skipped and test the system for several months in a real care facility.</p>
         <div style="display:flex; gap:14px; margin-top:22px; flex-wrap:wrap;">
-          <a href="#" target="_blank" rel="noopener" class="btn btn-solid"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg> Code</a>
-          <a href="#" target="_blank" rel="noopener" class="btn">Live <span class="ar" aria-hidden="true">↗</span></a>
+          <a href="https://bantai.up.railway.app" target="_blank" rel="noopener" class="btn">Live <span class="ar" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
@@ -454,7 +463,7 @@ body.night{ color-scheme:dark; }
 <section class="nextproj" style="padding-top:20px;">
   <div class="wrap">
     <span class="note reveal">Next sheet</span>
-    <h2 class="reveal">W.02 —<br><span class="outline">Inventory Dashboard</span></h2>
+    <h2 class="reveal">W.01 —<br><span class="outline">BantAI Elderly Monitoring System</span></h2>
     <div class="row2 reveal">
       <a href="index.html#work" class="btn btn-solid"><span aria-hidden="true">←</span> All work</a>
       <a href="index.html#contact" class="btn">Contact <span class="ar" aria-hidden="true">→</span></a>
