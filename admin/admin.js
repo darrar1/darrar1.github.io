@@ -129,6 +129,11 @@ async function loadSite() {
 }
 const fileExists = (p) => DEMO ? true : base.blobs.has(p);
 
+// GitHub Pages lets browsers reuse admin files for up to 10 minutes. Right after a site update the
+// browser can run the OLD admin code against the NEW pages; explain that instead of a raw error.
+const STALE_MSG = "This browser is still using an older copy of the admin (GitHub Pages caches it for up to 10 minutes after an update). Press Ctrl + Shift + R to reload — your draft is kept.";
+const buildMsg = (e) => (/CMS region ".*" not found/.test(e.message) ? STALE_MSG : e.message);
+
 // ===========================================================================
 // Images & PDF: validated by signature, re-encoded in the browser
 // ===========================================================================
@@ -458,7 +463,9 @@ function offerDraft() {
   bn.hidden = false;
   bn.replaceChildren(h('span', {}, `Unsaved draft from ${new Date(d.at).toLocaleString()}.`),
     btn('Restore draft', () => {
-      state = d.content;
+      // keep only sections that still exist (e.g. a draft saved before a section was removed)
+      state = structuredClone(base.content);
+      for (const k of Object.keys(state)) if (k in d.content) state[k] = d.content[k];
       // images that were never uploaded can't be restored
       let lost = 0;
       (function walk(o) { for (const [k, v] of Object.entries(o || {})) {
@@ -512,7 +519,7 @@ function previewHTML(path) {
 }
 function openPreview() {
   let pages;
-  try { pages = buildPages(state, base.files); } catch (e) { status(e.message, 'bad'); return; }
+  try { pages = buildPages(state, base.files); } catch (e) { status(buildMsg(e), 'bad'); return; }
   const sel = $('#pvPage');
   const names = { 'index.html': 'Home', 'about.html': 'About' };
   sel.replaceChildren(...Object.keys(pages).map((p) => h('option', { value: p }, names[p] || `Case study · ${p}`)));
@@ -539,7 +546,7 @@ function openPublish() {
   const body = $('#pbBody'); body.replaceChildren();
   const errs = validate(state);
   let pages;
-  try { pages = buildPages(state, base.files); } catch (e) { errs.push(e.message); }
+  try { pages = buildPages(state, base.files); } catch (e) { errs.push(buildMsg(e)); }
   if (errs.length) {
     body.append(h('p', {}, 'Fix these first:'), h('ul', { class: 'errs' }, errs.map((e) => h('li', {}, e))));
     $('#dPublish').showModal(); return;
@@ -613,6 +620,8 @@ async function startEditor() {
       : e.message;
     status(msg, 'bad'); $('#editorBody').replaceChildren(h('p', { class: 'err' }, msg)); return;
   }
+  try { buildPages(base.content, base.files); }
+  catch (e) { const msg = buildMsg(e); status(msg, "bad"); $("#editorBody").replaceChildren(h("p", { class: "err" }, msg)); return; }
   renderTabs(); renderSection(); offerDraft();
   if (!DEMO) armIdle();
   addEventListener('beforeunload', () => { if (dirty) saveDraft(); });
