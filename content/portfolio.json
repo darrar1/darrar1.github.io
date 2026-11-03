@@ -37,7 +37,7 @@
       "case": {
         "file": "work-portal.html",
         "summary": "Older adults at home or in care facilities can fall and stay unattended, and most tools give caregivers raw data, not next steps. I built BantAI with two teammates: radar sensors, a cloud backend, AI guidance, and web and mobile apps. It caught 30 of 31 test falls. Demo access on request.",
-        "templateNotice": true,
+        "templateNotice": false,
         "timeline": "10 months, Jan to Oct",
         "client": "BSIT Capstone Requirement, MSEUF",
         "year": "2026",
