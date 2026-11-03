@@ -148,25 +148,6 @@ R.refs = (c) => lines((c.references || []).map((r, i) => [
   '</div>',
 ]));
 
-// ---- index: 05 Plates ----
-const LANES = [
-  ['photo', 'Through the lens', 'Photography', 'Photography', 'P'],
-  ['design', 'By design', 'Graphic design', 'Design', 'D'],
-];
-R.plates = (c) => lines(LANES.map(([key, head, note, pill, letter]) => [
-  '<div class="lane">',
-  `  <div class="lane-head"><h3>${head}</h3><span class="note">${note}</span></div>`,
-  '  <div class="lane-stack">',
-  (c.plates || []).filter((p) => p.lane === key).map((p, i) => [
-    `    <figure class="plate" data-pill="${pill}" data-meta="${attr(p.meta)}">`,
-    `      <div class="ph"><img src="${src(p.image)}" alt="${attr(p.alt || p.title)}"></div>`,
-    `      <div class="cap"><b>${esc(p.title)}</b><span class="note-dim">Plate ${letter}.${pad(i + 1)}</span></div>`,
-    '    </figure>',
-  ]),
-  '  </div>',
-  '</div>',
-]));
-
 // ---- about: A3 skill depth ----
 const TIERS = [
   ['proficient', 't3', 'Proficient', 'note'],
@@ -312,8 +293,9 @@ export function setRegion(html, name, content) {
   const re = rx(name), m = html.match(re);
   if (!m) throw new Error(`CMS region "${name}" not found`);
   const [, indent, open, inner, close] = m;
+  const nl = html.includes('\r\n') ? '\r\n' : '\n'; // keep the file's own line endings
   const body = /\n/.test(inner)
-    ? '\n' + content.split('\n').map((l) => (l ? indent + l : l)).join('\n') + '\n' + indent
+    ? nl + content.split('\n').map((l) => (l ? indent + l : l)).join(nl) + nl + indent
     : content;
   return html.replace(re, () => indent + open + body + close);
 }
@@ -321,7 +303,7 @@ export const norm = (s) => String(s ?? '').replace(/\s+/g, ' ').trim();
 
 // Which regions live on which page, and which template renders them.
 export const PAGES = {
-  'index.html': { heroSpec: 'hero-spec', rotFirst: 'rot-first', rot: 'rot', work: 'work', cap: 'cap', creds: 'creds', refs: 'refs', plates: 'plates' },
+  'index.html': { heroSpec: 'hero-spec', rotFirst: 'rot-first', rot: 'rot', work: 'work', cap: 'cap', creds: 'creds', refs: 'refs' },
   'about.html': { depth: 'depth', facts: 'facts', exp: 'exp' },
 };
 export const CASE_TEMPLATE = 'work-portal.html';

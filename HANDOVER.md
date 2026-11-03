@@ -26,7 +26,7 @@ are harmless — tell him so if he asks again.
 | `about.html` | About page. ID badge hero, intro, education, skill depth, experience. |
 | `work-portal.html` | Case-study TEMPLATE (duplicate per project). |
 | `CUSTOMIZE.md` | His self-service manual. **Update it whenever you change structure.** |
-| `resume.pdf`, `images/*` | User-supplied. Expected names: `portrait.jpg`, `cert-featured.jpg`, `photo1–3.jpg`, `design1–3.jpg`, `case-portal-1/2.jpg`. |
+| `resume.pdf`, `images/*` | User-supplied. Expected names: `portrait.jpg`, `cert-featured.jpg`; everything else is uploaded through the admin. |
 
 Everything is **hand-coded vanilla HTML/CSS/JS, single file per page, zero
 dependencies, no build step**. This is a deliberate brand point (footer says
@@ -37,7 +37,7 @@ dependencies, no build step**. This is a deliberate brand point (footer says
 **"Engineering draft → blueprint."** Pearl paper with a faint drafting grid;
 mono annotations (JetBrains Mono) as the vernacular; hairline rules; sharp
 3px-radius buttons; numbered document sections (`01 / Selected work`) with
-`Next — 0X / …` **bridge** links; photography as numbered **Plates**; footer as
+`Next — 0X / …` **bridge** links; footer as
 a blueprint **title block**; **night mode** = the draft becoming the blueprint, switched by the header **theme toggle** (saved in localStorage `theme`, defaults to the OS setting)
 (deep navy, glowing grid). Fonts: Sora (display), Inter (body), JetBrains Mono
 (annotations). Tokens live in `:root`; index flips them wholesale under
@@ -61,8 +61,8 @@ line "SCALE 1:1 — BUILT BY HAND", tilting portrait with crop marks, spec line.
 Sections: 01 Work (bento: W.01 photo hero tile w/ stretched case-study link, W.02 wide, W.03/W.04 small; fills not borders; crop-mark hover; small tiles reveal their data-img faintly in-tile on hover (old floating #preview removed — it covered neighbouring tiles) + outcome
 metrics + role labels; W.01 links to work-portal.html), 02 Capabilities (logo carousel, two JS-driven lanes over drafting rulers, logos glow on
 mouse hover or touch-and-hold, scroll-velocity boost + skew, no hover-pause, pause button;
-CDN masks from cdn.simpleicons.org, Adobe marks drawn inline), 03 Credentials (featured doc + ledger + LinkedIn button), 04 Plates
-(two lanes + lightbox w/ keyboard), 05 How I work, 06 Principles (kinetic
+CDN masks from cdn.simpleicons.org, Adobe marks drawn inline), 03 Credentials (featured doc + ledger + LinkedIn button), 04 References
+(quote cards, edited in the admin), 05 How I work, 06 Principles (kinetic
 typography: typewriter / cursor-wave letters / progress+stamp / AI
 Tab-autocomplete), Contact (animated heading, click-to-copy email). **Night mode is a header toggle** (`#themeBtn`) — the old scroll trigger was removed. Wow kit: grid spotlight
 (#spot), crosshair cursor ring + click squeeze, paper grain, ghost numerals w/
@@ -136,7 +136,7 @@ push back when a request would hurt the portfolio.
 
 **Everything personal is still placeholder** except his name/photos he's added
 locally: email `hello@example.com`, social `href="#"`, LinkedIn `your-username`,
-all four projects, all certs, case-study content, Plates images/metadata,
+all four projects, all certs, case-study content,
 education/experience details, `resume.pdf`. Two items need his conscious
 sign-off: **P.04 "AI-assisted. Human-accountable."** (a public promise he must
 actually keep — keep only if he owns it) and **References** (restore only with
@@ -153,4 +153,5 @@ now has negative return. He knows this; hold the line kindly.
 ## 9. Content admin (added Nov 2026) — read CLAUDE.md
 
 Content now lives in `content/portfolio.json` and is edited through a private admin at `/admin/` (Shift + | on any page). Security: fine-grained GitHub token (this repo, Contents read/write), stored only AES-GCM-encrypted with a PBKDF2 passphrase key, memory-only when unlocked, 15-minute idle lock, strict CSP, no third-party scripts. Publishing = one Git commit through the GitHub API (content JSON + regenerated pages + images).
-CMS sections are marked `<!-- CMS:name -->` in index/about/work-portal; their markup comes ONLY from `admin/templates.js`. After any template change run `node admin/tools/regenerate.mjs`, then `--check`. `work-portal.html` doubles as the template for new case-study pages. Full rules: `CLAUDE.md`.
+CMS sections are marked `<!-- CMS:name -->` in index/about/work-portal; their markup comes ONLY from `admin/templates.js`. After any template change run `node admin/tools/regenerate.mjs`, then `--check`. `work-portal.html` doubles as the template for new case-study pages.
+**Plates (photo/design gallery + lightbox) was removed in Nov 2026 at his request** — sections renumbered (05 How I work, 06 Principles). Don't re-add it unless he asks. Full rules: `CLAUDE.md`.

@@ -12,7 +12,7 @@ Every page also has an **EDIT MAP** comment at the very top — open the file, a
 
 ## 0. The admin page — the easy way (recommended)
 
-Most content is now edited in your private **admin page** instead of in the HTML: projects, case studies, skills, credentials, plates, experience, references, hero words, the facts strip and your resume. Sections still edited by hand (this guide): How I work, Principles, contact links, footer.
+Most content is now edited in your private **admin page** instead of in the HTML: projects, case studies, skills, credentials, experience, references, hero words, the facts strip and your resume. Sections still edited by hand (this guide): How I work, Principles, contact links, footer.
 
 > ⚠ Never hand-edit HTML between `<!-- CMS:name -->` markers — the admin rewrites those sections on every publish (it warns you first).
 
@@ -50,7 +50,6 @@ Most content is now edited in your private **admin page** instead of in the HTML
 All images live in the `images/` folder. Ctrl+F `images/` in each file to see what is expected:
 - `images/portrait.jpg` — hero portrait + About ID badge
 - `images/cert-featured.jpg` — featured certificate screenshot
-- `images/photo1.jpg` ... `photo3.jpg`, `design1.jpg` ... `design3.jpg` — Plates gallery
 - `images/case-portal-1.jpg`, `case-portal-2.jpg` — case-study screens
 Resize photos to about 1500px wide before adding (smaller file = faster site).
 
@@ -109,12 +108,5 @@ early. Nobody is forced to click to reach your work. To change the duration,
 Ctrl+F `3500` (the timer) and `3.5s` (the bar animation) in `index.html` — keep
 them equal.
 
-**The References section is hidden.** Its quotes were invented placeholders,
-and fake testimonials can genuinely hurt you in an interview. The whole section
-still exists inside an HTML comment — Ctrl+F `HIDDEN REFERENCES` in
-`index.html`. When you have 2+ REAL quotes (ask a professor, client, or
-teammate — people usually say yes): remove the comment markers, replace the
-names and quotes, then renumber Plates/How I work/Principles back to 05/06/07
-(headings, ghost numbers, and the `Next —` bridge labels) and re-add
-`refs:'04 / References'` to the `locLabels` list in the script.
+**References are live** and edited in the admin page (Admin → References). Only add real quotes, with the person’s permission.
 

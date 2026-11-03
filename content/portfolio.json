@@ -319,50 +319,6 @@
       "role": "Technology Leader · Certified Scrum Master · former teacher"
     }
   ],
-  "plates": [
-    {
-      "lane": "photo",
-      "title": "Photo title",
-      "meta": "Camera · Lens · Settings",
-      "image": "images/photo1.jpg",
-      "alt": "Photography work 1"
-    },
-    {
-      "lane": "photo",
-      "title": "Photo title",
-      "meta": "Camera · Lens · Settings",
-      "image": "images/photo2.jpg",
-      "alt": "Photography work 2"
-    },
-    {
-      "lane": "photo",
-      "title": "Photo title",
-      "meta": "Camera · Lens · Settings",
-      "image": "images/photo3.jpg",
-      "alt": "Photography work 3"
-    },
-    {
-      "lane": "design",
-      "title": "Design title",
-      "meta": "Tool · Type · Year",
-      "image": "images/design1.jpg",
-      "alt": "Design work 1"
-    },
-    {
-      "lane": "design",
-      "title": "Design title",
-      "meta": "Tool · Type · Year",
-      "image": "images/design2.jpg",
-      "alt": "Design work 2"
-    },
-    {
-      "lane": "design",
-      "title": "Design title",
-      "meta": "Tool · Type · Year",
-      "image": "images/design3.jpg",
-      "alt": "Design work 3"
-    }
-  ],
   "experience": [
     {
       "title": "BantAI — Capstone Team Lead",

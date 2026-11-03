@@ -228,15 +228,6 @@ const SECTIONS = [
         newItem: () => ({ issuer: '', title: '', date: '', url: '' }),
         fields: [t('issuer', 'Issuer', 24, { req: true }), t('title', 'Title', 90, { req: true }), t('date', 'Date', 12, { hint: 'e.g. Jun 2026' }), url('url', 'Verify link')] },
     ] },
-  { id: 'plates', label: 'Plates', note: 'Photography and design pieces. Order inside each lane = order on the site.',
-    fields: [{ k: 'plates', type: 'list', itemName: 'plate', max: 40, itemLabel: (p) => `${p.lane === 'design' ? 'Design' : 'Photo'} · ${p.title || 'Untitled'}`,
-      newItem: () => ({ lane: 'photo', title: '', meta: '', image: '', alt: '' }),
-      fields: [
-        { k: 'lane', label: 'Lane', type: 'select', options: [['photo', 'Photography'], ['design', 'Graphic design']] },
-        t('title', 'Title', 40, { req: true }), img('image', 'Image', 1600, { req: true, nameFrom: 'title' }),
-        t('meta', 'Details (shown when enlarged)', 60, { hint: 'Photo: camera · lens · settings — Design: tool · type · year' }),
-        t('alt', 'Describe the image (for screen readers)', 120),
-      ] }] },
   { id: 'experience', label: 'Experience', note: 'Use "Now" in Dates for current roles (it shows as "Present" inside).',
     fields: [{ k: 'experience', type: 'list', itemName: 'role', max: 30, itemLabel: (e) => e.title || 'New role',
       newItem: () => ({ title: '', org: '', when: '', key: false, bullets: [] }),
@@ -496,7 +487,6 @@ function validate(c) {
   (c.skills || []).forEach((s, i) => { req(s.name, `Skill ${i + 1} name`); if (!logoOk(s.logo)) errs.push(`Skill ${i + 1} (${s.name || '?'}): logo name is invalid`); });
   const f = c.credentials?.featured; if (f) { req(f.title, 'Featured credential title'); link(f.url, 'Featured credential link'); }
   (c.credentials?.list || []).forEach((r, i) => { req(r.title, `Credential ${i + 1} title`); link(r.url, `Credential ${i + 1} link`); });
-  (c.plates || []).forEach((p, i) => { req(p.title, `Plate ${i + 1} title`); req(p.image, `Plate ${i + 1} image`); });
   (c.experience || []).forEach((e, i) => req(e.title, `Experience ${i + 1} role`));
   (c.references || []).forEach((r, i) => { req(r.text, `Reference ${i + 1} quote`); req(r.name, `Reference ${i + 1} name`); });
   return errs;
@@ -516,7 +506,7 @@ function previewHTML(path) {
   const fix = `<base href="${siteRoot}"><style>#lobby{display:none!important}body.locked{overflow:auto!important}
 .reveal,.display .row>span,.hero .spec,.hero-foot p,.hero-actions,.fig,.dim-wrap,.hero-stats{opacity:1!important;transform:none!important}
 .dim,.idx::after{transform:scaleX(1)!important}.tier-logos li{opacity:1!important;scale:1!important;filter:none!important}
-.tier-scale i{transform:none!important}.plate .ph img{clip-path:none!important}.cta-talk .tl{color:var(--azure)!important}
+.tier-scale i{transform:none!important}.cta-talk .tl{color:var(--azure)!important}
 .tlabel{opacity:1!important}</style>`;
   return html.replace(/<head>/i, '<head>' + fix);
 }
@@ -526,7 +516,7 @@ function openPreview() {
   const sel = $('#pvPage');
   const names = { 'index.html': 'Home', 'about.html': 'About' };
   sel.replaceChildren(...Object.keys(pages).map((p) => h('option', { value: p }, names[p] || `Case study · ${p}`)));
-  const anchor = { projects: '#work', skills: '#skills', credentials: '#certs', plates: '#creative', references: '#refs' }[current];
+  const anchor = { projects: '#work', skills: '#skills', credentials: '#certs', references: '#refs' }[current];
   sel.value = current === 'experience' ? 'about.html' : 'index.html';
   const load = () => {
     const fr = $('#pvFrame');
